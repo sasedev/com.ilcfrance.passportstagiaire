@@ -1,0 +1,56 @@
+{% if close is not defined %}{% set close = false %}{% endif %}
+
+{% for flashMessage in app.session.flashbag.get('danger') %}
+	<div class="alert alert-danger alert-dismissable">
+		<i class="fa fa-ban"></i>
+		{% if close %}<button type="button" class="close" data-dismiss="alert">&times;</button>{% endif %}
+		{{ flashMessage|raw }}
+	</div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('error') %}
+	<div class="alert alert-danger alert-dismissable">
+		<i class="fa fa-ban"></i>
+		{% if close %}<button type="button" class="close" data-dismiss="alert">&times;</button>{% endif %}
+		{{ flashMessage|raw }}
+	</div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+	<div class="alert alert-warning alert-dismissable">
+		<i class="fa fa-warning"></i>
+		{% if close %}<button type="button" class="close" data-dismiss="alert">&times;</button>{% endif %}
+		{{ flashMessage|raw }}
+	</div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+	<div class="alert alert-warning alert-dismissable">
+		<i class="fa fa-warning"></i>
+		{% if close %}<button type="button" class="close" data-dismiss="alert">&times;</button>{% endif %}
+		{{ flashMessage|raw }}
+	</div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('success') %}
+	<div class="alert alert-success alert-dismissable">
+		<i class="fa fa-check"></i>
+		{% if close %}<button type="button" class="close" data-dismiss="alert">&times;</button>{% endif %}
+		{{ flashMessage|raw }}
+	</div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('info') %}
+	<div class="alert alert-info alert-dismissable">
+		<i class="fa fa-info"></i>
+		{% if close %}<button type="button" class="close" data-dismiss="alert">&times;</button>{% endif %}
+		{{ flashMessage|raw }}
+	</div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('default') %}
+	<div class="alert alert-default alert-dismissable">
+		{% if close %}<button type="button" class="close" data-dismiss="alert">&times;</button>{% endif %}
+		{{ flashMessage|raw }}
+	</div>
+{% endfor %}

@@ -1,0 +1,57 @@
+{{form_start(UserPictureCropPictureForm, {'method':'POST','action': path('ilcfrance_passportstagiaire_front_user_editPost', {'id': user.id}) ,'style': 'horizontal', 'attr': {'id':'avatar_resize'} }) }}
+<div class="form-group row">
+	<div class="col-lg-offset-3 col-lg-8">
+		<img src="{{ path('vfs_tmp_files', {'file': '/'}) }}{{ tmp_avatar }}" alt="" id="avatar_big" class="img-responsive jcrop-preview">
+	</div>
+</div>
+<div class="form-group">
+	<div class="col-lg-offset-3 col-lg-8">
+		<button type="submit" id="resize_avatar_tmp" class="btn btn-primary">{{glyphIco('resize-small')}} {{'action.btnSelect' | trans|raw}}</button>
+		<button type="button" id="cancel_avatar_tmp" class="btn bg-red">{{glyphIco('remove-sign')}} {{'action.btnCancel'| trans|raw}}</button>
+	</div>
+</div>
+{{form_row(UserPictureCropPictureForm.x1)}}
+{{form_row(UserPictureCropPictureForm.y1)}}
+{{form_row(UserPictureCropPictureForm.w)}}
+{{form_row(UserPictureCropPictureForm.h)}}
+{{form_row(UserPictureCropPictureForm.avatar_tmp)}}
+{{form_rest(UserPictureCropPictureForm)}}
+{{form_end(UserPictureCropPictureForm)}}
+<br>
+<script type="text/javascript">
+$(function () {
+	$('#avatar_upload').hide();
+	$("#cancel_avatar_tmp").click(function() {
+		$('#UserPictureUploadPictureForm_avatar').fileinput('clear');
+		$('#uploadAvatarResult').empty();
+		$('#avatar_upload').show();
+		window.location.reload(true);
+	});
+	$('#resize_avatar_tmp').attr('disabled', 'disabled');
+	$('#avatar_big').cropper({
+			aspectRatio: 1,
+			guides: false,
+			movable: false,
+			rotatable: false,
+			scalable: false,
+			zoomable: false,
+			zoomOnTouch: false,
+			zoomOnWheel: false,
+			zoom: 1,
+			crop: function(e) {
+				$('#UserPictureCropPictureForm_x1').val(e.x);
+				$('#UserPictureCropPictureForm_y1').val(e.y);
+				$('#UserPictureCropPictureForm_w').val(e.width);
+				$('#UserPictureCropPictureForm_h').val(e.height);
+				if (e.width == 0) {
+					$('#resize_avatar_tmp').attr('disabled', 'disabled');
+				} else {
+					$('#resize_avatar_tmp').removeAttr('disabled');
+				}
+			}
+		}
+	);
+});
+</script>
+<br />
+<br>

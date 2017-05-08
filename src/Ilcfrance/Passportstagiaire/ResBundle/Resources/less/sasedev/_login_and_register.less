@@ -1,0 +1,54 @@
+/*
+ * Page: Login & Register
+ * ----------------------
+ */
+
+.security-logo,
+.login-logo,
+.register-logo {
+  font-size: 35px;
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: 300;
+}
+
+.security-page,
+.login-page,
+.register-page {
+  background: @gray-lighter;
+}
+
+.security-box,
+.login-box,
+.register-box {
+  width: @screen-xs;
+  margin: 0 auto;
+  @media (max-width: @screen-sm) {
+    width: 90%;
+    margin-top: 20px;
+  }
+}
+
+.security-box-body,
+.login-box-body,
+.register-box-body {
+  background: @body-bg;
+  padding: 20px;
+  border-top: 0;
+  color: @text-color;
+  .form-control-feedback {
+    color: lighten(@text-color, 10%);
+  }
+}
+
+.security-box-msg,
+.login-box-msg,
+.register-box-msg {
+  margin: 0;
+  text-align: center;
+  padding: 0 20px 20px 20px;
+}
+
+.social-auth-links {
+  margin: 10px 0;
+}

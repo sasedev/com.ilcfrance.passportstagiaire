@@ -1,0 +1,23 @@
+{% extends 'SasedevResBundle::front.tpl.html.twig' %}
+{% block mainwrapper %}
+				<section class="content">
+					<div class="container body-container-wp">
+					{% block main %}
+					<div class="row">
+						<div class="col-lg-12">
+							<h1>{{ pageTitle|raw }}</h1>
+							<hr>
+							<a href="..">..</a><br>
+							{% for filepath, filename in fs %}
+							<a href="{{ path('vfs_files', {'file': '/'}) }}{{ filepath }}">{{ filename }}</a><br>
+							{% endfor %}
+							<hr>
+						</div>
+					</div>
+					{% endblock main %}
+					</div>
+				</section>
+		<div class="container-fluid">
+			<div class="clearfix"></div>
+		</div>
+{% endblock mainwrapper %}

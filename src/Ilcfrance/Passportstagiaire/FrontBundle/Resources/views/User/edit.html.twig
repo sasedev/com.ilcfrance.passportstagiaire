@@ -1,0 +1,219 @@
+{% extends 'IlcfrancePassportstagiaireResBundle::admin.tpl.html.twig' %}
+{% block breadcrumb %}
+<ol class="breadcrumb">
+	<li><a href="{{ path('ilcfrance_passportstagiaire_front_homepage') }}">{{ faIco('dashboard') }} {{'breadcrumb.admin.dasboard'|trans|raw}}</a></li>
+	<li><a href="{{ path('ilcfrance_passportstagiaire_front_user_list') }}">{{faIco('users')}} {{'User.breadcrumb.admin.list'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('ilcfrance_passportstagiaire_front_user_editGet', {'id': user.id}) }}">{{faIco('edit')}} {{'User.breadcrumb.admin.edit'|trans({'%user%': user.id})|raw}}</a></li>
+</ol>
+{% endblock breadcrumb %}
+{% block main %}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('ilcfrance_passportstagiaire_front_user_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+			<a href="{{ path('ilcfrance_passportstagiaire_front_user_addGet') }}" class="btn btn-primary">{{ faIco('plus') }} {{ 'action.add'|trans }}</a>
+		</div>
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'User.tab.admin.overview'|trans|raw}}</a></li>
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'User.tab.admin.edit'|trans|raw}}</a></li>
+				<li {%if tabActive==3%} class="active"{%endif%}><a href="#picture" data-toggle="tab">{{'User.tab.admin.picture'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'User.tlabel.admin.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'User.id'|trans|raw}} :</div>
+								<div class="col-lg-9">{{user.id}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'User.email'|trans|raw}} :</div>
+								<div class="col-lg-9">{{user.email}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'User.picture'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if user.picture.url is empty %}{{bsLabelWarning('_NONE'|trans)}}{% else %}<img src="/res/UserPictures/{{ user.picture.url }}" alt="{{ user.fullName }}" align="bottom"> &nbsp; <a class="btn btn-sm btn-danger deleteConfirmUserPicture" href="{{path('ilcfrance_passportstagiaire_front_user_deleteUserPicture',{'id':user.id})}}">{{ faIco('trash') }} {{ 'action.delete'|trans }}</a> {% endif %}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'User.fullName'|trans|raw}} :</div>
+								<div class="col-lg-9">{{ ('User.sexe.' ~ user.sexe)|trans }} {{ user.fullName }}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'User.userRoles'|trans|raw}} :</div>
+								<div class="col-lg-9">
+									{%if user.userRoles|length!=0%}
+									<ul class="list-unstyled">
+									{% for r in user.userRoles %}
+										{% if is_granted('ROLE_SUPERADMIN') %}
+										<li><a href="{{path('ilcfrance_passportstagiaire_front_role_editGet', {'id': r.id})}}">{{r.id}}</a></li>
+										{% else %}
+										<li>{{r.id}}</li>
+										{% endif %}
+									{% endfor %}
+									</ul>
+									{%else%}
+									{{bsLabelWarning('_NONE'|trans)}}
+									{%endif%}&nbsp;
+								</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'User.logins'|trans|raw}} :</div>
+								<div class="col-lg-9">{{user.logins}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'User.lastLogin'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if user.lastLogin is not empty %}{{user.lastLogin|localeDate('medium')}} {{'_at'|trans}} {{user.lastLogin|localeDate('none', 'short')}}{% else %}{{bsLabelWarning('_NONE'|trans)}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'User.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{user.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{user.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'User.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{user.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{user.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'User.tlabel.admin.editId'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(UserUpdateIdForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_user_editPost', {'id': user.id}), 'style': 'horizontal'})}}
+							{{form_row(UserUpdateIdForm.id, {'label_col': 3, 'widget_col': 8 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(UserUpdateIdForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'User.tlabel.admin.editEmail'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(UserUpdateEmailForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_user_editPost', {'id': user.id}), 'style': 'horizontal'})}}
+							{{form_row(UserUpdateEmailForm.email, {'label_col': 3, 'widget_col': 8 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(UserUpdateEmailForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'User.tlabel.admin.editName'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(UserUpdateNameForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_user_editPost', {'id': user.id}), 'style': 'horizontal'})}}
+							{{form_row(UserUpdateNameForm.sexe, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'select2', 'style': 'width:100%', 'placeholder': 'User.sexe.placeholder'} })}}
+							{{form_row(UserUpdateNameForm.lastName, {'label_col': 3, 'widget_col': 8, 'attr': {'placeholder': 'User.lastName.placeholder'} })}}
+							{{form_row(UserUpdateNameForm.firstName, {'label_col': 3, 'widget_col': 8, 'attr': {'placeholder': 'User.firstName.placeholder'} })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(UserUpdateNameForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'User.tlabel.admin.editLockout'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(UserUpdateLockoutForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_user_editPost', {'id': user.id}), 'style': 'horizontal'})}}
+							{{form_row(UserUpdateLockoutForm.lockout, {'label_col': 3, 'widget_col': 8 , 'attr': {'class': 'select2', 'style': 'width:100%', 'placeholder': 'User.lockout.placeholder'} })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(UserUpdateLockoutForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'User.tlabel.admin.editLocale'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(UserUpdateLocaleForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_user_editPost', {'id': user.id}), 'style': 'horizontal'})}}
+							{{form_row(UserUpdateLocaleForm.locale, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'select2', 'style': 'width:100%', 'placeholder': 'User.locale.placeholder'} })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(UserUpdateLocaleForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'User.tlabel.admin.editPassword'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(UserUpdatePasswordForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_user_editPost', {'id': user.id}), 'style': 'horizontal'})}}
+							{{form_row(UserUpdatePasswordForm.clearPassword, {'label_col': 3, 'widget_col': 8, 'attr': {'placeholder': 'User.clearPassword.placeholder'} })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(UserUpdatePasswordForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'User.tlabel.admin.editRoles'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(UserUpdateRolesForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_user_editPost', {'id': user.id}), 'style': 'horizontal'})}}
+							{{form_row(UserUpdateRolesForm.userRoles, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'duallistbox', 'placeholder': 'User.userRoles.placeholder'} })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(UserUpdateRolesForm)}}
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==3%} in active{%endif%}" id="picture">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'User.tlabel.admin.editPicture'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(UserPictureUploadPictureForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_user_editPost', {'id': user.id}), 'style': 'horizontal', 'attr': {'id':'avatar_upload'}})}}
+							{{form_row(UserPictureUploadPictureForm.avatar, {'label_col': 3, 'widget_col': 8  })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnUpload'|trans|raw}}</button></div></div>
+							{{form_end(UserPictureUploadPictureForm)}}
+							<div id="uploadAvatarResult"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="uploadAvatar" class="modal modal-info fade in" tabindex="-1" user="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3 class="modal-title">{{'User.tlabel.admin.editPicture.crop'|trans|raw}}</h3>
+			</div>
+			<div class="modal-body">
+				<div class="progress">
+					<div id="uploadAvatarProgress" class="progress-bar progress-bar-primary progress-bar-striped" style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar"></div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-warning btn-outline" data-dismiss="modal">{{'action.btnCancel'|trans|raw}}</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="deleteConfirmUserPicture" class="modal modal-info fade in" tabindex="-1" user="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3 class="modal-title">{{'UserPicture.delete.confirm.title'|trans|raw}}</h3>
+			</div>
+			<div class="modal-body">
+				{{'UserPicture.delete.confirm.txt'|trans|raw}}
+			</div>
+			<div class="modal-footer">
+				<a href="{{ path('ilcfrance_passportstagiaire_front_user_deleteUserPicture', {'id':user.id}) }}" class="btn btn-primary danger btn-outline pull-left">{{'_yes'|trans|raw}}</a>
+				<button type="button" class="btn btn-danger btn-outline pull-right" data-dismiss="modal">{{'_no'|trans|raw}}</button>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock main %}
+{% block htmlBodyScripts %}
+{{ parent() }}
+<script type="text/javascript">
+$(function() {
+
+	$("#UserPictureUploadPictureForm_avatar").fileinput({'showUpload':false, 'previewFileType':'image', browseClass: "btn btn-success", browseLabel: " {{ 'action.btnSelect'|trans}}", browseIcon: '{{faIco('file-image-o')}}', removeClass: "btn btn-danger", removeLabel: " {{ 'action.btnCancel'|trans}}", removeIcon: '{{faIco('trash')}}'});
+	
+	var uploadAvatarProgress = $('#uploadAvatarProgress');
+	var uploadAvatarResult = $('#uploadAvatarResult');
+
+	$('#avatar_upload').ajaxForm({
+		beforeSend: function() {
+			var percentVal = 0;
+			uploadAvatarResult.empty();
+			uploadAvatarProgress.css('width', percentVal+'%').attr('aria-valuenow', percentVal);
+			$('#uploadAvatar').modal('show');
+		},
+		uploadProgress: function(event, position, total, percentComplete) {
+			uploadAvatarProgress.css('width', percentComplete+'%').attr('aria-valuenow', percentComplete);
+		},
+		complete: function(xhr) {
+			$('#uploadAvatar').modal('hide');
+			uploadAvatarResult.html(xhr.responseText);
+		}
+	});
+	
+	$('.deleteConfirmUserPicture').on("click", function(e) {
+		e.preventDefault();
+		$('#deleteConfirmUserPicture').modal('show');
+	});
+});
+</script>
+{% endblock htmlBodyScripts %}

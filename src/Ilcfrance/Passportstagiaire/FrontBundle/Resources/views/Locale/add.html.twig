@@ -1,0 +1,37 @@
+{% extends 'IlcfrancePassportstagiaireResBundle::admin.tpl.html.twig' %}
+{% block breadcrumb %}
+<ol class="breadcrumb">
+	<li><a href="{{ path('ilcfrance_passportstagiaire_front_homepage') }}">{{ faIco('dashboard') }} {{'breadcrumb.admin.dasboard'|trans|raw}}</a></li>
+	<li><a href="{{ path('ilcfrance_passportstagiaire_front_locale_list') }}">{{faIco('language')}} {{'Locale.breadcrumb.admin.list'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('ilcfrance_passportstagiaire_front_locale_addGet') }}">{{faIco('plus')}} {{'Locale.breadcrumb.admin.add'|trans()|raw}}</a></li>
+</ol>
+{% endblock breadcrumb %}
+{% block main %}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('ilcfrance_passportstagiaire_front_locale_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+		</div>
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">{{ 'Locale.tlabel.admin.add'|trans|raw}}</h3>
+			</div>
+			<div class="box-body">
+				{{form_start(LocaleAddForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_locale_addPost'), 'style': 'horizontal'})}}
+				{{form_row(LocaleAddForm.id, {'label_col': 3, 'widget_col': 8, 'attr': {'placeholder': 'Locale.id.placeholder'} })}}
+				{{form_row(LocaleAddForm.direction, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'select2', 'style': 'width:100%', 'placeholder': 'Locale.direction.placeholder' } })}}
+				{{form_row(LocaleAddForm.status, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'select2', 'style': 'width:100%', 'placeholder': 'Locale.status.placeholder'} })}}
+				<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+				{{form_end(LocaleAddForm)}}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock main %}
+{% block htmlBodyScripts %}
+{{ parent() }}
+<script type="text/javascript">
+$(function() {
+});
+</script>
+{% endblock htmlBodyScripts %}

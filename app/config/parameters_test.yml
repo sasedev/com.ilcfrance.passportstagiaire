@@ -1,0 +1,12 @@
+parameters:
+    mail_from: "system@predator.loc"
+    mail_from_name: "ILCFrance.com"
+    sitename: "Passportstagiaire.ILCFrance.com"
+    mailtos:
+        - { name: 'Salah Abdelkadeur Seif Eddine', email: 'sasedev@G3-710.predator.loc' }
+    domain: 'passportstagiaire.ilcfrance.predator.loc'
+twig:
+    globals:
+        default_locale: "%locale%"
+        sitename: "Passportstagiaire.ILCFrance.com"
+        siteauthor: "Salah Abdelkadeur Seif Eddine | SASEDev"

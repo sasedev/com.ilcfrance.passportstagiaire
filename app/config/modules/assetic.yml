@@ -1,0 +1,780 @@
+# Assetic Configuration
+assetic:
+    debug: '%kernel.debug%'
+    use_controller:
+        enabled:              '%kernel.debug%'
+        profiler:             false
+#    read_from:            '%assetic.read_from%'
+    write_to:             '%kernel.root_dir%/../web'
+    java: /usr/bin/java
+    node: /usr/bin/node
+    node_paths:
+        - "%kernel.root_dir%/../node_modules"  
+        - /usr/lib/node_modules
+        - /usr/lib/nodejs
+        - /usr/share/javascript
+    ruby: /usr/bin/ruby
+    filters:
+#        autoprefixer: ~
+        closure:
+            jar: "%kernel.root_dir%/Resources/java/compiler.jar"
+        coffee: ~
+        compass:
+            bin: /usr/local/bin/compass
+        csscachebusting: ~
+        cssembed:
+            jar: "%kernel.root_dir%/Resources/java/cssembed-0.4.5.jar"
+        cssimport: ~
+        cssmin: ~
+        cssrewrite: ~
+        dart:
+            bin: /usr/lib/dart/bin/dart2js
+        emberprecompile:
+            bin: /usr/bin/ember
+        gss:
+            jar: "%kernel.root_dir%/Resources/java/closure-stylesheets-library.jar"
+        handlebars: ~
+        jpegoptim: ~
+        jpegtran: ~
+        jsmin: ~
+        jsminplus: ~
+        jsqueeze: ~
+        less:
+            bin: "%kernel.root_dir%/../node_modules/.bin/lessc"
+        minifycsscompressor: ~
+        optipng: ~
+        packager: ~
+        packer: ~
+        phpcssembed: ~
+        pngout:
+            bin: "%kernel.root_dir%/../node_modules/.bin/pngout"
+#            bin: "%kernel.root_dir%/../bin/pngout"
+        reactjsx:
+            bin: /usr/bin/jsx
+        roole: ~
+        sass:
+            bin: "%kernel.root_dir%/../node_modules/.bin/node-sass"
+#            bin: /usr/local/bin/sass
+        scss: ~
+        sprockets:
+            lib: /usr/local/bin/sprockets
+        typescript: ~
+        uglifycss:
+            # on utilise le uglifycss installé localement
+            bin: "%kernel.root_dir%/../node_modules/.bin/uglifycss"
+        uglifyjs2:
+            # on utilise le uglifyjs installé localement
+            bin: "%kernel.root_dir%/../node_modules/.bin/uglifyjs"
+        yui_css:
+            jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.8.jar"
+        yui_js:
+            jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.8.jar"
+    bundles:
+        - SasedevSharedBundle
+        - IlcfrancePassportstagiaireResBundle
+
+    assets:
+
+
+# css
+
+        css_min_fontawesome_less:
+            inputs:
+                - '%kernel.root_dir%/../src/Ilcfrance/Passportstagiaire/ResBundle/Resources/less/font-awesome.less'
+            filters:
+                - less
+                - cssrewrite
+                - minifycsscompressor
+                - yui_css
+            combine: true
+            output: 'res/css/font-awesome.min.css'
+
+        css_min_glyphicons_less:
+            inputs:
+                - '%kernel.root_dir%/../src/Ilcfrance/Passportstagiaire/ResBundle/Resources/less/glyphicons.less'
+            filters:
+                - less
+                - cssrewrite
+                - minifycsscompressor
+                - yui_css
+            combine: true
+            output: 'res/css/glyphicons.min.css'
+
+        css_min_select2:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/select2/dist/css/select2.css'
+            filters:
+                - cssrewrite
+                - minifycsscompressor
+                - yui_css
+            combine: true
+            output: 'res/css/select2.min.css'
+
+        css_sasedevtpl_less:
+            inputs:
+                - '%kernel.root_dir%/../src/Ilcfrance/Passportstagiaire/ResBundle/Resources/less/app.less'
+            filters:
+                - less
+                - cssrewrite
+            combine: true
+            output: 'res/css/sasedevtpl.css'
+
+        css_min_sasedevtpl_less:
+            inputs:
+                - '%kernel.root_dir%/../src/Ilcfrance/Passportstagiaire/ResBundle/Resources/less/app.less'
+            filters:
+                - less
+                - cssrewrite
+                - minifycsscompressor
+                - yui_css
+            combine: true
+            output: 'res/css/sasedevtpl.min.css'
+
+        css_min_datatables_net_bs:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-bs/css/dataTables.bootstrap.css'
+            filters:
+                - cssrewrite
+                - minifycsscompressor
+                - yui_css
+            combine: true
+            output: 'res/css/dataTables.bs.min.css'
+
+        css_min_datatables_net_bs_autofill:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-autofill-bs/css/autoFill.bootstrap.css'
+            filters:
+                - cssrewrite
+                - minifycsscompressor
+                - yui_css
+            combine: true
+            output: 'res/css/dataTables.bs.autoFill.min.css'
+
+        css_min_datatables_net_bs_buttons:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-buttons-bs/css/buttons.bootstrap.css'
+            filters:
+                - cssrewrite
+                - minifycsscompressor
+                - yui_css
+            combine: true
+            output: 'res/css/dataTables.bs.buttons.min.css'
+
+        css_min_datatables_net_bs_colReorder:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-colreorder-bs/css/colReorder.bootstrap.css'
+            filters:
+                - cssrewrite
+                - minifycsscompressor
+                - yui_css
+            combine: true
+            output: 'res/css/dataTables.bs.colReorder.min.css'
+
+        css_min_datatables_net_bs_fixedHeader:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.css'
+            filters:
+                - cssrewrite
+                - minifycsscompressor
+                - yui_css
+            combine: true
+            output: 'res/css/dataTables.bs.fixedHeader.min.css'
+
+        css_min_datatables_net_bs_fixedColumns:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-fixedcolumns-bs/css/fixedColumns.bootstrap.css'
+            filters:
+                - cssrewrite
+                - minifycsscompressor
+                - yui_css
+            combine: true
+            output: 'res/css/dataTables.bs.fixedColumns.min.css'
+
+        css_min_datatables_net_bs_keyTable:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-keytable-bs/css/keyTable.bootstrap.css'
+            filters:
+                - cssrewrite
+                - minifycsscompressor
+                - yui_css
+            combine: true
+            output: 'res/css/dataTables.bs.keyTable.min.css'
+
+        css_min_datatables_net_bs_responsive:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.css'
+            filters:
+                - cssrewrite
+                - minifycsscompressor
+                - yui_css
+            combine: true
+            output: 'res/css/dataTables.bs.responsive.min.css'
+
+        css_min_datatables_net_bs_scroller:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-scroller-bs/css/scroller.bootstrap.css'
+            filters:
+                - cssrewrite
+                - minifycsscompressor
+                - yui_css
+            combine: true
+            output: 'res/css/dataTables.bs.scroller.min.css'
+
+        css_min_datatables_net_bs_select:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-select-bs/css/select.bootstrap.css'
+            filters:
+                - cssrewrite
+                - minifycsscompressor
+                - yui_css
+            combine: true
+            output: 'res/css/dataTables.bs.select.min.css'
+
+        css_min_cropper:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/cropper/dist/cropper.css'
+            filters:
+                - cssrewrite
+                - minifycsscompressor
+                - yui_css
+            combine: true
+            output: 'res/css/cropper.min.css'
+            
+
+        css_min_app:
+            inputs:
+                - '@css_min_fontawesome_less'
+                - '@css_min_glyphicons_less'
+                - '@css_min_select2'
+                - '@css_min_sasedevtpl_less'
+                - '@css_min_datatables_net_bs'
+                - '@css_min_datatables_net_bs_autofill'
+                - '@css_min_datatables_net_bs_buttons'
+                - '@css_min_datatables_net_bs_colReorder'
+                - '@css_min_datatables_net_bs_fixedHeader'
+                - '@css_min_datatables_net_bs_fixedColumns'
+                - '@css_min_datatables_net_bs_keyTable'
+                - '@css_min_datatables_net_bs_responsive'
+                - '@css_min_datatables_net_bs_scroller'
+                - '@css_min_datatables_net_bs_select'
+                - '@css_min_cropper'
+            filters:
+                - less
+                - cssrewrite
+                - minifycsscompressor
+                - yui_css
+            combine: true
+            output: 'res/css/app.min.css'
+            
+
+# js html5html5shiv + respond
+
+        js_min_html5shiv:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/html5shiv/dist/html5shiv.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/html5shiv.min.js'
+
+        js_min_respond:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/respond/src/matchmedia.polyfill.js'
+                - '%kernel.root_dir%/../web/res/bower_components/respond/src/matchmedia.addListener.js'
+                - '%kernel.root_dir%/../web/res/bower_components/respond/src/respond.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/respond.min.js'
+
+        js_min_html5respond:
+            inputs:
+                - '@js_min_html5shiv'
+                - '@js_min_respond'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/html5shiv.respond.min.js'
+
+        js_min_jquery1:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/jquery1/dist/jquery.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/jquery.v1.min.js'
+
+        js_min_jquery2:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/jquery2/dist/jquery.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/jquery.v2.min.js'
+
+        js_min_jquery3:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/jquery3/dist/jquery.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/jquery.v3.min.js'
+
+        js_min_jquery_migrate:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/jquery-migrate1/jquery-migrate.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/jquery.migrate.min.js'
+
+        js_min_jquery_migrate_v3:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/jquery-migrate3/jquery-migrate.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/jquery.migrate.v3.min.js'
+
+        js_min_hinclude:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/hinclude/hinclude.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/hinclude.min.js'
+
+        js_min_moment:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/moment/min/moment-with-locales.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/moment.min.js'
+
+        js_min_moment_timezone:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/moment-timezone/builds/moment-timezone-with-data.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/moment.timezone.min.js'
+
+        js_min_holderjs:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/holderjs/holder.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/holderjs.min.js'
+
+        js_min_jszip:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/jszip/dist/jszip.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/jszip.min.js'
+
+        js_min_pdfmake:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/pdfmake/build/pdfmake.js'
+                - '%kernel.root_dir%/../web/res/bower_components/pdfmake/build/vfs_fonts.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/pdfmake.min.js'
+
+        js_min_sortablejs:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/sortablejs/Sortable.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/sortablejs.min.js'
+
+        js_min_dompurify:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/DOMPurify/src/purify.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/dompurify.min.js'
+
+        js_min_blueimp_canvas_to_blob:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/blueimp-canvas-to-blob/js/canvas-to-blob.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/blueimp-canvas-to-blob.min.js'
+
+        js_min_jquery_easing:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/jquery.easing/js/jquery.easing.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/jquery.easing.min.js'
+
+        js_min_jqueryui:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/jqueryui/jquery-ui.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/jquery.ui.min.js'
+
+        js_min_jquery_mousewheel:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/jquery-mousewheel/jquery.mousewheel.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/jquery.mousewheel.min.js'
+
+        js_min_jquery_slimscroll:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/jquery-slimscroll/jquery.slimscroll.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/jquery.slimscroll.min.js'
+
+        js_min_jquery_color:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/jquery-color/jquery.color.js'
+                - '%kernel.root_dir%/../web/res/bower_components/jquery-color/jquery.color.svg-names.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/jquery.color.min.js'
+
+        js_min_jquery_form:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/jquery-form/src/jquery.form.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/jquery.form.min.js'
+
+        js_min_jquery_inputmask:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/jquery.inputmask/dist/jquery.inputmask.bundle.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/jquery.inputmask.min.js'
+
+        js_min_cropper:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/cropper/dist/cropper.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/jquery.cropper.min.js'
+
+        js_min_iCheck:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/iCheck/icheck.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/icheck.min.js'
+
+        js_min_select2:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/select2/dist/js/select2.full.js'
+                - '%kernel.root_dir%/../web/res/bower_components/select2/dist/js/i18n/*.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/select2.min.js'
+
+        js_min_jquery_datatables_net:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net/js/jquery.dataTables.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/dataTables.jquery.min.js'
+
+        js_min_datatables_net_autofill:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-autofill/js/dataTables.autoFill.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/dataTables.autoFill.min.js'
+
+        js_min_datatables_net_buttons:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-buttons/js/dataTables.buttons.js'
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-buttons/js/buttons.colVis.js'
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-buttons/js/buttons.flash.js'
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-buttons/js/buttons.html5.js'
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-buttons/js/buttons.print.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/dataTables.buttons.min.js'
+
+        js_min_datatables_net_colReorder:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-colreorder/js/dataTables.colReorder.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/dataTables.colReorder.min.js'
+
+        js_min_datatables_net_fixedHeader:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-fixedheader/js/dataTables.fixedHeader.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/dataTables.fixedHeader.min.js'
+
+        js_min_datatables_net_fixedColumns:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-fixedcolumns/js/dataTables.fixedColumns.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/dataTables.fixedColumns.min.js'
+
+        js_min_datatables_net_keyTable:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-keytable/js/dataTables.keyTable.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/dataTables.keyTable.min.js'
+
+        js_min_datatables_net_responsive:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-responsive/js/dataTables.responsive.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/dataTables.responsive.min.js'
+
+        js_min_datatables_net_scroller:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-scroller/js/dataTables.scroller.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/dataTables.scroller.min.js'
+
+        js_min_datatables_net_select:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-select/js/dataTables.select.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/dataTables.select.min.js'
+
+        js_min_bootstrap:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/bootstrap3/dist/js/bootstrap.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/bootstrap.min.js'
+
+        js_min_datatables_net_bs:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-bs/js/dataTables.bootstrap.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/dataTables.bs.min.js'
+
+        js_min_datatables_net_bs_autofill:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-autofill-bs/js/autoFill.bootstrap.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/dataTables.bs.autoFill.min.js'
+
+        js_min_datatables_net_bs_buttons:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-buttons-bs/js/buttons.bootstrap.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/dataTables.bs.buttons.min.js'
+
+        js_min_datatables_net_bs_responsive:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/datatables.net-responsive-bs/js/responsive.bootstrap.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/dataTables.bs.responsive.min.js'
+
+        js_min_bootstrap_colorpicker:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/bootstrap.colorpicker.min.js'
+
+        js_min_bootstrap_datetimepicker:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/bootstrap.datetimepicker.min.js'
+
+        js_min_bootstrap_duallistbox:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/bootstrap-duallistbox/src/jquery.bootstrap-duallistbox.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/bootstrap.duallistbox.min.js'
+
+        js_min_bootstrap_fileinput:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/bootstrap-fileinput/js/fileinput.js'
+                - '%kernel.root_dir%/../web/res/bower_components/bootstrap-fileinput/js/locales/*.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/bootstrap.fileinput.min.js'
+
+        js_min_bootstrap_slider:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/bootstrap.slider.min.js'
+
+        js_min_fastclick:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/fastclick/lib/fastclick.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/fastclick.min.js'
+
+        js_min_tinymce:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/tinymce/tinymce.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/tinymce.min.js'
+
+        js_min_jquery_tinymce:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/tinymce/jquery.tinymce.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/jquery.tinymce.min.js'
+
+        js_min_tinymce_i18n:
+            inputs:
+                - '%kernel.root_dir%/../web/res/bower_components/ivan-chkv.tinymce-i18n/langs/*.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/tinymce.langs.min.js'
+
+        js_min_sasedevtpl:
+            inputs:
+                - '%kernel.root_dir%/../src/Ilcfrance/Passportstagiaire/ResBundle/Resources/js/sasedevtpl.js'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/sasedevtpl.min.js'
+
+# js apps
+
+        js_min_jq_migrate_v1:
+            inputs:
+                - '@js_min_jquery1'
+                - '@js_min_jquery_migrate'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/jq.migrate.v1.min.js'
+
+        js_min_jq_migrate_v2:
+            inputs:
+                - '@js_min_jquery2'
+                - '@js_min_jquery_migrate'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/jq.migrate.v2.min.js'
+
+        js_min_jq_migrate_v3:
+            inputs:
+                - '@js_min_jquery3'
+                - '@js_min_jquery_migrate_v3'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/jq.migrate.v3.min.js'
+
+        js_min_app:
+            inputs:
+                - '@js_min_hinclude'
+                - '@js_min_moment'
+                - '@js_min_moment_timezone'
+                - '@js_min_holderjs'
+                - '@js_min_jszip'
+                - '@js_min_pdfmake'
+                - '@js_min_sortablejs'
+                - '@js_min_dompurify'
+                - '@js_min_blueimp_canvas_to_blob'
+                - '@js_min_jquery_easing'
+                - '@js_min_jqueryui'
+                - '@js_min_jquery_mousewheel'
+                - '@js_min_jquery_slimscroll'
+                - '@js_min_jquery_color'
+                - '@js_min_jquery_form'
+                - '@js_min_jquery_inputmask'
+                - '@js_min_cropper'
+                - '@js_min_iCheck'
+                - '@js_min_select2'
+                - '@js_min_bootstrap'
+                - '@js_min_jquery_datatables_net'
+                - '@js_min_datatables_net_bs'
+                - '@js_min_datatables_net_autofill'
+                - '@js_min_datatables_net_bs_autofill'
+                - '@js_min_datatables_net_buttons'
+                - '@js_min_datatables_net_bs_buttons'
+                - '@js_min_datatables_net_colReorder'
+                - '@js_min_datatables_net_fixedHeader'
+                - '@js_min_datatables_net_fixedColumns'
+                - '@js_min_datatables_net_keyTable'
+                - '@js_min_datatables_net_responsive'
+                - '@js_min_datatables_net_bs_responsive'
+                - '@js_min_datatables_net_scroller'
+                - '@js_min_datatables_net_select'
+                - '@js_min_bootstrap_colorpicker'
+                - '@js_min_bootstrap_datetimepicker'
+                - '@js_min_bootstrap_duallistbox'
+                - '@js_min_bootstrap_fileinput'
+                - '@js_min_bootstrap_slider'
+                - '@js_min_fastclick'
+                - '@js_min_tinymce'
+                - '@js_min_jquery_tinymce'
+                - '@js_min_tinymce_i18n'
+                - '@js_min_fastclick'
+                - '@js_min_sasedevtpl'
+            filters:
+                - uglifyjs2
+            combine: true
+            output: 'res/js/app.min.js'
+
+

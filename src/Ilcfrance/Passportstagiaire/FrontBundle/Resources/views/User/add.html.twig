@@ -1,0 +1,43 @@
+{% extends 'IlcfrancePassportstagiaireResBundle::admin.tpl.html.twig' %}
+{% block breadcrumb %}
+<ol class="breadcrumb">
+	<li><a href="{{ path('ilcfrance_passportstagiaire_front_homepage') }}">{{ faIco('dashboard') }} {{'breadcrumb.admin.dasboard'|trans|raw}}</a></li>
+	<li><a href="{{ path('ilcfrance_passportstagiaire_front_user_list') }}">{{faIco('users')}} {{'User.breadcrumb.admin.list'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('ilcfrance_passportstagiaire_front_user_addGet') }}">{{faIco('plus')}} {{'User.breadcrumb.admin.add'|trans()|raw}}</a></li>
+</ol>
+{% endblock breadcrumb %}
+{% block main %}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('ilcfrance_passportstagiaire_front_user_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+		</div>
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">{{ 'User.tlabel.admin.add'|trans|raw}}</h3>
+			</div>
+			<div class="box-body">
+				{{form_start(UserAddForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_user_addPost'), 'style': 'horizontal'})}}
+				{{form_row(UserAddForm.id, {'label_col': 3, 'widget_col': 8, 'attr': {'placeholder': 'User.id.placeholder'} })}}
+				{{form_row(UserAddForm.clearPassword, {'label_col': 3, 'widget_col': 8, 'attr': {'placeholder': 'User.clearPassword.placeholder'} })}}
+				{{form_row(UserAddForm.email, {'label_col': 3, 'widget_col': 8, 'attr': {'placeholder': 'User.email.placeholder'} })}}
+				{{form_row(UserAddForm.sexe, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'select2', 'style': 'width:100%', 'placeholder': 'User.sexe.placeholder'} })}}
+				{{form_row(UserAddForm.lastName, {'label_col': 3, 'widget_col': 8, 'attr': {'placeholder': 'User.lastName.placeholder'} })}}
+				{{form_row(UserAddForm.firstName, {'label_col': 3, 'widget_col': 8, 'attr': {'placeholder': 'User.firstName.placeholder'} })}}
+				{{form_row(UserAddForm.locale, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'select2', 'style': 'width:100%', 'placeholder': 'User.locale.placeholder'} })}}
+				{{form_row(UserAddForm.lockout, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'select2', 'style': 'width:100%', 'placeholder': 'User.lockout.placeholder'} })}}
+				{{form_row(UserAddForm.userRoles, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'duallistbox', 'placeholder': 'User.userRoles.placeholder'} })}}
+				<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+				{{form_end(UserAddForm)}}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock main %}
+{% block htmlBodyScripts %}
+{{ parent() }}
+<script type="text/javascript">
+$(function() {
+});
+</script>
+{% endblock htmlBodyScripts %}

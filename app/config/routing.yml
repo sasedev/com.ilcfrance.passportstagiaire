@@ -1,0 +1,11 @@
+ilcfrance_passportstagiaire_security:
+    resource: "@IlcfrancePassportstagiaireSecurityBundle/Resources/config/routing.yml"
+    prefix:   /
+
+ilcfrance_passportstagiaire_front:
+    resource: "@IlcfrancePassportstagiaireFrontBundle/Resources/config/routing.yml"
+    prefix:   /
+
+ilcfrance_passportstagiaire_res:
+    resource: "@IlcfrancePassportstagiaireResBundle/Resources/config/routing.yml"
+    prefix:   /

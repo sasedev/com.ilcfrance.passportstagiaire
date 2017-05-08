@@ -1,0 +1,125 @@
+{% extends 'IlcfrancePassportstagiaireResBundle::admin.tpl.html.twig' %}
+{% block breadcrumb %}
+<ol class="breadcrumb">
+	<li><a href="{{ path('ilcfrance_passportstagiaire_front_homepage') }}">{{ faIco('dashboard') }} {{'breadcrumb.admin.dasboard'|trans|raw}}</a></li>
+	<li><a href="{{ path('ilcfrance_passportstagiaire_front_role_list') }}">{{faIco('flash')}} {{'Role.breadcrumb.admin.list'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('ilcfrance_passportstagiaire_front_role_editGet', {'id': role.id}) }}">{{faIco('edit')}} {{'Role.breadcrumb.admin.edit'|trans({'%role%': role.id})|raw}}</a></li>
+</ol>
+{% endblock breadcrumb %}
+{% block main %}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('ilcfrance_passportstagiaire_front_role_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+			<a href="{{ path('ilcfrance_passportstagiaire_front_role_addGet') }}" class="btn btn-primary">{{ faIco('plus') }} {{ 'action.add'|trans }}</a>
+		</div>
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'Role.tab.admin.overview'|trans|raw}}</a></li>
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'Role.tab.admin.edit'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'Role.tlabel.admin.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'Role.id'|trans|raw}} :</div>
+								<div class="col-lg-9">{{role.id}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Role.description'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if role.description is not empty%}{{role.description|raw}}{%else%}{{bsLabelWarning('_NA'|trans)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Role.parents'|trans|raw}} :</div>
+								<div class="col-lg-9">
+									{%if role.parents|length!=0%}
+									<ul class="list-unstyled">
+									{% for r in role.parents %}
+										<li><a href="{{path('ilcfrance_passportstagiaire_front_role_editGet', {'id': r.id})}}">{{r.id}}</a></li>
+									{% endfor %}
+									</ul>
+									{%else%}
+									{{bsLabelWarning('_NONE'|trans)}}
+									{%endif%}&nbsp;
+								</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Role.childs'|trans|raw}} :</div>
+								<div class="col-lg-9">
+									{%if role.childs|length!=0%}
+									<ul class="list-unstyled">
+									{% for r in role.childs %}
+										<li><a href="{{path('ilcfrance_passportstagiaire_front_role_editGet', {'id': r.id})}}">{{r.id}}</a></li>
+									{% endfor %}
+									</ul>
+									{%else%}
+									{{bsLabelWarning('_NONE'|trans)}}
+									{%endif%}&nbsp;
+								</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Role.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{role.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{role.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Role.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{role.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{role.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Role.tlabel.admin.editId'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(RoleUpdateIdForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_role_editPost', {'id': role.id}), 'style': 'horizontal'})}}
+							{{form_row(RoleUpdateIdForm.id, {'label_col': 3, 'widget_col': 8 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(RoleUpdateIdForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Role.tlabel.admin.editDescription'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(RoleUpdateDescriptionForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_role_editPost', {'id': role.id}), 'style': 'horizontal'})}}
+							{{form_row(RoleUpdateDescriptionForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(RoleUpdateDescriptionForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Role.tlabel.admin.editParents'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(RoleUpdateParentsForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_role_editPost', {'id': role.id}), 'style': 'horizontal'})}}
+							{{form_row(RoleUpdateParentsForm.parents, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'duallistbox'} })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(RoleUpdateParentsForm)}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock main %}
+{% block htmlBodyScripts %}
+{{ parent() }}
+<script type="text/javascript">
+$(function() {
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			theme: "modern",
+			content_css : '{{ absolute_url(asset('/res/css/app.min.css')) }}',
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			language : '{{ (app.request.locale~'_tinymce')|trans }}',
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+});
+</script>
+{% endblock htmlBodyScripts %}

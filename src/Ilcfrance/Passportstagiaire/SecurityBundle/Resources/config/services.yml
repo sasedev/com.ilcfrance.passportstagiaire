@@ -1,0 +1,27 @@
+parameters:
+    ilcfrance_passportstagiaire_security.role_hierarchy.role_manager.role_class: Ilcfrance\Passportstagiaire\DataBundle\Entity\Role
+    ilcfrance_passportstagiaire_security.role_hierarchy.role_manager.default.class: Ilcfrance\Passportstagiaire\SecurityBundle\Security\RoleManager
+    ilcfrance_passportstagiaire_security.role_hierarchy.class: Ilcfrance\Passportstagiaire\SecurityBundle\Security\RoleHierarchy
+    ilcfrance_passportstagiaire_security.login_success.class: Ilcfrance\Passportstagiaire\SecurityBundle\Listener\LoginSuccess
+    ilcfrance_passportstagiaire_security.users_activity.class: Ilcfrance\Passportstagiaire\SecurityBundle\Listener\UsersActivityListener
+
+services:
+    ilcfrance_passportstagiaire_security.role_hierarchy.role_manager.default:
+        class: "%ilcfrance_passportstagiaire_security.role_hierarchy.role_manager.default.class%"
+        arguments: ["@doctrine", "%ilcfrance_passportstagiaire_security.role_hierarchy.role_manager.role_class%"]
+
+    security.role_hierarchy:
+        class: "%ilcfrance_passportstagiaire_security.role_hierarchy.class%"
+        arguments: ['@ilcfrance_passportstagiaire_security.role_hierarchy.role_manager.default', "%ilcfrance_passportstagiaire_security.role_hierarchy.role_manager.role_class%"]
+
+    ilcfrance_passportstagiaire_security.login_success:
+        class: "%ilcfrance_passportstagiaire_security.login_success.class%"
+        arguments: ["@doctrine"]
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login, method: onLogin }
+
+    ilcfrance_passportstagiaire_security.users_activity:
+        class: "%ilcfrance_passportstagiaire_security.users_activity.class%"
+        arguments: ["@security.token_storage", "@doctrine"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }

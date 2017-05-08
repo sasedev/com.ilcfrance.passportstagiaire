@@ -1,0 +1,12 @@
+parameters:
+    mail_from:                 "system@ilcfrance.com"
+    mail_from_name:            "ILCFrance.com"
+    sitename:                  "Passportstagiaire.ILCFrance.com"
+    mailtos:
+        - { name: 'Salah Abdelkadeur Seif Eddine', email: 'seif.salah@gmail.com' }
+        - { name: 'Léa Paolini', email: 'lea.paolini@ilcfrance.com' }
+twig:
+    globals:
+        default_locale: "%locale%"
+        sitename: "Passportstagiaire.ILCFrance.com"
+        siteauthor: "Salah Abdelkadeur Seif Eddine | SASEDev"

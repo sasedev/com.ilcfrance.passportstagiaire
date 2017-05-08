@@ -1,0 +1,113 @@
+{% extends 'IlcfrancePassportstagiaireResBundle::admin.tpl.html.twig' %}
+{% block breadcrumb %}
+<ol class="breadcrumb">
+	<li><a href="{{ path('ilcfrance_passportstagiaire_front_homepage') }}">{{ faIco('dashboard') }} {{'breadcrumb.admin.dasboard'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('ilcfrance_passportstagiaire_front_trainee_list') }}">{{faIco('user-circle')}} {{'Trainee.breadcrumb.admin.list'|trans|raw}}</a></li>
+</ol>
+{% endblock breadcrumb %}
+{% block main %}
+<div class="row">
+	<div class="col-lg-12">
+		{% if is_granted('ROLE_ADMIN') %}
+		<div class="well well-sm text-right">
+			<a href="{{ path('ilcfrance_passportstagiaire_front_trainee_export') }}" class="btn btn-primary">{{ faIco('file-excel-o') }} {{ 'action.excel'|trans }}</a>
+			<a href="{{ path('ilcfrance_passportstagiaire_front_trainee_importGet') }}" class="btn btn-primary">{{ faIco('file-excel-o') }} {{ 'action.btnExcel'|trans }}</a>
+			<a href="{{ path('ilcfrance_passportstagiaire_front_trainee_addGet') }}" class="btn btn-primary">{{ faIco('plus') }} {{ 'action.add'|trans }}</a>
+		</div>
+		{% endif %}
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">{{ 'Trainee.tlabel.admin.list'|trans|raw}}</h3>
+			</div>
+			<div class="box-body table-responsive">
+				<table id="traineeList" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>{{ 'Trainee.lastName.label'|trans|raw }}</th>
+							<th>{{ 'Trainee.firstName.label'|trans|raw }}</th>
+							<th>{{ 'Trainee.level.label'|trans|raw }}</th>
+							<th>{{ 'Trainee.records.label'|trans|raw }}</th>
+							<th>{{ 'Trainee.origine.label'|trans|raw }}</th>
+							<th>{{ 'table.actions'|trans|raw }}</th>
+						</tr>
+					</thead>
+					<tbody>
+					{% if trainees|length != 0 %}
+						{% for trainee in trainees %}
+						<tr>
+							<td>{{ trainee.lastName }} </td>
+							<td>{{ trainee.firstName }} </td>
+							<td>{% if trainee.level is not empty %}{{ trainee.level }}{% else %}{{ bsLabel('_NA'|trans)}}{% endif %}</td>
+							<td>
+								{{bsLabel(trainee.records|length)}}
+							</td>
+							<td>{{ trainee.origine }} </td>
+							<td>
+								<a class="btn btn-sm btn-info" href="{{path('ilcfrance_passportstagiaire_front_trainee_editGet',{'id':trainee.id})}}">{{ faIco('edit') }} {{ 'action.edit'|trans }}</a>
+								{% if is_granted('ROLE_ADMIN') %}<a class="btn btn-sm btn-danger deleteConfirmTrainee" href="{{path('ilcfrance_passportstagiaire_front_trainee_delete',{'id':trainee.id})}}">{{ faIco('trash') }} {{ 'action.delete'|trans }}</a>{% endif %}
+							</td>
+						</tr>
+						{% endfor %}
+					{% else %}
+						<tr>
+							<td colspan="6">{{ 'Trainee.empty'|trans|raw }}</td>
+						</tr>
+					{% endif %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{% if is_granted('ROLE_ADMIN') %}
+<div id="deleteConfirmTrainee" class="modal modal-info fade in" tabindex="-1" trainee="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3 class="modal-title">{{'Trainee.delete.confirm.title'|trans|raw}}</h3>
+			</div>
+			<div class="modal-body">
+				{{'Trainee.delete.confirm.txt'|trans|raw}}
+			</div>
+			<div class="modal-footer">
+				<a href="" class="btn btn-primary danger btn-outline pull-left">{{'_yes'|trans|raw}}</a>
+				<button type="button" class="btn btn-danger btn-outline pull-right" data-dismiss="modal">{{'_no'|trans|raw}}</button>
+			</div>
+		</div>
+	</div>
+</div>
+{%  endif %}
+{% endblock main %}
+{% block htmlBodyScripts %}
+{{ parent() }}
+<script type="text/javascript">
+$(function() {
+	{% if trainees|length != 0 %}
+	$('#traineeList').DataTable({
+		"language": {
+			"url": "{{ asset('/res/js/dataTablesI18N/')~(app.request.locale~'_datatables')|trans }}"
+		},
+		"columns": [
+			null,
+			null,
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"pageLength": 10{% if is_granted('ROLE_ADMIN') %},
+		fnDrawCallback : function() {
+			$('.deleteConfirmTrainee').on("click", function(e) {
+				e.preventDefault();
+				var lnk = $(this).attr('href');
+				modalDeleteBtn = $('#deleteConfirmTrainee').find('.danger');
+				modalDeleteBtn.attr('href', lnk);
+				$('#deleteConfirmTrainee').modal('show');
+			});
+		}{%  endif %}
+	});
+	{% endif %}
+});
+</script>
+{% endblock htmlBodyScripts %}

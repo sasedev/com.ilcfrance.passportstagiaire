@@ -1,0 +1,119 @@
+{% extends 'IlcfrancePassportstagiaireResBundle::admin.tpl.html.twig' %}
+{% block breadcrumb %}
+<ol class="breadcrumb">
+	<li><a href="{{ path('ilcfrance_passportstagiaire_front_homepage') }}">{{ faIco('dashboard') }} {{'breadcrumb.admin.dasboard'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('ilcfrance_passportstagiaire_program_list') }}">{{faIco('file')}} {{'Program.breadcrumb.admin.list'|trans|raw}}</a></li>
+</ol>
+{% endblock breadcrumb %}
+{% block main %}
+<div class="row">
+	<div class="col-lg-12">
+		{% if is_granted('ROLE_ADMIN') %}
+		<div class="well well-sm text-right">
+			<a href="{{ path('ilcfrance_passportstagiaire_program_addGet') }}" class="btn btn-primary">{{ faIco('plus') }} {{ 'action.add'|trans }}</a>
+		</div>
+		{% endif %}
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">{{ 'Program.tlabel.admin.list'|trans|raw}}</h3>
+			</div>
+			<div class="box-body table-responsive">
+				<table id="programList" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>{{ 'Program.originalName.label'|trans|raw }}</th>
+							<th>{{ 'Program.description.label'|trans|raw }}</th>
+							<th>{{ 'Program.mimeType.label'|trans|raw }}</th>
+							<th>{{ 'Program.size.label'|trans|raw }}</th>
+							<th>{{ 'table.actions'|trans|raw }}</th>
+						</tr>
+					</thead>
+					<tbody>
+					{% if programs|length != 0 %}
+						{% for program in programs %}
+						<tr>
+							<td>{{ program.originalName }} </td>
+							<td>{{ program.description|raw }}</td>
+							<td>{{ program.mimeType }} </td>
+							<td>
+								{%if program.size<1024%}
+									{{program.size}} o
+								{%elseif program.size<(1024*1024)%}
+									{{'%.2f'|format(program.size/1024)}} Ko
+								{%elseif program.size<(1024*1024*1024)%}
+									{{'%.2f'|format(program.size/1024/1024)}} Mo
+								{%else%}
+									{{'%.2f'|format(program.size/1024/1024/1024)}} Go
+								{% endif %}
+							</td>
+							<td>
+								<a class="btn btn-sm btn-success" href="{{path('ilcfrance_passportstagiaire_program_download',{'id':program.id})}}">{{ faIco('edit') }} {{ 'action.btnDownload'|trans }}</a>
+								{% if is_granted('ROLE_ADMIN') %}
+								<a class="btn btn-sm btn-info" href="{{path('ilcfrance_passportstagiaire_program_editGet',{'id':program.id})}}">{{ faIco('edit') }} {{ 'action.edit'|trans }}</a>
+								<a class="btn btn-sm btn-danger deleteConfirmProgram" href="{{path('ilcfrance_passportstagiaire_program_delete',{'id':program.id})}}">{{ faIco('trash') }} {{ 'action.delete'|trans }}</a>
+								{% endif %}
+							</td>
+						</tr>
+						{% endfor %}
+					{% else %}
+						<tr>
+							<td colspan="5">{{ 'Program.empty'|trans|raw }}</td>
+						</tr>
+					{% endif %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{% if is_granted('ROLE_ADMIN') %}
+<div id="deleteConfirmProgram" class="modal modal-info fade in" tabindex="-1" program="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3 class="modal-title">{{'Program.delete.confirm.title'|trans|raw}}</h3>
+			</div>
+			<div class="modal-body">
+				{{'Program.delete.confirm.txt'|trans|raw}}
+			</div>
+			<div class="modal-footer">
+				<a href="" class="btn btn-primary danger btn-outline pull-left">{{'_yes'|trans|raw}}</a>
+				<button type="button" class="btn btn-danger btn-outline pull-right" data-dismiss="modal">{{'_no'|trans|raw}}</button>
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+{% endblock main %}
+{% block htmlBodyScripts %}
+{{ parent() }}
+<script type="text/javascript">
+$(function() {
+	{% if programs|length != 0 %}
+	$('#programList').DataTable({
+		"language": {
+			"url": "{{ asset('/res/js/dataTablesI18N/')~(app.request.locale~'_datatables')|trans }}"
+		},
+		"columns": [
+			null,
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"pageLength": 10{% if is_granted('ROLE_ADMIN') %},
+		fnDrawCallback : function() {
+			$('.deleteConfirmProgram').on("click", function(e) {
+				e.preventDefault();
+				var lnk = $(this).attr('href');
+				modalDeleteBtn = $('#deleteConfirmProgram').find('.danger');
+				modalDeleteBtn.attr('href', lnk);
+				$('#deleteConfirmProgram').modal('show');
+			});
+		}{% endif %}
+	});
+	{% endif %}
+});
+</script>
+{% endblock htmlBodyScripts %}

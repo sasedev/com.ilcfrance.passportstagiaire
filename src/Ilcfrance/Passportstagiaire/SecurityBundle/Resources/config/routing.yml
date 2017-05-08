@@ -1,0 +1,37 @@
+_security_logout:
+    path:  /logout
+
+_security_login:
+    path:     /login
+    defaults: { _controller: "IlcfrancePassportstagiaireSecurityBundle:Login:login" }
+
+_security_check:
+    path:  /login_check
+    methods: [POST]
+
+_security_lost_id:
+    path:  /lostId
+    defaults: { _controller: "IlcfrancePassportstagiaireSecurityBundle:Lost:id" }
+
+_security_lost_password:
+    path:  /lostPassword
+    defaults: { _controller: "IlcfrancePassportstagiaireSecurityBundle:Lost:password" }
+
+_security_lost_genpassword:
+    path:  /generateNewPassword/{id}/{code}
+    defaults: { _controller: "IlcfrancePassportstagiaireSecurityBundle:Lost:newpassword" }
+
+_security_myProfileGet:
+    path:     /myProfile
+    defaults: { _controller: "IlcfrancePassportstagiaireSecurityBundle:Profile:get" }
+    methods: [GET]
+
+_security_myProfilePost:
+    path:     /myProfile
+    defaults: { _controller: "IlcfrancePassportstagiaireSecurityBundle:Profile:post" }
+    methods: [POST]
+
+_security_myProfileDeletPic:
+    path:     /myProfileDeleteAvatar
+    defaults: { _controller: "IlcfrancePassportstagiaireSecurityBundle:Profile:deleteAvatar" }
+    methods: [GET]

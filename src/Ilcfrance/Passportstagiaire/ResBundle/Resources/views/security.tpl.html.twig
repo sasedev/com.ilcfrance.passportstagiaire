@@ -1,0 +1,93 @@
+{% extends 'SasedevSharedBundle::basehtml.tpl.twig' %}
+{%if menu_active is not defined%}
+{%set menu_active=''%}
+{%endif%}
+{%if smenu_active is not defined%}
+{%set smenu_active=''%}
+{%endif%}
+{%if tabActive is not defined%}
+{%set tabActive=1%}
+{%endif%}
+{%if admmenu_active is not defined%}
+{%set admmenu_active=''%}
+{%endif%}
+{%if sadmmenu_active is not defined%}
+{%set sadmmenu_active=''%}
+{%endif%}
+{% block htmlHeadMetas %}
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+	<meta name="author" content="{{ siteauthor }}">
+	<meta name="description" content="{{ sitename }}">
+{{ parent() }}
+{% endblock htmlHeadMetas %}
+{% block htmlHeadLinks %}
+{{ parent() }}
+	<link rel="icon" type="image/x-icon" href="{{ absolute_url(asset('/favicon.ico')) }}">
+	<link href="{{ absolute_url(asset('/res/css/app.min.css')) }}" rel="stylesheet" media="all">
+{% endblock htmlHeadLinks %}
+{% block htmlHeadScripts %}
+{{ parent() }}
+	<!--[if lt IE 9]><!-->
+	<script src="{{ absolute_url(asset('/res/js/html5shiv.respond.min.js')) }}"></script>
+	<!--<![endif]-->
+	<script src="{{ absolute_url(asset('/res/js/jq.migrate.v1.min.js')) }}"></script>
+{% endblock htmlHeadScripts %}
+{% block htmlBodyAttributes %}class="security-page"{% endblock htmlBodyAttributes %}
+{% block htmlBodyContent %}
+{{ parent() }}
+		<div class="wrapper fixed-top fixed bottom">
+			{% block mainheader %}
+			<header class="main-header">
+				<nav class="navbar navbar-fixed-top">
+					<div class="container-fluid">
+						<div class="navbar-header">
+							<a href="{{ path('ilcfrance_passportstagiaire_front_homepage') }}" class="logo">
+								<img alt="{{ sitename }}" src="{{asset('/res/images/logo.png')}}" class="img-responsive" />
+							</a>
+							<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#navbar-collapse">
+								<i class="fa fa-bars"></i>
+							</button>
+						</div>
+						{% block topmenu %}
+						{% block topmenuLeft %}
+						{{ include('IlcfrancePassportstagiaireResBundle:Menu:top.left.html.twig', { 'menu_active': menu_active, 'smenu_active': smenu_active, 'admmenu_active': admmenu_active, 'sadmmenu_active': sadmmenu_active, 'tabActive': tabActive })}}
+						{% endblock topmenuLeft %}
+						{% block topmenuRight %}
+						{{ include('IlcfrancePassportstagiaireResBundle:Menu:top.right.html.twig', { 'menu_active': menu_active, 'smenu_active': smenu_active, 'admmenu_active': admmenu_active, 'sadmmenu_active': sadmmenu_active, 'tabActive': tabActive })}}
+						{% endblock topmenuRight %}
+						{% endblock topmenu %}
+					</div>
+				</nav>
+			</header>
+			{% endblock mainheader %}
+			<div class="content-wrapper">
+				<section class="content">
+					<div class="security-box">
+						<div class="security-logo">
+							<a href="{{ path('ilcfrance_passportstagiaire_front_homepage') }}" class="logo"><img alt="{{ sitename }}" src="/res/images/logo.png" class="img-responsive"></a>
+						</div>
+						<div class="security-box-body">
+							<p class="login-box-msg">{% if pageTitle is defined %}{{ pageTitle|raw }}{% else %}Security Page{% endif %}</p>
+							{{ include('SasedevSharedBundle::flash.html.twig', { 'close': true })}}
+							{% block main %}{% endblock main %}
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+		{% block mainfooter %}
+		<footer class="site-footer-fixed">
+			<div class="footer-copyright">
+				<div class="container-fluid">
+					<strong>Copyright &copy; {{ 'now'|date('Y') }} <a href="http://ilcfrance.com">ILCFrance.com</a>.</strong> All rights reserved.
+				</div>
+			</div>
+		</footer>
+		{% endblock mainfooter %}
+{% endblock htmlBodyContent %}
+{% block htmlBodyScripts %}
+{{ parent() }}
+<script src="{{ absolute_url(asset('/res/js/app.min.js')) }}"></script>
+{% endblock htmlBodyScripts %}

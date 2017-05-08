@@ -1,0 +1,242 @@
+{% extends 'IlcfrancePassportstagiaireResBundle::admin.tpl.html.twig' %}
+{% block breadcrumb %}
+<ol class="breadcrumb">
+	<li><a href="{{ path('ilcfrance_passportstagiaire_front_homepage') }}">{{ faIco('dashboard') }} {{'breadcrumb.admin.dasboard'|trans|raw}}</a></li>
+	<li><a href="{{ path('ilcfrance_passportstagiaire_front_trainee_list') }}">{{faIco('user-circle')}} {{'Trainee.breadcrumb.admin.list'|trans|raw}}</a></li>
+	<li><a href="{{ path('ilcfrance_passportstagiaire_front_trainee_editGet', {'id': traineeRecord.trainee.id}) }}">{{faIco('edit')}} {{'Trainee.breadcrumb.admin.edit'|trans({'%trainee%': traineeRecord.trainee.fullName})|raw}}</a></li>
+	<li class="active"><a href="{{ path('ilcfrance_passportstagiaire_front_trainee_record_editGet', {'id': traineeRecord.id}) }}">{{faIco('edit')}} {{'TraineeRecord.breadcrumb.admin.edit'|trans({'%trainee%': traineeRecord.trainee.fullName, '%dtStart%':traineeRecord.recordDate|localeDate('medium'),'%hStart%':traineeRecord.recordDate|localeDate('none', 'short') })|raw}}</a></li>
+</ol>
+{% endblock breadcrumb %}
+{% block main %}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('ilcfrance_passportstagiaire_front_trainee_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+			<a href="{{ path('ilcfrance_passportstagiaire_front_trainee_addGet') }}" class="btn btn-primary">{{ faIco('plus') }} {{ 'action.add'|trans }}</a>
+		</div>
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'TraineeRecord.tab.admin.overview'|trans|raw}}</a></li>
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'TraineeRecord.tab.admin.edit'|trans|raw}}</a></li>
+				<li {%if tabActive==3%} class="active"{%endif%}><a href="#docs" data-toggle="tab">{{'TraineeRecord.tab.admin.docs'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'Trainee.tlabel.admin.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'TraineeRecord.trainee'|trans|raw}} :</div>
+								<div class="col-lg-9">{{traineeRecord.trainee.fullName}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'TraineeRecord.teacher'|trans|raw}} :</div>
+								<div class="col-lg-9">{{traineeRecord.teacherName}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'TraineeRecord.recordDate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{traineeRecord.recordDate|localeDate('medium')}} {{'_at'|trans}} {{traineeRecord.recordDate|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'TraineeRecord.worksCovered'|trans|raw}} :</div>
+								<div class="col-lg-9">{{traineeRecord.worksCovered|raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'TraineeRecord.takeaways'|trans|raw}} :</div>
+								<div class="col-lg-9">{{traineeRecord.takeaways|raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'TraineeRecord.comments'|trans|raw}} :</div>
+								<div class="col-lg-9">{{traineeRecord.comments|raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'TraineeRecord.homeworks'|trans|raw}} :</div>
+								<div class="col-lg-9">{{traineeRecord.homeworks|raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Trainee.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{traineeRecord.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{traineeRecord.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Trainee.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{traineeRecord.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{traineeRecord.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'TraineeRecord.tlabel.admin.editRecordDate'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(TraineeRecordUpdateRecordDateForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_record_editPost', {'id': traineeRecord.id}), 'style': 'horizontal'})}}
+							{{form_row(TraineeRecordUpdateRecordDateForm.recordDate, {'label_col': 3, 'widget_col': 8, 'widget_col': 8, 'attr': {'class': 'datetimepicker'} })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(TraineeRecordUpdateRecordDateForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'TraineeRecord.tlabel.admin.editWorksCovered'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(TraineeRecordUpdateWorksCoveredForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_record_editPost', {'id': traineeRecord.id}), 'style': 'horizontal'})}}
+							{{form_row(TraineeRecordUpdateWorksCoveredForm.worksCovered, {'label_col': 3, 'widget_col': 8, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(TraineeRecordUpdateWorksCoveredForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'TraineeRecord.tlabel.admin.editTakeaways'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(TraineeRecordUpdateTakeawaysForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_record_editPost', {'id': traineeRecord.id}), 'style': 'horizontal'})}}
+							{{form_row(TraineeRecordUpdateTakeawaysForm.takeaways, {'label_col': 3, 'widget_col': 8, 'widget_col': 8 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(TraineeRecordUpdateTakeawaysForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'TraineeRecord.tlabel.admin.editComments'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(TraineeRecordUpdateCommentsForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_record_editPost', {'id': traineeRecord.id}), 'style': 'horizontal'})}}
+							{{form_row(TraineeRecordUpdateCommentsForm.comments, {'label_col': 3, 'widget_col': 8, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(TraineeRecordUpdateCommentsForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'TraineeRecord.tlabel.admin.editHomeworks'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(TraineeRecordUpdateHomeworksForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_record_editPost', {'id': traineeRecord.id}), 'style': 'horizontal'})}}
+							{{form_row(TraineeRecordUpdateHomeworksForm.homeworks, {'label_col': 3, 'widget_col': 8, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(TraineeRecordUpdateHomeworksForm)}}
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==3%} in active{%endif%}" id="docs">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'TraineeRecord.tlabel.admin.addDoc'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(TraineeRecordDocumentAddForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_record_editPost', {'id': traineeRecord.id}), 'style': 'horizontal'})}}
+							{{form_row(TraineeRecordDocumentAddForm.file, {'label_col': 3, 'widget_col': 8, 'attr': {'placeholder': 'Document.fileName.placeholder'} })}}
+							{{form_row(TraineeRecordDocumentAddForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+							{{form_end(TraineeRecordDocumentAddForm)}}
+						</div>
+					</div>
+					<div class="panel box box">
+						<div class="box-header">
+							<h3 class="box-title">{{ 'TraineeRecordDocument.tlabel.admin.list'|trans|raw}}</h3>
+						</div>
+						<div class="box-body table-responsive">
+							<table id="docList" class="table table-bordered table-hover">
+								<thead>
+									<tr>
+										<th>{{ 'TraineeRecordDocument.originalName.label'|trans|raw }}</th>
+										<th>{{ 'TraineeRecordDocument.description.label'|trans|raw }}</th>
+										<th>{{ 'TraineeRecordDocument.mimeType.label'|trans|raw }}</th>
+										<th>{{ 'TraineeRecordDocument.size.label'|trans|raw }}</th>
+										<th>{{ 'table.actions'|trans|raw }}</th>
+									</tr>
+								</thead>
+								<tbody>
+								{% if traineeRecord.docs|length != 0 %}
+									{% for doc in traineeRecord.docs %}
+									<tr>
+										<td>{{ doc.originalName }} </td>
+										<td>{{ doc.description|raw }}</td>
+										<td>{{ doc.mimeType }} </td>
+										<td>
+											{%if doc.size<1024%}
+												{{doc.size}} o
+											{%elseif doc.size<(1024*1024)%}
+												{{'%.2f'|format(doc.size/1024)}} Ko
+											{%elseif doc.size<(1024*1024*1024)%}
+												{{'%.2f'|format(doc.size/1024/1024)}} Mo
+											{%else%}
+												{{'%.2f'|format(doc.size/1024/1024/1024)}} Go
+											{% endif %}
+										</td>
+										<td>
+											<a class="btn btn-sm btn-success" href="{{path('ilcfrance_passportstagiaire_front_trainee_record_document_download',{'id':doc.id})}}">{{ faIco('edit') }} {{ 'action.btnDownload'|trans }}</a>
+											{% if is_granted('ROLE_ADMIN') or app.user.id == traineeRecord.teacher.id %}
+											<a class="btn btn-sm btn-info" href="{{path('ilcfrance_passportstagiaire_front_trainee_record_document_editGet',{'id':doc.id})}}">{{ faIco('edit') }} {{ 'action.edit'|trans }}</a>
+											<a class="btn btn-sm btn-danger deleteConfirmDoc" href="{{path('ilcfrance_passportstagiaire_front_trainee_record_document_delete',{'id':doc.id})}}">{{ faIco('trash') }} {{ 'action.delete'|trans }}</a>
+											{% endif %}
+										</td>
+									</tr>
+									{% endfor %}
+								{% else %}
+									<tr>
+										<td colspan="5">{{ 'TraineeRecordDocument.empty'|trans|raw }}</td>
+									</tr>
+								{% endif %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% if is_granted('ROLE_ADMIN') or app.user.id == traineeRecord.teacher.id %}
+<div id="deleteConfirmDoc" class="modal modal-info fade in" tabindex="-1" doc="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3 class="modal-title">{{'TraineeRecordDocument.delete.confirm.title'|trans|raw}}</h3>
+			</div>
+			<div class="modal-body">
+				{{'TraineeRecordDocument.delete.confirm.txt'|trans|raw}}
+			</div>
+			<div class="modal-footer">
+				<a href="" class="btn btn-primary danger btn-outline pull-left">{{'_yes'|trans|raw}}</a>
+				<button type="button" class="btn btn-danger btn-outline pull-right" data-dismiss="modal">{{'_no'|trans|raw}}</button>
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+{% endblock main %}
+{% block htmlBodyScripts %}
+{{ parent() }}
+<script type="text/javascript">
+$(function() {
+	{% if traineeRecord.docs|length != 0 %}
+	$('#docList').DataTable({
+		"language": {
+			"url": "{{ asset('/res/js/dataTablesI18N/')~(app.request.locale~'_datatables')|trans }}"
+		},
+		"columns": [
+			null,
+			null,
+			null,
+			null,
+			{ "searchable": false, "sortable": false }
+		],
+		"pageLength": 10{% if is_granted('ROLE_ADMIN') %},
+		fnDrawCallback : function() {
+			$('.deleteConfirmDoc').on("click", function(e) {
+				e.preventDefault();
+				var lnk = $(this).attr('href');
+				modalDeleteBtn = $('#deleteConfirmDoc').find('.danger');
+				modalDeleteBtn.attr('href', lnk);
+				$('#deleteConfirmDoc').modal('show');
+			});
+		}{% endif %}
+	});
+	{% endif %}
+
+	$("#TraineeRecordDocumentAddForm_file").fileinput({'showUpload':false, 'previewFileType':'image', browseClass: "btn btn-success", browseLabel: " {{ 'action.btnSelect'|trans}}", browseIcon: '{{faIco('file')}}', removeClass: "btn btn-danger", removeLabel: " {{ 'action.btnCancel'|trans}}", removeIcon: '{{faIco('trash')}}'});
+	
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			theme: "modern",
+			content_css : '{{ absolute_url(asset('/res/css/app.min.css')) }}',
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			language : '{{ (app.request.locale~'_tinymce')|trans }}',
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+});
+</script>
+{% endblock htmlBodyScripts %}

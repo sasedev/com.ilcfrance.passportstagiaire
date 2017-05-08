@@ -1,0 +1,293 @@
+ilcfrance_passportstagiaire_front_homepage:
+    path:     /
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Default:index" }
+
+ilcfrance_passportstagiaire_front_locale_list:
+    path:     /locales
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Locale:list" }
+
+ilcfrance_passportstagiaire_front_locale_addGet:
+    path:     /locale/add
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Locale:addGet" }
+    methods: [GET]
+
+ilcfrance_passportstagiaire_front_locale_addPost:
+    path:     /locale/add
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Locale:addPost" }
+    methods: [POST]
+
+ilcfrance_passportstagiaire_front_locale_delete:
+    path:     /locale/delete/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Locale:delete" }
+    requirements:
+        id: "^[a-z]{2}$"
+
+ilcfrance_passportstagiaire_front_locale_editGet:
+    path:     /locale/edit/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Locale:editGet" }
+    methods: [GET]
+    requirements:
+        id: "^[a-z]{2}$"
+
+ilcfrance_passportstagiaire_front_locale_editPost:
+    path:     /locale/edit/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Locale:editPost" }
+    methods: [POST]
+    requirements:
+        id: "^[a-z]{2}$"
+
+ilcfrance_passportstagiaire_front_role_list:
+    path:     /roles
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Role:list" }
+
+ilcfrance_passportstagiaire_front_role_addGet:
+    path:     /role/add
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Role:addGet" }
+    methods: [GET]
+
+ilcfrance_passportstagiaire_front_role_addPost:
+    path:     /role/add
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Role:addPost" }
+    methods: [POST]
+
+ilcfrance_passportstagiaire_front_role_delete:
+    path:     /role/delete/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Role:delete" }
+    requirements:
+        id: "^ROLE_[A-Z](([A-Z0-9_]+[A-Z0-9])|[A-Z0-9])$"
+
+ilcfrance_passportstagiaire_front_role_editGet:
+    path:     /role/edit/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Role:editGet" }
+    methods: [GET]
+    requirements:
+        id: "^ROLE_[A-Z](([A-Z0-9_]+[A-Z0-9])|[A-Z0-9])$"
+
+ilcfrance_passportstagiaire_front_role_editPost:
+    path:     /role/edit/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Role:editPost" }
+    methods: [POST]
+    requirements:
+        id: "^ROLE_[A-Z](([A-Z0-9_]+[A-Z0-9])|[A-Z0-9])$"
+
+ilcfrance_passportstagiaire_front_user_list:
+    path:     /users
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:User:list" }
+
+ilcfrance_passportstagiaire_front_user_addGet:
+    path:     /user/add
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:User:addGet" }
+    methods: [GET]
+
+ilcfrance_passportstagiaire_front_user_addPost:
+    path:     /user/add
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:User:addPost" }
+    methods: [POST]
+
+ilcfrance_passportstagiaire_front_user_delete:
+    path:     /user/delete/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:User:delete" }
+    requirements:
+        id: "^[a-z][a-z0-9_]+$"
+
+ilcfrance_passportstagiaire_front_user_editGet:
+    path:     /user/edit/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:User:editGet" }
+    methods: [GET]
+    requirements:
+        id: "^[a-z][a-z0-9_]+$"
+
+ilcfrance_passportstagiaire_front_user_editPost:
+    path:     /user/edit/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:User:editPost" }
+    methods: [POST]
+    requirements:
+        id: "^[a-z][a-z0-9_]+$"
+
+ilcfrance_passportstagiaire_front_user_deleteUserPicture:
+    path:     /user/deleteUserPicture/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:User:deleteUserPicture" }
+    requirements:
+        id: "^[a-z][a-z0-9_]+$"
+
+ilcfrance_passportstagiaire_front_trainee_list:
+    path:     /trainees
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Trainee:list" }
+
+ilcfrance_passportstagiaire_front_trainee_export:
+    path:     /trainees/export
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Trainee:export" }
+
+ilcfrance_passportstagiaire_front_trainee_addGet:
+    path:     /trainee/add
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Trainee:addGet" }
+    methods: [GET]
+
+ilcfrance_passportstagiaire_front_trainee_addPost:
+    path:     /trainee/add
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Trainee:addPost" }
+    methods: [POST]
+
+ilcfrance_passportstagiaire_front_trainee_importGet:
+    path:     /trainee/import
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Trainee:importGet" }
+    methods: [GET]
+
+ilcfrance_passportstagiaire_front_trainee_importPost:
+    path:     /trainee/import
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Trainee:importPost" }
+    methods: [POST]
+
+ilcfrance_passportstagiaire_front_trainee_delete:
+    path:     /trainee/delete/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Trainee:delete" }
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ilcfrance_passportstagiaire_front_trainee_editGet:
+    path:     /trainee/edit/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Trainee:editGet" }
+    methods: [GET]
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ilcfrance_passportstagiaire_front_trainee_editPost:
+    path:     /trainee/edit/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Trainee:editPost" }
+    methods: [POST]
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ilcfrance_passportstagiaire_front_trainee_record_delete:
+    path:     /worksRecord/delete/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:TraineeRecord:delete" }
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ilcfrance_passportstagiaire_front_trainee_record_editGet:
+    path:     /worksRecord/edit/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:TraineeRecord:editGet" }
+    methods: [GET]
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ilcfrance_passportstagiaire_front_trainee_record_editPost:
+    path:     /worksRecord/edit/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:TraineeRecord:editPost" }
+    methods: [POST]
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+
+ilcfrance_passportstagiaire_front_trainee_record_document_download:
+    path:     /worksRecordDoc/download/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:TraineeRecordDocument:download" }
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+
+ilcfrance_passportstagiaire_front_trainee_record_document_delete:
+    path:     /worksRecordDoc/delete/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:TraineeRecordDocument:delete" }
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+
+ilcfrance_passportstagiaire_front_trainee_record_document_editGet:
+    path:     /worksRecordDoc/edit/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:TraineeRecordDocument:editGet" }
+    methods: [GET]
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+
+ilcfrance_passportstagiaire_front_trainee_record_document_editPost:
+    path:     /worksRecordDoc/edit/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:TraineeRecordDocument:editPost" }
+    methods: [POST]
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+
+ilcfrance_passportstagiaire_document_list:
+    path:     /documents
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Document:list" }
+
+ilcfrance_passportstagiaire_document_addGet:
+    path:     /document/add
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Document:addGet" }
+    methods: [GET]
+
+ilcfrance_passportstagiaire_document_addPost:
+    path:     /document/add
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Document:addPost" }
+    methods: [POST]
+
+ilcfrance_passportstagiaire_document_delete:
+    path:     /document/delete/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Document:delete" }
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ilcfrance_passportstagiaire_document_download:
+    path:     /document/download/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Document:download" }
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ilcfrance_passportstagiaire_document_editGet:
+    path:     /document/edit/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Document:editGet" }
+    methods: [GET]
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ilcfrance_passportstagiaire_document_editPost:
+    path:     /document/edit/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Document:editPost" }
+    methods: [POST]
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+    
+
+    
+ilcfrance_passportstagiaire_program_list:
+    path:     /programs
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Program:list" }
+
+ilcfrance_passportstagiaire_program_addGet:
+    path:     /program/add
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Program:addGet" }
+    methods: [GET]
+
+ilcfrance_passportstagiaire_program_addPost:
+    path:     /program/add
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Program:addPost" }
+    methods: [POST]
+
+ilcfrance_passportstagiaire_program_delete:
+    path:     /program/delete/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Program:delete" }
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ilcfrance_passportstagiaire_program_download:
+    path:     /program/download/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Program:download" }
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ilcfrance_passportstagiaire_program_editGet:
+    path:     /program/edit/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Program:editGet" }
+    methods: [GET]
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ilcfrance_passportstagiaire_program_editPost:
+    path:     /program/edit/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Program:editPost" }
+    methods: [POST]
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+    

@@ -1,0 +1,17 @@
+{% extends 'IlcfrancePassportstagiaireResBundle::security.tpl.html.twig' %}
+{% block main %}
+{{form_start(LoginForm, {'method':'POST', 'action': path('_security_check'), 'style': 'horizontal'})}}
+{{form_row(LoginForm.username, {'label_col': 5, 'widget_col': 7, 'attr': {'placeholder': 'User.id.placeholder', 'input_group': {'append': glyphIco('user') } } } )}}
+{{form_row(LoginForm.password, {'label_col': 5, 'widget_col': 7, 'attr': {'placeholder': 'User.password.placeholder', 'input_group': {'append': glyphIco('asterisk') } } } )}}
+{{form_row(LoginForm.remember_me, {'label_col': 5, 'widget_col': 7, 'attr': {'align_with_widget': true} })}}
+{{form_row(LoginForm.target_path, {'label_col': 0, 'widget_col': 12})}}
+	<div class="form-group">
+		<div class="col-lg-6">
+			<button class="btn-primary btn btn-block" type="submit">{{faIco('sign-in')}} {{'action.btnLogin'|trans|raw}}</button>
+		</div>
+		<div class="col-lg-6">
+			<button class="btn-default btn btn-block" type="reset">{{faIco('ban')}} {{'action.btnCancel'|trans|raw}}</button>
+		</div>
+	</div>
+{{form_end(LoginForm)}}
+{% endblock main %}

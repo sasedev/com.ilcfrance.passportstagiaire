@@ -1,0 +1,314 @@
+
+.cv {
+	margin-top: 100px;
+	margin-bottom: 30px;
+	background-color: lighten(@body-bg, 17%);
+	border-radius: 10px;
+}
+
+#authorpic-header {
+	margin-top: -80px;
+}
+
+#authorpic {
+	width: 200px;
+	height: 200px;
+	border-radius: 10%;
+	overflow: hidden;
+	padding: 5px;
+	background: #ededed;
+	display: inline-block;
+}
+
+#authorpic img {
+	width: 190px;
+	height: 190px;
+	border-radius: 10%;
+}
+
+.timelinejob {
+	margin-top: 20px;
+	position: relative;
+	padding: 1em 0;
+	list-style: none;
+}
+
+.timelinejob:before {
+	width: 7px;
+	height: 100%;
+	position: absolute;
+	left: 25px;
+	top: 0;
+	content: ' ';
+	display: block;
+	background: @brand-primary;
+	background: -moz-linear-gradient(top, #ffffff 0%, @brand-primary 7%, @brand-primary 89%, #ffffff 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(7%, @brand-primary), color-stop(89%, @brand-primary), color-stop(100%, #ffffff));
+	background: -webkit-linear-gradient(top, #ffffff 0%, @brand-primary 7%, @brand-primary 89%, #ffffff 100%);
+	background: -o-linear-gradient(top, #ffffff 0%, @brand-primary 7%, @brand-primary 89%, #ffffff 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%, @brand-primary 7%, @brand-primary 89%, #ffffff 100%);
+	background: linear-gradient(to bottom, #ffffff 0%, @brand-primary 7%, @brand-primary 89%, #ffffff 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=0);
+}
+
+.timelinejob li {
+	width: 100%;
+	z-index: 2;
+	position: relative;
+	float: left;
+}
+
+.timelinejob .year {
+	width: 10%;
+	padding: 10px;
+	font-size: 1.3em;
+	font-weight: 700;
+	display: inline-block;
+	background-color: lighten(@body-bg, 17%);
+}
+
+.timelinejob .description {
+	width: 80%;
+	display: inline-block;
+	background: @gray;
+	margin-bottom: 10px;
+	position: relative;
+	padding: 10px 10px 0 10px;
+	border-radius: 2px;
+}
+
+.timelinejob .description:after {
+	content: '';
+	position: absolute;
+	top: 15px;
+	right: 0;
+	left: -16px;
+	height: 0;
+	width: 0;
+	border: solid transparent;
+	border-right-color: @gray;
+	border-width: 8px;
+	pointer-events: none;
+}
+
+.timelinejob .description h3 {
+	font-size: 1.4em;
+	margin: 0;
+	padding: 0;
+	font-weight: 700;
+}
+
+.timelinejob .description p {
+	font-size: 1.1em;
+	margin-top: 5px;
+	padding: 0;
+}
+
+.job {
+	margin-bottom: 15px;
+	background-color: lighten(@body-bg, 24%);
+	border-radius: 3px;
+	
+}
+
+.job .where {
+	font-size: 1.3em;
+	font-weight: bold;
+}
+
+.job .year {
+	font-size: 1.2em;
+	opacity: 0.7;
+}
+
+.job .profession {
+	font-size: 1.4em;
+	font-weight: bold;
+}
+
+.job .description {
+	font-size: 1.1em;
+	line-height: 1.3em;
+}
+
+.contact-item {
+	width: 100%;
+	float: left;
+}
+
+.contact-item .icon {
+	padding: 10px;
+	border-bottom: 1px solid #aaa;
+	border-right: 1px solid #aaa;
+	opacity: 0.2;
+}
+
+.contact-item:last-child .icon {
+	border-bottom: none;
+}
+
+.contact-item .fa , .contact-item .glyphicon , .contact-item .glyphicons , .contact-item .halflings , .contact-item .social , .contact-item .filetypes {
+	font-size: 1.8em;
+}
+
+.contact-item .title {
+	width: 80%;
+	width: ~"calc(100% - 70px)";
+	font-size: 1.5em;
+	font-weight: 700;
+	opacity: 0.9;
+}
+
+.contact-item .title.only {
+	margin-top: 10px;
+}
+
+.contact-item .description {
+	width: 80%;
+	width: ~"calc(100% - 70px)";
+	font-size: 1.1em;
+	opacity: 0.7;
+}
+
+#map_home {
+	width: 98%;
+	height: 200px;
+}
+
+.items-container {
+	max-width: 700px;
+}
+
+.item-skills {
+	height: 30px;
+	background: darken(@brand-primary, 10%);
+	color: @gray-lighter;
+	padding: 5px 10px;
+	margin-bottom: 5px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: 1.1em;
+	font-weight: 600;
+}
+
+.skills-legend {
+	margin-top: 20px;
+	opacity: 0.8;
+}
+
+.skills-legend:before {
+	width: 100%;
+	height: 3px;
+	position: relative;
+	content: ' ';
+	display: block;
+	margin-bottom: -13px;
+	background: #c6c6c6;
+}
+
+.skills-legend div {
+	width: 25%;
+	display: inline-block;
+	font-size: 1.1em;
+	color: #a9a9a9;
+	float: left;
+}
+
+.legend:before {
+	width: 3px;
+	height: 10px;
+	position: relative;
+	content: ' ';
+	display: block;
+	margin: auto;
+	margin-bottom: 15px;
+	background: #c6c6c6;
+}
+
+.legend-left.legend:before {
+	margin-left: 0;
+}
+
+.legend-right.legend:before {
+	margin-right: 0;
+}
+
+.legend-left:nth-child(2) span {
+	margin-left: -25px;
+}
+
+.legend-right:nth-child(3) span {
+	margin-right: -20px;
+}
+
+.legend-right {
+	text-align: right;
+}
+
+.star-skills .skill {
+	font-size: 1.1em;
+	margin: 10px 0;
+	padding-bottom: 10px;
+	border-bottom: 1px solid lighten(@body-bg, 24%);
+}
+
+.star-skills .skill .icons {
+	width: 177px;
+	height: 25px;
+	background: url(../images/star.png) no-repeat;
+}
+
+.star-skills .skill .icons-active {
+	background: url(../images/star-active.png) no-repeat;
+}
+
+.tag {
+	background: darken(@brand-primary, 10%);
+	color: @gray-lighter;
+	display: inline-block;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	padding: 5px 5px 5px 25px;
+	position: relative;
+	font-size: 1.1em;
+}
+
+.tag:before {
+	content: "\f005";
+	font-family: FontAwesome;
+	font-style: normal;
+	font-weight: normal;
+	position: absolute;
+	top: 6px;
+	left: 7px;
+}
+
+@media ( min-width : 500px) {
+	.timelinejob .description {
+		width: 85%;
+	}
+}
+
+@media ( min-width : 768px) {
+	.timelinejob .description {
+		width: 85%;
+	}
+}
+
+@media ( min-width : 992px) {
+	.timelinejob .description {
+		width: 87%;
+	}
+}
+
+@media ( min-width : 1200px) {
+	.timelinejob .description {
+		width: 90%;
+	}
+}
+
+
+
+
+

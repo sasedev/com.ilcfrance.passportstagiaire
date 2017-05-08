@@ -1,0 +1,34 @@
+<!DOCTYPE html>{% block html %}
+<html {% block htmlAttributes %}{% endblock htmlAttributes %}>{% block htmlContent %}{% block htmlHead %}
+	<head>{% block htmlHeadContent %}{% block htmlHeadMetas %}
+{% if htmlHeadMetas is defined %}{% for meta in htmlHeadMetas %}
+		{% if meta.prepend is not empty %}{{ meta.prepend|raw }}{% endif %}
+		<meta {% for element in meta.elements %}{{ element.key }}="{{ element.value }}" {% endfor %}/>
+		{% if meta.append is not empty %}{{ meta.append|raw }}{% endif %}
+{% endfor %}{% endif %}{% endblock htmlHeadMetas %}
+{% block htmlHeadLinks %}{% if htmlHeadLinks is defined %}{% for link in htmlHeadLinks %}
+		{% if link.prepend is not empty %}{{ link.prepend|raw }}{% endif %}
+		<link {% for element in link.elements %}{{ element.key }}="{% if element.isAsset is defined and element.isAsset %}{{ absolute_url(asset(element.value)) }}{% else %}{{ element.value }}{% endif %}" {% endfor %}/>
+		{% if link.append is not empty %}{{ link.append|raw }}{% endif %}
+{% endfor %}{% endif %}{% endblock htmlHeadLinks %}
+{% block htmlHeadScripts %}{% if htmlHeadScripts is defined %}{% for script in htmlHeadScripts %}
+		{% if script.prepend is not empty %}{{ script.prepend|raw }}{% endif %}
+		<script {% for element in script.elements %}{{ element.key }}="{% if element.isAsset is defined and element.isAsset %}{{ absolute_url(asset(element.value)) }}{% else %}{{ element.value }}{% endif %}" {% endfor %}>{% if script.content is not empty %}{{ script.content|raw }}{% endif %}</script>
+		{% if script.append is not empty %}{{ script.append|raw }}{% endif %}
+{% endfor %}{% endif %}{% endblock htmlHeadScripts %}
+{% block htmlHeadTitle %}
+		<title>{% block htmlHeadTitleContent %}{% if htmlHeadPageTitle is defined %}{{ htmlHeadPageTitle|raw }}{% endif %}{% endblock htmlHeadTitleContent %}</title>
+{% endblock htmlHeadTitle %}
+{% endblock htmlHeadContent %}
+	</head>{% endblock htmlHead %}{% block htmlBody %}
+	<body {% block htmlBodyAttributes %}{% endblock htmlBodyAttributes %}>{% block htmlBodyContent %}{% endblock htmlBodyContent %}
+{% block htmlBodyScripts %}{% if htmlBodyScripts is defined %}{% for script in htmlBodyScripts %}
+		{% if script.prepend is not empty %}{{ script.prepend|raw }}{% endif %}
+		<script {% for element in script.elements %}{{ element.key }}="{% if element.isAsset is defined and element.isAsset %}{{ absolute_url(asset(element.value)) }}{% else %}{{ element.value }}{% endif %}" {% endfor %}>{% if script.content is not empty %}{{ script.content|raw }}{% endif %}</script>
+		{% if script.append is not empty %}{{ script.append|raw }}{% endif %}
+{% endfor %}{% endif %}{% endblock htmlBodyScripts %}
+	</body>
+{% endblock htmlBody %}
+{% endblock htmlContent %}
+</html>
+{% endblock html %}

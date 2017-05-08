@@ -1,0 +1,122 @@
+//@import url(https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,500,500i,700,700i&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext);
+//@import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,400i,700,700i&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext);
+
+@bs3-path:                       "/../../../../../../web/res/bower_components/bootstrap/less";
+@select2-path:                       "/../../../../../../web/res/bower_components/select2-bootstrap-theme/src";
+@bootstrap-slider-path:          "/../../../../../../web/res/bower_components/seiyria-bootstrap-slider/src/less";
+@animatecss-path:                "./animatecss/";
+
+//tpl
+// Core variables and mixins
+@import "@{bs3-path}/variables.less";
+@import "sasedev/_vars.less";
+
+
+// Overwrite
+//@import "sasedev/_variables_bs3_black.less";
+@import "@{bs3-path}/mixins.less";
+
+// Reset and dependencies
+@import "@{bs3-path}/normalize.less";
+@import "sasedev/_normalize4.less";
+@import "@{bs3-path}/print.less";
+@import "@{bs3-path}/glyphicons.less";
+
+// Core CSS
+@import "@{bs3-path}/scaffolding.less";
+@import "@{bs3-path}/type.less";
+@import "@{bs3-path}/code.less";
+@import "@{bs3-path}/grid.less";
+@import "@{bs3-path}/tables.less";
+@import "sasedev/tables.less";
+@import "@{bs3-path}/forms.less";
+@import "@{bs3-path}/buttons.less";
+
+// Components
+@import "@{bs3-path}/component-animations.less";
+@import "@{bs3-path}/dropdowns.less";
+@import "@{bs3-path}/button-groups.less";
+@import "@{bs3-path}/input-groups.less";
+@import "@{bs3-path}/navs.less";
+@import "@{bs3-path}/navbar.less";
+@import "@{bs3-path}/breadcrumbs.less";
+@import "@{bs3-path}/pagination.less";
+@import "@{bs3-path}/pager.less";
+@import "@{bs3-path}/labels.less";
+@import "@{bs3-path}/badges.less";
+@import "@{bs3-path}/jumbotron.less";
+@import "@{bs3-path}/thumbnails.less";
+@import "@{bs3-path}/alerts.less";
+@import "@{bs3-path}/progress-bars.less";
+@import "@{bs3-path}/media.less";
+@import "@{bs3-path}/list-group.less";
+@import "@{bs3-path}/panels.less";
+@import "@{bs3-path}/responsive-embed.less";
+@import "@{bs3-path}/wells.less";
+@import "@{bs3-path}/close.less";
+
+// Components w/ JavaScript
+@import "@{bs3-path}/modals.less";
+@import "@{bs3-path}/tooltip.less";
+@import "@{bs3-path}/popovers.less";
+@import "@{bs3-path}/carousel.less";
+
+// Utility classes
+@import "@{bs3-path}/utilities.less";
+@import "@{bs3-path}/responsive-utilities.less";
+
+
+
+@import "sasedev/_mixins.less";
+@import "sasedev/_core.less";
+@import "sasedev/_header.less";
+@import "sasedev/_footer.less";
+@import "sasedev/_sidebar.less";
+@import "sasedev/_error.less";
+@import "sasedev/components/_box-std.less";
+@import "sasedev/components/_text.less";
+@import "sasedev/components/_dropdown.less";
+@import "sasedev/components/_forms.less";
+@import "sasedev/components/_progress-bars.less";
+@import "sasedev/components/_small-box.less";
+@import "sasedev/components/_boxes.less";
+@import "sasedev/components/_info-box.less";
+
+// bootstrap slider
+@import "@{bootstrap-slider-path}/rules.less";
+@import "sasedev/components/_bootstrap-slider.less";
+@import "sasedev/components/_timeline.less";
+@import "sasedev/components/_buttons.less";
+@import "sasedev/components/_cards.less";
+@import "sasedev/components/_alerts.less";
+@import "sasedev/components/_callout.less";
+@import "sasedev/components/_navs.less";
+@import "sasedev/components/_products.less";
+@import "sasedev/components/_table.less";
+@import "sasedev/components/_direct-chat.less";
+@import "sasedev/components/_users-list.less";
+@import "sasedev/components/_carousel.less";
+@import "sasedev/components/_modal.less";
+@import "sasedev/components/_social-widgets.less";
+@import "sasedev/components/_bootstrap-social.less";
+@import "sasedev/fullcalendar/_fullcalendar.less";
+@import "sasedev/bootstrap-select2/_core.less";
+//@import "@{select2-path}/select2-bootstrap.less";
+@import "sasedev/bootstrap-duallistbox/_core.less";
+@import "sasedev/bootstrap-datetimepicker/_core.less";
+@import "sasedev/bootstrap-fileinput/_core.less";
+@import "sasedev/bootstrap-colorpicker/_core.less";
+@import "sasedev/icheck/_core.less";
+//PAGES
+//------
+@import "sasedev/_mailbox.less";
+@import "sasedev/_lockscreen.less";
+@import "sasedev/_login_and_register.less";
+@import "sasedev/_404_500_errors.less";
+@import "sasedev/_profile.less";
+@import "sasedev/_blog.less";
+@import "sasedev/_cv.less";
+//Miscellaneous
+//-------------
+@import "sasedev/_misc.less";
+@import "sasedev/_print.less";

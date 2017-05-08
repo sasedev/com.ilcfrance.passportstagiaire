@@ -1,0 +1,33 @@
+
+
+
+
+.box-std {
+	margin-bottom: 15px;
+	background-color: lighten(@body-bg, 17%);
+	border: 0px solid lighten(@body-bg, 17%);
+	box-shadow: 0 0 0 0;
+}
+
+.box-std h2 {
+	font-size: 1.8em;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.box-std h2:BEFORE {
+	content: '.:';
+	margin-right: 5px;
+	color: @text-color;
+}
+
+.box-std h2:AFTER {
+	content: ':.';
+	margin-left: 5px;
+	color: @text-color;
+}
+
+.box-std p {
+	font-size: 1.1em;
+	line-height: 1.3em;
+}

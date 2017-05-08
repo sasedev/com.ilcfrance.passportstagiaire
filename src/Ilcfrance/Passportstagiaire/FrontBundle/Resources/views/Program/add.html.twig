@@ -1,0 +1,56 @@
+{% extends 'IlcfrancePassportstagiaireResBundle::admin.tpl.html.twig' %}
+{% block breadcrumb %}
+<ol class="breadcrumb">
+	<li><a href="{{ path('ilcfrance_passportstagiaire_front_homepage') }}">{{ faIco('dashboard') }} {{'breadcrumb.admin.dasboard'|trans|raw}}</a></li>
+	<li><a href="{{ path('ilcfrance_passportstagiaire_program_list') }}">{{faIco('file')}} {{'Program.breadcrumb.admin.list'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('ilcfrance_passportstagiaire_program_addGet') }}">{{faIco('plus')}} {{'Program.breadcrumb.admin.add'|trans()|raw}}</a></li>
+</ol>
+{% endblock breadcrumb %}
+{% block main %}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('ilcfrance_passportstagiaire_program_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+		</div>
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">{{ 'Program.tlabel.admin.add'|trans|raw}}</h3>
+			</div>
+			<div class="box-body">
+				{{form_start(ProgramAddForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_program_addPost'), 'style': 'horizontal'})}}
+				{{form_row(ProgramAddForm.file, {'label_col': 3, 'widget_col': 8, 'attr': {'placeholder': 'Program.fileName.placeholder'} })}}
+				{{form_row(ProgramAddForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+				<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+				{{form_end(ProgramAddForm)}}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock main %}
+{% block htmlBodyScripts %}
+{{ parent() }}
+<script type="text/javascript">
+$(function() {
+	$('textarea.wysiwyg').each(function() {
+		var options = {
+			theme: "modern",
+			content_css : '{{ absolute_url(asset('/res/css/app.min.css')) }}',
+			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+			language : '{{ (app.request.locale~'_tinymce')|trans }}',
+			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
+		};
+		$this = $(this);
+		if($this.is('[required]')) {
+			options.oninit = function(editor) {
+				editor.on('change', function(e) {
+					editor.save();
+				});
+			}
+		}
+		$this.tinymce(options);
+	});
+
+	$("#ProgramAddForm_file").fileinput({'showUpload':false, 'previewFileType':'image', browseClass: "btn btn-success", browseLabel: " {{ 'action.btnSelect'|trans}}", browseIcon: '{{faIco('file')}}', removeClass: "btn btn-danger", removeLabel: " {{ 'action.btnCancel'|trans}}", removeIcon: '{{faIco('trash')}}'});
+});
+</script>
+{% endblock htmlBodyScripts %}

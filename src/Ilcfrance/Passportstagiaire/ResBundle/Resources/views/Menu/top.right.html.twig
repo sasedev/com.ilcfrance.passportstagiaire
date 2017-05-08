@@ -1,0 +1,59 @@
+{%if menu_active is not defined%}
+{%set menu_active=''%}
+{%endif%}
+{%if smenu_active is not defined%}
+{%set smenu_active=''%}
+{%endif%}
+{%if tabActive is not defined%}
+{%set tabActive=1%}
+{%endif%}
+{%if admmenu_active is not defined%}
+{%set admmenu_active=''%}
+{%endif%}
+{%if sadmmenu_active is not defined%}
+{%set sadmmenu_active=''%}
+{%endif%}
+<div class="collapse navbar-collapse navbar-custom-menu navbar-right">
+						<ul class="nav navbar-nav">
+						{% if is_granted('ROLE_USER') %}
+								<li class="dropdown user user-menu{% if menu_active is defined and menu_active == 'security' %} active"{% endif %}">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+										{% if app.user.picture is not null and app.user.picture.url is not empty %}
+										<img src="/res/UserPictures/{{ app.user.picture.url }}" class="user-image" alt="{{ app.user.fullName }}">
+										{% else %}
+										<img src="/res/UserPictures/default.jpg" class="user-image" alt="{{ app.user.fullName }}">
+										{% endif %}
+										<span class="hidden-xs">{{ app.user.fullName }}</span>
+										<span class="caret"></span>
+									</a>
+									<ul class="dropdown-menu">
+										<li class="user-header">
+											{% if app.user.picture is not null and app.user.picture.url is not empty %}
+											<img src="/res/UserPictures/{{ app.user.picture.url }}" class="img-square" alt="{{ app.user.fullName }}">
+											{% else %}
+											<img src="/res/UserPictures/default.jpg" class="img-square" alt="{{ app.user.fullName }}">
+											{% endif %}
+											<p>
+												{{ app.user.fullName }}<small>{{ app.user.dtCrea|localeDate('medium') }}</small>
+											</p>
+										</li>
+										<li class="user-footer">
+											<div class="pull-left">
+												<a href="{{ path('_security_myProfileGet') }}" class="btn btn-default btn-flat">{{ 'action.btnProfile'|trans }}</a>
+											</div>
+											<div class="pull-right">
+												<a href="{{ path('_security_logout') }}" class="btn btn-default btn-flat">{{ 'action.btnLogout'|trans }}</a>
+											</div>
+										</li>
+									</ul>
+								</li>
+							{% else %}
+								<li class="dropdown{% if menu_active is defined and menu_active == 'security' %} active"{% endif %}">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ glyphIco('user') }} <span class="caret"></span></a>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="{{ path('_security_login') }}">{{ glyphIco('log-in') }} Login</a></li>
+									</ul>
+								</li>	
+							{% endif %}
+							</ul>
+						</div>

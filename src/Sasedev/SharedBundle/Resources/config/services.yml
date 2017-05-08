@@ -1,0 +1,48 @@
+parameters:
+    sasedev_shared.TwigBasic.extension.class: Sasedev\SharedBundle\Extension\TwigBasicExtension
+    sasedev_shared.TwigForm.extension.class: Sasedev\SharedBundle\Extension\TwigFormExtension
+    sasedev_shared.TwigCallPhp.extension.class: Sasedev\SharedBundle\Extension\TwigCallPhpExtension
+    sasedev_shared.TwigCountry.extension.class: Sasedev\SharedBundle\Extension\TwigCountryExtension
+    sasedev_shared.TwigDateFormatter.extension.class: Sasedev\SharedBundle\Extension\TwigDateFormatterExtension
+#    sasedev_shared.bootstrap.form.extension.typesetter_extension.class: Sasedev\SharedBundle\Form\Extension\TypeSetterExtension
+#    sasedev_shared.bootstrap.form.type.collection.class: Sasedev\SharedBundle\Form\Type\BootstrapCollectionType
+
+services:
+#    sasedev_shared.example:
+#        class: Sasedev\SharedBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+    sasedev_shared.TwigBasic.extension:
+        class: "%sasedev_shared.TwigBasic.extension.class%"
+        tags:
+            - { name: twig.extension }
+
+    sasedev_shared.TwigForm.extension:
+        class: "%sasedev_shared.TwigForm.extension.class%"
+        tags:
+            - { name: twig.extension }
+
+    sasedev_shared.TwigCallPhp.extension:
+        class: "%sasedev_shared.TwigCallPhp.extension.class%"
+        tags:
+            - { name: twig.extension }
+
+    sasedev_shared.TwigCountry.extension:
+        class: "%sasedev_shared.TwigCountry.extension.class%"
+        tags:
+            - { name: twig.extension }
+
+    sasedev_shared.TwigDateFormatter.extension:
+        class: "%sasedev_shared.TwigDateFormatter.extension.class%"
+        tags:
+            - { name: twig.extension }
+            
+#    sasedev_shared.bootstrap.form.extension.typesetter_extension:
+#        class: %sasedev_shared.bootstrap.form.extension.typesetter_extension.class%
+#        tags:
+#            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+#    sasedev_shared.bootstrap.form.type.collection:
+#        class: %sasedev_shared.bootstrap.form.type.collection.class%
+#        tags:
+#            - { name: form.type, alias: bootstrap_collection }
+

@@ -1,0 +1,20 @@
+{%if menu_active is not defined%}
+{%set menu_active=''%}
+{%endif%}
+{%if smenu_active is not defined%}
+{%set smenu_active=''%}
+{%endif%}
+{%if tabActive is not defined%}
+{%set tabActive=1%}
+{%endif%}
+{%if admmenu_active is not defined%}
+{%set admmenu_active=''%}
+{%endif%}
+{%if sadmmenu_active is not defined%}
+{%set sadmmenu_active=''%}
+{%endif%}
+<div class="collapse navbar-collapse navbar-custom-menu navbar-left">
+							<ul class="nav navbar-nav">
+								<li {% if menu_active is defined and menu_active == 'home' %}class="active"{% endif %}><a href="{{ path('ilcfrance_passportstagiaire_front_homepage') }}">Home</a></li>
+							</ul>
+						</div>

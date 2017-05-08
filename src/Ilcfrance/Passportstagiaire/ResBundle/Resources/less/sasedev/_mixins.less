@@ -1,0 +1,156 @@
+
+//Box solid color variantion creator
+.box-solid-variant(@color; @text-color: #fff) {
+  border: 1px solid @color;
+  > .box-header {
+    color: @text-color;
+    background: @color;
+    background-color: @color;
+    a,
+    .btn, .box-title {
+      color: @text-color;
+    }
+  }
+  > .box-footer {
+    color: @text-color;
+    background: lighten(@color, 2%);
+    background-color: lighten(@color, 2%);
+    a,
+    .btn {
+      color: @text-color;
+    }
+  }
+}
+//Direct Chat Variant
+.direct-chat-variant(@bg-color; @color: #fff) {
+  .right > .direct-chat-text {
+    background: @bg-color;
+    border-color: @bg-color;
+    color: @color;
+    &:after,
+    &:before {
+      border-left-color: @bg-color;
+    }
+  }
+}
+
+//border radius creator
+.border-radius(@radius) {
+  border-radius: @radius;
+}
+
+//Different radius each side
+.border-radius(@top-left;
+@top-right
+;
+@bottom-left
+;
+@bottom-right
+)
+{
+  border-top-left-radius: @top-left
+;
+  border-top-right-radius: @top-right
+;
+  border-bottom-right-radius: @bottom-right
+;
+  border-bottom-left-radius: @bottom-left
+;
+}
+
+
+//Gradient background
+.gradient(@color: #F5F5F5, @start: #EEE, @stop: #FFF) {
+  background: @color;
+  background: -webkit-gradient(linear,
+  left bottom,
+  left top,
+  color-stop(0, @start),
+  color-stop(1, @stop));
+  background: -ms-linear-gradient(bottom,
+  @start,
+  @stop);
+  background: -moz-linear-gradient(center bottom,
+  @start 0%,
+  @stop 100%);
+  background: -o-linear-gradient(@stop,
+  @start);
+  filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@stop,@start));
+}
+
+//Added 2.1.0
+//Skins Mixins
+
+//Dark Sidebar Mixin
+.skin-sidebar(@link-hover-border-color) {
+  // Sidebar background color (Both .wrapper and .left-side are responsible for sidebar bg color)
+  .sidebar-menu > li {
+    //Section Headning 
+    &.header {
+      color: @color-black-light;
+      background: darken(@sidebar-bg, 4%);
+    }
+    //links
+    > a {
+      color: @sidebar-hover-color;
+      border-left: 3px solid transparent;
+        > .fa , .glyphicon , .glyphicons , .halflings , .social , .filetypes {
+        	color: @color-black-light;
+        }
+    }
+    //Hover and active states
+    &:hover > a, &.active > a {
+      color: @sidebar-hover-color;
+      background: @sidebar-hover-bg;
+      border-left-color: @link-hover-border-color;
+        > .fa , .glyphicon , .glyphicons , .halflings , .social , .filetypes {
+        	color: @color-black-dark;
+        }
+    }
+    //First Level Submenu
+    > .treeview-menu {
+      margin: 0 1px;
+      background: @sidebar-submenu-bg;
+    }
+  }
+  //All links within the sidebar menu
+  .sidebar a {
+    color: @sidebar-color;
+        > .fa , .glyphicon , .glyphicons , .halflings , .social , .filetypes {
+        	color: @color-black-light;
+        }
+    &:hover {
+      text-decoration: none;
+        > .fa , .glyphicon , .glyphicons , .halflings , .social , .filetypes {
+        	color: @color-black-dark;
+        }
+    }
+  }
+  //All submenus
+  .treeview-menu {
+    > li {
+      > a {
+        color: @sidebar-submenu-color;
+        > .fa , .glyphicon , .glyphicons , .halflings , .social , .filetypes {
+        	color: @color-black-light;
+        }
+      }
+      &.active > a, > a:hover {
+        color: @sidebar-submenu-hover-color;
+        > .fa , .glyphicon , .glyphicons , .halflings , .social , .filetypes  {
+        	color: @color-black-dark;
+        }
+      }
+    }
+  }
+  //The sidebar search form
+  .sidebar-form {
+    margin: 10px 10px;
+    input[type="text"], .btn {
+      background-color: lighten(@sidebar-bg, 10%);
+      height: 35px;
+      //.transition(all @transition-speed @transition-fn);
+    }
+  }
+}
+

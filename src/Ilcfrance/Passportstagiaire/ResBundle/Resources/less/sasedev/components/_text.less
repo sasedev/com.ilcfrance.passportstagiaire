@@ -1,0 +1,111 @@
+// Text truncate
+// Requires inline-block or block for proper styling
+
+.text-truncate() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// CSS image replacement
+.text-hide() {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+
+
+.pull-left() {
+  float: left !important;
+}
+.pull-right() {
+  float: right !important;
+}
+
+//
+// Text
+//
+
+// Alignment
+
+.text-justify        { text-align: justify !important; }
+.text-nowrap         { white-space: nowrap !important; }
+.text-truncate       { .text-truncate(); }
+
+// Responsive alignment
+
+.text-xs-left   { text-align: left !important; }
+.text-xs-right  { text-align: right !important; }
+.text-xs-center { text-align: center !important; }
+.text-xs-justify { text-align: justify !important; }
+.text-sm-left   { text-align: left !important; }
+.text-sm-right  { text-align: right !important; }
+.text-sm-center { text-align: center !important; }
+.text-sm-justify { text-align: justify !important; }
+.text-md-left   { text-align: left !important; }
+.text-md-right  { text-align: right !important; }
+.text-md-center { text-align: center !important; }
+.text-md-justify { text-align: justify !important; }
+.text-lg-left   { text-align: left !important; }
+.text-lg-right  { text-align: right !important; }
+.text-lg-center { text-align: center !important; }
+.text-lg-justify { text-align: justify !important; }
+
+
+.pull-none {
+  float: none !important;
+}
+
+.pull-xs-left {
+  .pull-left();
+}
+.pull-xs-right {
+  .pull-right();
+}
+.pull-xs-none {
+  float: none !important;
+}
+
+.pull-sm-left {
+  .pull-left();
+}
+.pull-sm-right {
+  .pull-right();
+}
+.pull-sm-none {
+  float: none !important;
+}
+
+.pull-md-left {
+  .pull-left();
+}
+.pull-md-right {
+  .pull-right();
+}
+.pull-md-none {
+  float: none !important;
+}
+
+.pull-lg-left {
+  .pull-left();
+}
+.pull-lg-right {
+  .pull-right();
+}
+.pull-lg-none {
+  float: none !important;
+}
+
+// Weight and italics
+
+.font-weight-normal  { font-weight: normal; }
+.font-weight-bold    { font-weight: bold; }
+.font-italic         { font-style: italic; }
+
+// Misc
+
+.text-hide {
+  .text-hide();
+}

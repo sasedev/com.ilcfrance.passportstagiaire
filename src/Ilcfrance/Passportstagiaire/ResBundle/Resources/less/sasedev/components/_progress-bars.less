@@ -1,0 +1,135 @@
+/*
+ * Component: Progress Bar
+ * -----------------------
+ */
+
+//General CSS
+.progress,
+.progress > .progress-bar {
+  .box-shadow(none);
+  &, .progress-bar {
+    .border-radius(@progress-bar-border-radius);
+  }
+}
+
+/* size variation */
+.progress.sm,
+.progress-sm {
+  height: 10px;
+  &, .progress-bar {
+    .border-radius(@progress-bar-sm-border-radius);
+  }
+}
+
+.progress.xs,
+.progress-xs {
+  height: 7px;
+  &, .progress-bar {
+    .border-radius(@progress-bar-xs-border-radius);
+  }
+}
+
+.progress.xxs,
+.progress-xxs {
+  height: 3px;
+  &, .progress-bar {
+    .border-radius(@progress-bar-xs-border-radius);
+  }
+}
+
+/* Vertical bars */
+.progress.vertical {
+  position: relative;
+  width: 30px;
+  height: 200px;
+  display: inline-block;
+  margin-right: 10px;
+  > .progress-bar {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+  }
+
+  //Sizes
+  &.sm,
+  &.progress-sm {
+    width: 20px;
+  }
+
+  &.xs,
+  &.progress-xs {
+    width: 10px;
+  }
+  &.xxs,
+  &.progress-xxs {
+    width: 3px;
+  }
+}
+
+//Progress Groups
+.progress-group {
+  .progress-text {
+    font-weight: 600;
+  }
+  .progress-number {
+    float: right;
+  }
+}
+
+/* Remove margins from progress bars when put in a table */
+.table {
+  tr > td .progress {
+    margin: 0;
+  }
+}
+
+// Variations
+// -------------------------
+.progress-bar-primary {
+  .progress-bar-variant(@brand-primary);
+}
+
+.progress-bar-success {
+  .progress-bar-variant(@brand-success);
+}
+
+.progress-bar-warning {
+  .progress-bar-variant(@brand-warning);
+}
+
+.progress-bar-error,
+.progress-bar-danger {
+  .progress-bar-variant(@brand-danger);
+}
+
+.progress-bar-info {
+  .progress-bar-variant(@brand-info);
+}
+
+.progress-bar-white {
+  .progress-bar-variant(@color-white-dark);
+}
+
+.progress-bar-black {
+  .progress-bar-variant(@color-black-light);
+}
+
+.progress-bar-gray {
+  .progress-bar-variant(@gray);
+}
+
+.progress-bar-green {
+  .progress-bar-variant(@color-green);
+}
+
+.progress-bar-blue {
+  .progress-bar-variant(@color-blue);
+}
+
+.progress-bar-red {
+  .progress-bar-variant(@color-red);
+}
+
+.progress-bar-yellow {
+  .progress-bar-variant(@color-yellow);
+}

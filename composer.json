@@ -1,0 +1,150 @@
+{
+	"name" : "symfony/framework-standard-edition",
+	"license" : "MIT",
+	"type" : "project",
+	"description" : "The \"Symfony Standard Edition\" distribution",
+	"autoload" : {
+		"psr-4" : {
+			"" : "src/"
+		},
+		"classmap" : [
+			"app/AppKernel.php",
+			"app/AppCache.php"
+		]
+	},
+	"autoload-dev" : {
+		"psr-4" : {
+			"Tests\\" : "tests/"
+		},
+		"files" : [
+			"vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php"
+		]
+	},
+	"require" : {
+		"php" : ">=5.5.9",
+		"composer/composer" : "^1.4",
+		"incenteev/composer-parameter-handler" : "^2.0",
+		"symfony/symfony" : "3.2.*",
+		"symfony/polyfill-apcu" : "^1.0",
+		"symfony/monolog-bundle" : "^3.0.2",
+		"symfony/swiftmailer-bundle" : "^2.3.10",
+		"symfony/assetic-bundle" : "^2.8||^3.0",
+		"symfony/psr-http-message-bridge" : "^1.0",
+		"symfony/security-acl" : "^3.0",
+		"sensio/distribution-bundle" : "^5.0",
+		"sensio/generator-bundle" : "^3.0",
+		"sensio/framework-extra-bundle" : "^3.0.2",
+		"php-console/php-console" : "^3.1",
+		"zendframework/zend-diactoros" : "^1.3",
+		"predis/predis" : "^1.1",
+		"doctrine/orm" : "^2.5",
+		"doctrine/doctrine-bundle" : "^1.6",
+		"doctrine/doctrine-cache-bundle" : "^1.2",
+		"doctrine/doctrine-fixtures-bundle" : "^2.3",
+		"stof/doctrine-extensions-bundle" : "^1.2",
+		"snc/redis-bundle" : "^2.0",
+		"jms/di-extra-bundle" : "^1.7|^2.0",
+		"jms/security-extra-bundle" : "^1.6|^2.0",
+		"jms/serializer-bundle" : "^1.1|^2.0",
+		"twig/twig" : "^1.0||^2.0",
+		"twig/extensions" : "^1.3||^2.0",
+		"ptachoire/cssembed" : "^1.0",
+		"mrclay/minify" : "^2.3|^2.0",
+		"knplabs/gaufrette" : "^0.2|^1.0",
+		"knplabs/knp-components" : "^1.3|^2.0",
+		"knplabs/knp-paginator-bundle" : "^2.5|^3.0",
+		"liuggio/excelbundle" : "^2.1|^3.0",
+		"liip/imagine-bundle" : "^1.5|^2.0",
+		"sasedev/composer-plugin-filecopier" : "~1.1"
+	},
+	"require-dev" : {
+		"sensio/generator-bundle" : "^3.0",
+		"symfony/phpunit-bridge" : "^3.0"
+	},
+	"scripts" : {
+		"symfony-scripts" : [
+			"Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
+			"npm install",
+			"bin/console assetic:dump --no-debug"
+		],
+		"post-install-cmd" : "@symfony-scripts",
+		"post-update-cmd" : "@symfony-scripts"
+	},
+	"config" : {
+		"bin-dir" : "bin",
+		"vendor-dir" : "vendor",
+		"component-dir" : "vendor",
+		"process-timeout" : 1200,
+		"sort-packages" : true
+	},
+	"extra" : {
+		"symfony-app-dir" : "app",
+		"symfony-bin-dir" : "bin",
+		"symfony-var-dir" : "var",
+		"symfony-web-dir" : "web",
+		"symfony-tests-dir" : "tests",
+		"symfony-assets-install" : "relative",
+		"incenteev-parameters" : {
+			"file" : "app/config/parameters.yml",
+			"keep-outdated" : "true"
+		},
+		"filescopier" : [{
+				"source" : "src/Ilcfrance/Passportstagiaire/ResBundle/Resources/css",
+				"destination" : "web/res/css"
+			}, {
+				"source" : "src/Ilcfrance/Passportstagiaire/ResBundle/Resources/js",
+				"destination" : "web/res/js"
+			}, {
+				"source" : "web/res/bower_components/tinymce/plugins/",
+				"destination" : "web/res/js/plugins"
+			}, {
+				"source" : "web/res/bower_components/tinymce/skins/",
+				"destination" : "web/res/js/skins"
+			}, {
+				"source" : "web/res/bower_components/tinymce/themes/",
+				"destination" : "web/res/js/themes"
+			}, {
+				"source" : "web/res/bower_components/ivan-chkv.tinymce-i18n/langs",
+				"destination" : "web/res/js/langs"
+			}, {
+				"source" : "src/Ilcfrance/Passportstagiaire/ResBundle/Resources/images",
+				"destination" : "web/res/images"
+			}, {
+				"source" : "src/Ilcfrance/Passportstagiaire/ResBundle/Resources/imgs",
+				"destination" : "web/res/imgs"
+			}, {
+				"source" : "src/Ilcfrance/Passportstagiaire/ResBundle/Resources/img",
+				"destination" : "web/res/img"
+			}, {
+				"source" : "src/Ilcfrance/Passportstagiaire/ResBundle/Resources/fonts",
+				"destination" : "web/res/fonts"
+			}, {
+				"source" : "web/res/bower_components/font-awesome/fonts",
+				"destination" : "web/res/fonts"
+			}, {
+				"source" : "web/res/bower_components/ionicons/fonts",
+				"destination" : "web/res/fonts"
+			}, {
+				"source" : "src/Ilcfrance/Passportstagiaire/ResBundle/Resources/appicons/*",
+				"destination" : "web"
+			}, {
+				"source" : "web/res/bower_components/bootstrap-colorpicker/dist/img/bootstrap-colorpicker/*",
+				"destination" : "web/res/img/bootstrap-colorpicker"
+			}, {
+				"source" : "web/res/bower_components/bootstrap-fileinput/img/*",
+				"destination" : "web/res/img/bootstrap-fileinput"
+			}, {
+				"source" : "web/res/bower_components/iCheck/skins/flat/*.png",
+				"destination" : "web/res/img/icheck/flat"
+			}
+		],
+		"branch-alias" : {
+			"dev-master" : "3.2-dev"
+		}
+	}
+}

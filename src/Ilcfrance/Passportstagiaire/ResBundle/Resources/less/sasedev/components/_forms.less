@@ -1,0 +1,47 @@
+
+/* Input group */
+.input-group {
+  .input-group-addon {
+    .border-radius(@input-radius);
+    border-color: @gray;
+  }
+}
+
+/* button groups */
+.btn-group-vertical {
+  .btn {
+    &.btn-flat:first-of-type, &.btn-flat:last-of-type {
+      .border-radius(0);
+    }
+  }
+}
+
+.icheck > label {
+  padding-left: 0;
+}
+
+select option:hover, select option:focus, select option:active {
+	background-color: @brand-primary;
+	color: @body-bg
+}
+select option:selected {
+	background-color: darken(@brand-primary, 7%);
+	color: @body-bg
+}
+
+/* support Font Awesome icons in form-control */
+.form-control-feedback.fa, .form-control-feedback.glyphicon, .form-control-feedback.glyphicons, .form-control-feedback.halflings, .form-control-feedback.social, .form-control-feedback.filetypes {
+  line-height: @input-height-base;
+}
+
+.input-lg + .form-control-feedback.fa, .input-lg + .form-control-feedback.glyphicon, .input-lg + .form-control-feedback.glyphicons, .input-lg + .form-control-feedback.halflings, .input-lg + .form-control-feedback.social, .input-lg + .form-control-feedback.filetypes, 
+.input-group-lg + .form-control-feedback.fa, .input-group-lg + .form-control-feedback.glyphicon, .input-group-lg + .form-control-feedback.glyphicons, .input-group-lg + .form-control-feedback.halflings, .input-group-lg + .form-control-feedback.social, .input-group-lg + .form-control-feedback.filetypes, 
+.form-group-lg .form-control + .form-control-feedback.fa, .form-group-lg .form-control + .form-control-feedback.glyphicon, .form-group-lg .form-control + .form-control-feedback.glyphicons, .form-group-lg .form-control + .form-control-feedback.halflings, .form-group-lg .form-control + .form-control-feedback.social, .form-group-lg .form-control + .form-control-feedback.filetypes {
+  line-height: @input-height-large;
+}
+
+.input-sm + .form-control-feedback.fa, .input-sm + .form-control-feedback.glyphicon, .input-sm + .form-control-feedback.glyphicons, .input-sm + .form-control-feedback.halflings, .input-sm + .form-control-feedback.social, .input-sm + .form-control-feedback.filetypes,  
+.input-group-sm + .form-control-feedback.fa, .input-group-sm + .form-control-feedback.glyphicon, .input-group-sm + .form-control-feedback.glyphicons, .input-group-sm + .form-control-feedback.halflings, .input-group-sm + .form-control-feedback.social, .input-group-sm + .form-control-feedback.filetypes,
+.form-group-sm .form-control + .form-control-feedback.fa , .form-group-sm .form-control + .form-control-feedback.glyphicon , .form-group-sm .form-control + .form-control-feedback.glyphicons , .form-group-sm .form-control + .form-control-feedback.halflings , .form-group-sm .form-control + .form-control-feedback.social , .form-group-sm .form-control + .form-control-feedback.filetypes {
+  line-height: @input-height-small;
+}
