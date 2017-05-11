@@ -29,34 +29,6 @@ $(function() {
 								size : "5px"
 							});
 		}
-		if ($(".content-wrapper").length) {
-			$(".content-wrapper").slimScroll({
-				destroy : true
-			}).height("auto");
-
-			$(".content-wrapper")
-					.slimscroll(
-							{
-								height : ($(window).height() - headerHeight - footerHeight)
-										+ "px",
-								color : "#00b300",
-								size : "10px"
-							});
-		}
-		if ($(".dashboard-content-wrapper").length) {
-			$(".dashboard-content-wrapper").slimScroll({
-				destroy : true
-			}).height("auto");
-
-			$(".dashboard-content-wrapper")
-					.slimscroll(
-							{
-								height : ($(window).height() - headerHeight - footerHeight)
-										+ "px",
-								color : "#00b300",
-								size : "10px"
-							});
-		}
 	}
 	function tree(menu) {
 		var animationSpeed = 500;
