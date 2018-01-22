@@ -72,9 +72,9 @@ class TraineeController extends IlcfranceController
             ->getUser()
             ->getFullname())
             ->setTitle('Work Records Trainees List')
-            ->setSubject($this->translate('Work Records Trainees List'))
-            ->setDescription($this->translate('Work Records Trainees List'))
-            ->setKeywords($this->translate('pagetitle.mpaye.list'))
+            ->setSubject('Work Records Trainees List')
+            ->setDescription('Work Records Trainees List')
+            ->setKeywords('Work Records Trainees List')
             ->setCategory('ILCFrance');
         $phpExcelObject->setActiveSheetIndex(0);
 
@@ -89,20 +89,20 @@ class TraineeController extends IlcfranceController
         $workSheet->getStyle('B1')
             ->getFont()
             ->setBold(true);
-        $workSheet->setCellValue('C1', $this->translate('Trainee.address'));
-        $workSheet->getStyle('C1')
-            ->getFont()
-            ->setBold(true);
-        $workSheet->setCellValue('D1', $this->translate('Trainee.town'));
-        $workSheet->getStyle('D1')
-            ->getFont()
-            ->setBold(true);
         $workSheet->setCellValue('E1', $this->translate('Trainee.email'));
         $workSheet->getStyle('E1')
             ->getFont()
             ->setBold(true);
         $workSheet->setCellValue('F1', $this->translate('Trainee.phone'));
         $workSheet->getStyle('F1')
+            ->getFont()
+            ->setBold(true);
+        $workSheet->setCellValue('C1', $this->translate('Trainee.address'));
+        $workSheet->getStyle('C1')
+            ->getFont()
+            ->setBold(true);
+        $workSheet->setCellValue('D1', $this->translate('Trainee.town'));
+        $workSheet->getStyle('D1')
             ->getFont()
             ->setBold(true);
         $workSheet->setCellValue('G1', $this->translate('Trainee.mobile'));
@@ -133,12 +133,45 @@ class TraineeController extends IlcfranceController
         $workSheet->getStyle('M1')
             ->getFont()
             ->setBold(true);
+        $workSheet->setCellValue('N1', $this->translate('TraineeHistorical.year'));
+        $workSheet->getStyle('N1')
+            ->getFont()
+            ->setBold(true);
+        $workSheet->setCellValue('O1', $this->translate('TraineeHistorical.origine'));
+        $workSheet->getStyle('O1')
+            ->getFont()
+            ->setBold(true);
+        $workSheet->setCellValue('P1', $this->translate('TraineeHistorical.initLevel'));
+        $workSheet->getStyle('P1')
+            ->getFont()
+            ->setBold(true);
+        $workSheet->setCellValue('Q1', $this->translate('TraineeHistorical.level'));
+        $workSheet->getStyle('Q1')
+            ->getFont()
+            ->setBold(true);
+        $workSheet->setCellValue('R1', $this->translate('TraineeHistorical.needs'));
+        $workSheet->getStyle('R1')
+            ->getFont()
+            ->setBold(true);
+        $workSheet->setCellValue('S1', $this->translate('TraineeHistorical.courses'));
+        $workSheet->getStyle('S1')
+            ->getFont()
+            ->setBold(true);
 
         $workSheet->getStyle('A1:M1')->applyFromArray(array(
             'fill' => array(
                 'type' => \PHPExcel_Style_Fill::FILL_SOLID,
                 'color' => array(
-                    'rgb' => '94ccdf'
+                    'rgb' => '94CCDF'
+                )
+            )
+        ));
+
+        $workSheet->getStyle('N1:S1')->applyFromArray(array(
+            'fill' => array(
+                'type' => \PHPExcel_Style_Fill::FILL_SOLID,
+                'color' => array(
+                    'rgb' => '55A7C3'
                 )
             )
         ));
@@ -146,40 +179,104 @@ class TraineeController extends IlcfranceController
         $i = 1;
 
         foreach ($trainees as $trainee) {
-            $i++;
+            if ($trainee->getHistoricals()->count() == 0) {
+                $i++;
+                $workSheet->setCellValue('A' . $i, $trainee->getLastName(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                $workSheet->setCellValue('B' . $i, $trainee->getFirstName(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                $workSheet->setCellValue('C' . $i, $trainee->getAddress(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                $workSheet->setCellValue('D' . $i, $trainee->getTown(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                $workSheet->setCellValue('E' . $i, $trainee->getEmail(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                $workSheet->setCellValue('F' . $i, $trainee->getPhone(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                $workSheet->setCellValue('G' . $i, $trainee->getMobile(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                $workSheet->setCellValue('H' . $i, $trainee->getJob(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                $workSheet->setCellValue('I' . $i, $trainee->getInitLevel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                $workSheet->setCellValue('J' . $i, $trainee->getLevel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                $workSheet->setCellValue('K' . $i, $trainee->getNeeds(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                $workSheet->setCellValue('L' . $i, $trainee->getCourses(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                $workSheet->setCellValue('M' . $i, $trainee->getOrigine(), \PHPExcel_Cell_DataType::TYPE_STRING2);
 
-            $workSheet->setCellValue('A' . $i, $trainee->getLastName(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-            $workSheet->setCellValue('B' . $i, $trainee->getFirstName(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-            $workSheet->setCellValue('C' . $i, $trainee->getAddress(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-            $workSheet->setCellValue('D' . $i, $trainee->getTown(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-            $workSheet->setCellValue('E' . $i, $trainee->getEmail(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-            $workSheet->setCellValue('F' . $i, $trainee->getPhone(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-            $workSheet->setCellValue('G' . $i, $trainee->getMobile(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-            $workSheet->setCellValue('H' . $i, $trainee->getJob(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-            $workSheet->setCellValue('I' . $i, $trainee->getInitLevel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-            $workSheet->setCellValue('J' . $i, $trainee->getLevel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-            $workSheet->setCellValue('K' . $i, $trainee->getNeeds(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-            $workSheet->setCellValue('L' . $i, $trainee->getCourses(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-            $workSheet->setCellValue('M' . $i, $trainee->getOrigine(), \PHPExcel_Cell_DataType::TYPE_STRING2);
-
-            if ($i % 2 == 1) {
-                $workSheet->getStyle('A' . $i . ':M' . $i)->applyFromArray(array(
-                    'fill' => array(
-                        'type' => \PHPExcel_Style_Fill::FILL_SOLID,
-                        'color' => array(
-                            'rgb' => 'd8f1f5'
+                if ($i % 2 == 1) {
+                    $workSheet->getStyle('A' . $i . ':M' . $i)->applyFromArray(array(
+                        'fill' => array(
+                            'type' => \PHPExcel_Style_Fill::FILL_SOLID,
+                            'color' => array(
+                                'rgb' => 'd8f1f5'
+                            )
                         )
-                    )
-                ));
+                    ));
+                } else {
+                    $workSheet->getStyle('A' . $i . ':M' . $i)->applyFromArray(array(
+                        'fill' => array(
+                            'type' => \PHPExcel_Style_Fill::FILL_SOLID,
+                            'color' => array(
+                                'rgb' => 'bfbfbf'
+                            )
+                        )
+                    ));
+                }
             } else {
-                $workSheet->getStyle('A' . $i . ':M' . $i)->applyFromArray(array(
-                    'fill' => array(
-                        'type' => \PHPExcel_Style_Fill::FILL_SOLID,
-                        'color' => array(
-                            'rgb' => 'bfbfbf'
-                        )
-                    )
-                ));
+                foreach ($trainee->getHistoricals() as $historical) {
+                    $i++;
+                    $workSheet->setCellValue('A' . $i, $trainee->getLastName(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    $workSheet->setCellValue('B' . $i, $trainee->getFirstName(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    $workSheet->setCellValue('C' . $i, $trainee->getAddress(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    $workSheet->setCellValue('D' . $i, $trainee->getTown(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    $workSheet->setCellValue('E' . $i, $trainee->getEmail(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    $workSheet->setCellValue('F' . $i, $trainee->getPhone(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    $workSheet->setCellValue('G' . $i, $trainee->getMobile(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    $workSheet->setCellValue('H' . $i, $trainee->getJob(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    $workSheet->setCellValue('I' . $i, $trainee->getInitLevel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    $workSheet->setCellValue('J' . $i, $trainee->getLevel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    $workSheet->setCellValue('K' . $i, $trainee->getNeeds(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    $workSheet->setCellValue('L' . $i, $trainee->getCourses(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    $workSheet->setCellValue('M' . $i, $trainee->getOrigine(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+
+                    $workSheet->setCellValue('N' . $i, $historical->getYear(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    $workSheet->setCellValue('O' . $i, $historical->getOrigine(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    $workSheet->setCellValue('P' . $i, $historical->getInitLevel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    $workSheet->setCellValue('Q' . $i, $historical->getLevel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    $workSheet->setCellValue('R' . $i, $historical->getNeeds(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    $workSheet->setCellValue('S' . $i, $historical->getCourses(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+
+                    if ($i % 2 == 1) {
+                        $workSheet->getStyle('A' . $i . ':M' . $i)->applyFromArray(array(
+                            'fill' => array(
+                                'type' => \PHPExcel_Style_Fill::FILL_SOLID,
+                                'color' => array(
+                                    'rgb' => 'D8F1F5'
+                                )
+                            )
+                        ));
+                    } else {
+                        $workSheet->getStyle('A' . $i . ':M' . $i)->applyFromArray(array(
+                            'fill' => array(
+                                'type' => \PHPExcel_Style_Fill::FILL_SOLID,
+                                'color' => array(
+                                    'rgb' => 'BFBFBF'
+                                )
+                            )
+                        ));
+                    }
+                    if ($i % 2 == 1) {
+                        $workSheet->getStyle('N' . $i . ':S' . $i)->applyFromArray(array(
+                            'fill' => array(
+                                'type' => \PHPExcel_Style_Fill::FILL_SOLID,
+                                'color' => array(
+                                    'rgb' => 'C9DCDF'
+                                )
+                            )
+                        ));
+                    } else {
+                        $workSheet->getStyle('N' . $i . ':S' . $i)->applyFromArray(array(
+                            'fill' => array(
+                                'type' => \PHPExcel_Style_Fill::FILL_SOLID,
+                                'color' => array(
+                                    'rgb' => 'BAE3E5'
+                                )
+                            )
+                        ));
+                    }
+                }
             }
         }
 
@@ -196,6 +293,12 @@ class TraineeController extends IlcfranceController
         $workSheet->getColumnDimension('K')->setAutoSize(true);
         $workSheet->getColumnDimension('L')->setAutoSize(true);
         $workSheet->getColumnDimension('M')->setAutoSize(true);
+        $workSheet->getColumnDimension('N')->setAutoSize(true);
+        $workSheet->getColumnDimension('O')->setAutoSize(true);
+        $workSheet->getColumnDimension('P')->setAutoSize(true);
+        $workSheet->getColumnDimension('Q')->setAutoSize(true);
+        $workSheet->getColumnDimension('R')->setAutoSize(true);
+        $workSheet->getColumnDimension('S')->setAutoSize(true);
 
         $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
         $response = $this->get('phpexcel')->createStreamedResponse($writer);
@@ -325,6 +428,10 @@ class TraineeController extends IlcfranceController
 
                 ini_set('memory_limit', '4096M');
                 ini_set('max_execution_time', '0');
+
+                $em = $this->getEntityManager();
+                $dbTrainees = $em->getRepository('IlcfrancePassportstagiaireDataBundle:Trainee')->findAll();
+
                 $extension = $traineeImportForm['excel']->getData()->guessExtension();
                 if ($extension == 'zip') {
                     $extension = 'xlsx';
@@ -367,8 +474,8 @@ class TraineeController extends IlcfranceController
                 $lineRead = 0;
                 $lineUnprocessed = 0;
                 $traineeNew = 0;
+                $histNew = 0;
                 $lineError = 0;
-                $em = $this->getEntityManager();
 
                 for ($row = 2; $row <= $highestRow; $row++) {
                     $lineRead++;
@@ -386,17 +493,33 @@ class TraineeController extends IlcfranceController
                     $needs = \trim(\strval($worksheet->getCellByColumnAndRow(10, $row)->getValue()));
                     $courses = \trim(\strval($worksheet->getCellByColumnAndRow(11, $row)->getValue()));
                     $origine = \trim(\strval($worksheet->getCellByColumnAndRow(12, $row)->getValue()));
+
+                    $histYear = \trim(\intval($worksheet->getCellByColumnAndRow(13, $row)->getValue()));
+                    $histOrigine = \trim(\strval($worksheet->getCellByColumnAndRow(14, $row)->getValue()));
+                    $histInitLevel = \trim(\strval($worksheet->getCellByColumnAndRow(15, $row)->getValue()));
+                    $histLevel = \trim(\strval($worksheet->getCellByColumnAndRow(16, $row)->getValue()));
+                    $histNeeds = \trim(\strval($worksheet->getCellByColumnAndRow(17, $row)->getValue()));
+                    $histCourses = \trim(\strval($worksheet->getCellByColumnAndRow(18, $row)->getValue()));
+
                     if ($origine == '') {
                         $origine = 'PASSPORT';
                     }
 
-                    if ($lastName != '' and $firstName != '') {
-                        $trainee = $em->getRepository('IlcfrancePassportstagiaireDataBundle:Trainee')->findOneBy(array(
-                            'lastName' => $lastName,
-                            'firstName' => $firstName
-                        ));
+                    if ($lastName != '' && $firstName != '') {
+                        $trainee = null;
+                        $hist = null;
+                        foreach ($dbTrainees as $dbTrainee) {
+                            if ($dbTrainee->getLastName() == $lastName && $dbTrainee->getFirstName() == $firstName) {
+                                $trainee = $dbTrainee;
+                            }
+                        }
+                        // $trainee = $em->getRepository('IlcfrancePassportstagiaireDataBundle:Trainee')->findOneBy(array(
+                        // 'lastName' => $lastName,
+                        // 'firstName' => $firstName
+                        // ));
                         if (null == $trainee) {
                             $traineeNew++;
+                            $histNew++;
 
                             $trainee = new Trainee();
                             $trainee->setFirstName($firstName);
@@ -414,56 +537,151 @@ class TraineeController extends IlcfranceController
                             $trainee->setOrigine($origine);
 
                             $em->persist($trainee);
-                            $log .= "le Trainee " . $lastName . ' ' . $firstName . ' est nouveau<br>';
+                            $log .= 'L' . $row . ": le Stagiaire " . $lastName . ' ' . $firstName . ' est nouveau. ';
+
+                            if (\trim($histYear) == '') {
+                                $histYear = \date('Y');
+                            }
+                            if (\trim($histOrigine) == '') {
+                                $histOrigine = $origine;
+                            }
+                            if (\trim($histInitLevel) == '') {
+                                $histInitLevel = $initLevel;
+                            }
+                            if (\trim($histLevel) == '') {
+                                $histLevel = $level;
+                            }
+                            if (\trim($histNeeds) == '') {
+                                $histNeeds = $needs;
+                            }
+                            if (\trim($histCourses) == '') {
+                                $histCourses = $courses;
+                            }
+
+                            $hist = new TraineeHistorical();
+                            $hist->setTrainee($trainee);
+                            $hist->setYear($histYear);
+                            $hist->setOrigine($histOrigine);
+                            $hist->setInitLevel($histInitLevel);
+                            $hist->setLevel($histLevel);
+                            $hist->setNeeds($histNeeds);
+                            $hist->setCourses($histCourses);
+
+                            $em->persist($hist);
+                            $log .= "Nouveau Parcours " . $histYear . ' ' . $histOrigine . '.<br>';
+
+                            $trainee->addHistorical($hist);
+                            $em->persist($trainee);
+                            $dbTrainees[] = $trainee;
                         } else {
-                            $update = false;
-                            if (\trim($address) != "") {
+                            $updateTrainee = false;
+                            if (\trim($address) != "" && $trainee->getAddress() != $address) {
                                 $trainee->setAddress($address);
-                                $update = true;
+                                $updateTrainee = true;
                             }
-                            if (\trim($town) != "") {
+                            if (\trim($town) != "" && $trainee->getTown() != $town) {
                                 $trainee->setTown($town);
-                                $update = true;
+                                $updateTrainee = true;
                             }
-                            if (\trim($email) != "") {
+                            if (\trim($email) != "" && $trainee->getEmail() != $email) {
                                 $trainee->setEmail($email);
-                                $update = true;
+                                $updateTrainee = true;
                             }
-                            if (\trim($phone) != "") {
+                            if (\trim($phone) != "" && $trainee->getPhone() != $phone) {
                                 $trainee->setPhone($phone);
-                                $update = true;
+                                $updateTrainee = true;
                             }
-                            if (\trim($mobile) != "") {
+                            if (\trim($mobile) != "" && $trainee->getMobile() != $mobile) {
                                 $trainee->setMobile($mobile);
-                                $update = true;
+                                $updateTrainee = true;
                             }
-                            if (\trim($job) != "") {
+                            if (\trim($job) != "" && $trainee->getJob() != $job) {
                                 $trainee->setJob($job);
-                                $update = true;
+                                $updateTrainee = true;
                             }
-                            if (\trim($initLevel) != "") {
+                            if (\trim($initLevel) != "" && $trainee->getInitLevel() != $initLevel) {
                                 $trainee->setInitLevel($initLevel);
-                                $update = true;
+                                $updateTrainee = true;
                             }
-                            if (\trim($needs) != "") {
+                            if (\trim($needs) != "" && $trainee->getNeeds() != $needs) {
                                 $trainee->setNeeds($needs);
-                                $update = true;
+                                $updateTrainee = true;
                             }
-                            if (\trim($courses) != "") {
+                            if (\trim($courses) != "" && $trainee->getCourses() != $courses) {
                                 $trainee->setCourses($courses);
-                                $update = true;
+                                $updateTrainee = true;
                             }
-                            if (\trim($origine) != "") {
+                            if (\trim($origine) != "" && $trainee->getOrigine() != $origine) {
                                 $trainee->setOrigine($origine);
-                                $update = true;
+                                $updateTrainee = true;
+                            }
+                            if ($updateTrainee) {
+                                $em->persist($trainee);
+                                $log .= 'L' . $row . ": le Stagiaire " . $lastName . ' ' . $firstName . ' a été mis à jour. ';
+                            } else {
+                                // $log .= 'L'.$row.": le Stagiaire " . $lastName . ' ' . $firstName . ' existe déjà. ';
+                            }
+                            if (\trim($histYear) != '' && \trim($histOrigine) != '') {
+                                foreach ($trainee->getHistoricals() as $dbHist) {
+                                    if ($dbHist->getYear() == $histYear && $dbHist->getOrigine() == $histOrigine) {
+                                        $hist = $dbHist;
+                                    }
+                                }
+                                if (null != $hist) {
+
+                                    $updateHist = false;
+                                    if (\trim($histInitLevel) != "" && $hist->getInitLevel() != $histInitLevel) {
+                                        $hist->setInitLevel($histInitLevel);
+                                        $updateHist = true;
+                                    }
+                                    if (\trim($histLevel) != "" && $hist->getLevel() != $histLevel) {
+                                        $hist->setLevel($histLevel);
+                                        $updateHist = true;
+                                    }
+                                    if (\trim($histNeeds) != "" && $hist->getNeeds() != $histNeeds) {
+                                        $hist->setNeeds($histNeeds);
+                                        $updateHist = true;
+                                    }
+                                    if (\trim($histCourses) != "" && $hist->getCourses() != $histCourses) {
+                                        $hist->setCourses($histCourses);
+                                        $updateHist = true;
+                                    }
+
+                                    if ($updateHist) {
+                                        if (!$updateTrainee) {
+                                            $log .= 'L' . $row . ': ';
+                                        }
+                                        $em->persist($hist);
+                                        $log .= "le Parcours " . $histYear . ' ' . $histOrigine . ' a été mis à jour.<br>';
+                                    } else {
+                                        // $log .= "le Parcours " . $histYear . ' ' . $histOrigine . ' existe déjà.<br>';
+                                        if ($updateTrainee) {
+                                            $log .= '<br>';
+                                        }
+                                    }
+                                } else {
+                                    $histNew++;
+
+                                    $hist = new TraineeHistorical();
+                                    $hist->setTrainee($trainee);
+                                    $hist->setYear($histYear);
+                                    $hist->setOrigine($histOrigine);
+                                    $hist->setInitLevel($histInitLevel);
+                                    $hist->setLevel($histLevel);
+                                    $hist->setNeeds($histNeeds);
+                                    $hist->setCourses($histCourses);
+
+                                    $em->persist($hist);
+
+                                    $trainee->addHistorical($hist);
+                                    $em->persist($trainee);
+                                    if (!$updateTrainee) {
+                                        $log .= 'L' . $row . ': ';
+                                    }
+                                    $log .= "Nouveau Parcours " . $histYear . ' ' . $histOrigine . '.<br>';
+                                }
                             }
                             $lineUnprocessed++;
-                            if ($update) {
-                                $em->persist($trainee);
-                                $log .= "le Trainee " . $lastName . ' ' . $firstName . ' existe déjà mais a été mis à jour<br>';
-                            } else {
-                                $log .= "le Trainee " . $lastName . ' ' . $firstName . ' existe déjà<br>';
-                            }
                         }
                     } else {
                         $lineError++;
@@ -473,8 +691,9 @@ class TraineeController extends IlcfranceController
                 $em->flush();
 
                 $log .= $lineRead . ' lignes lues<br>';
-                $log .= $traineeNew . " nouveaux Trainees<br>";
-                $log .= $lineUnprocessed . " Trainees déjà dans la base<br>";
+                $log .= $traineeNew . " nouveaux Stagiaires<br>";
+                $log .= $histNew . " nouveaux Parcours<br>";
+                $log .= $lineUnprocessed . " Stagiaires déjà dans la base<br>";
                 $log .= $lineError . ' lignes contenant des erreurs<br>';
 
                 $this->addFlash('log', $log);

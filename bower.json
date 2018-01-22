@@ -73,7 +73,7 @@
     "datatables.net-select-bs" : "~1.2",
     "fullcalendar" : "~3.3",
     "iCheck": "~1.0",
-    "tinymce" : "~4.5",
+    "tinymce" : "4.*",
     "ivan-chkv.tinymce-i18n" : "~4.0"
   }
 }
