@@ -34,9 +34,13 @@
 								<div class="col-lg-3 text-right">{{'User.fullName'|trans|raw}} :</div>
 								<div class="col-lg-9">{{ ('User.sexe.' ~ user.sexe)|trans }} {{ user.fullName }}&nbsp;</div>
 								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'User.locale'|trans|raw}} :</div>
+								<div class="col-lg-9">{% if user.locale is not empty %}
+								{% if is_granted('ROLE_SUPERADMIN') %}<a href="{{ path('ilcfrance_passportstagiaire_front_locale_editGet', {'id': user.locale.id}) }}">{{user.locale.languageName}}</a>{% else %}{{user.locale.languageName}}{% endif %}{% else %}{{bsLabelWarning('_NONE'|trans)}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'User.userRoles'|trans|raw}} :</div>
 								<div class="col-lg-9">
-									{%if user.userRoles|length!=0%}
+									{%if user.userRoles.count()!=0%}
 									<ul class="list-unstyled">
 									{% for r in user.userRoles %}
 										{% if is_granted('ROLE_SUPERADMIN') %}
@@ -55,6 +59,11 @@
 								<div class="col-lg-9">{{user.logins}}&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'User.lastLogin'|trans|raw}} :</div>
 								<div class="col-lg-9">{% if user.lastLogin is not empty %}{{user.lastLogin|localeDate('medium')}} {{'_at'|trans}} {{user.lastLogin|localeDate('none', 'short')}}{% else %}{{bsLabelWarning('_NONE'|trans)}}{% endif %}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'User.records'|trans|raw}} :</div>
+								<div class="col-lg-9">
+									{{bsLabel(user.records.count())}}&nbsp;
+								</div>
 								<div class="col-lg-12">&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'User.dtCrea'|trans|raw}} :</div>
 								<div class="col-lg-9">{{user.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{user.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
@@ -148,7 +157,7 @@
 		</div>
 	</div>
 </div>
-<div id="uploadAvatar" class="modal modal-info fade in" tabindex="-1" user="dialog" aria-labelledby="myModalLabel">
+<div id="uploadAvatar" class="modal modal-info fade in" tabindex="-1" user="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -166,7 +175,7 @@
 		</div>
 	</div>
 </div>
-<div id="deleteConfirmUserPicture" class="modal modal-info fade in" tabindex="-1" user="dialog" aria-labelledby="myModalLabel">
+<div id="deleteConfirmUserPicture" class="modal modal-info fade in" tabindex="-1" user="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">

@@ -158,6 +158,26 @@ ilcfrance_passportstagiaire_front_trainee_editPost:
     requirements:
         id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
 
+ilcfrance_passportstagiaire_front_trainee_historical_delete:
+    path:     /historical/delete/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:TraineeHistorical:delete" }
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ilcfrance_passportstagiaire_front_trainee_historical_editGet:
+    path:     /historical/edit/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:TraineeHistorical:editGet" }
+    methods: [GET]
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ilcfrance_passportstagiaire_front_trainee_historical_editPost:
+    path:     /historical/edit/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:TraineeHistorical:editPost" }
+    methods: [POST]
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
 ilcfrance_passportstagiaire_front_trainee_record_delete:
     path:     /worksRecord/delete/{id}
     defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:TraineeRecord:delete" }

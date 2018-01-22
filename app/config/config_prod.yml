@@ -23,10 +23,14 @@ monolog:
             type: stream
             path: "%kernel.logs_dir%/%kernel.environment%_debug.log"
             level: debug
+        main:
+            type: fingers_crossed
+            action_level: error
+            handler: nested
+        nested:
+            type: stream
+            path: '%kernel.logs_dir%/%kernel.environment%.log'
+            level: debug
         console:
-            type:   console
-            bubble: false
-            channels: ["!event", "!doctrine"]
-            verbosity_levels:
-                VERBOSITY_VERBOSE: INFO
-                VERBOSITY_VERY_VERBOSE: DEBUG
+            type: console
+            process_psr_3_messages: false

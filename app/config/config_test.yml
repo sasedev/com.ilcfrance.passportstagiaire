@@ -10,13 +10,9 @@ framework:
     router:
         resource: "%kernel.root_dir%/config/routing_%kernel.environment%.yml"
         strict_requirements: true
-    profiler: 
-        only_exceptions: false
-        collect: true
+    profiler:
+        collect: false
 
-web_profiler:
-    toolbar: false
-    intercept_redirects: false
 
 monolog:
     handlers:
@@ -33,21 +29,10 @@ monolog:
             type: stream
             path: "%kernel.logs_dir%/%kernel.environment%_debug.log"
             level: debug
-        console:
-            type:   console
-            bubble: false
-            channels: ["!event", "!doctrine"]
-            verbosity_levels:
-                VERBOSITY_VERBOSE: INFO
-                VERBOSITY_VERY_VERBOSE: DEBUG
-        # uncomment to get logging in your browser
-        # you may have to allow bigger header sizes in your Web server configuration
-        #firephp:
-        #    type:   firephp
-        #    level:  info
-        #chromephp:
-        #    type:   chromephp
-        #    level:  info
+
+web_profiler:
+    toolbar: false
+    intercept_redirects: false
 
 swiftmailer:
     disable_delivery: true

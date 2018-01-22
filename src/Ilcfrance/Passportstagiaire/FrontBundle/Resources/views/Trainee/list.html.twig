@@ -26,8 +26,7 @@
 							<th>{{ 'Trainee.lastName.label'|trans|raw }}</th>
 							<th>{{ 'Trainee.firstName.label'|trans|raw }}</th>
 							<th>{{ 'Trainee.level.label'|trans|raw }}</th>
-							<th>{{ 'Trainee.records.label'|trans|raw }}</th>
-							<th>{{ 'Trainee.origine.label'|trans|raw }}</th>
+							<th>{{ 'Trainee.historicals.label'|trans|raw }}</th>
 							<th>{{ 'table.actions'|trans|raw }}</th>
 						</tr>
 					</thead>
@@ -39,9 +38,10 @@
 							<td>{{ trainee.firstName }} </td>
 							<td>{% if trainee.level is not empty %}{{ trainee.level }}{% else %}{{ bsLabel('_NA'|trans)}}{% endif %}</td>
 							<td>
-								{{bsLabel(trainee.records|length)}}
+								{% for hist in trainee.historicals %}
+								{{ hist.year }} - {{ hist.origine }} {{bsLabel(hist.records.count())}}
+								{% endfor %}
 							</td>
-							<td>{{ trainee.origine }} </td>
 							<td>
 								<a class="btn btn-sm btn-info" href="{{path('ilcfrance_passportstagiaire_front_trainee_editGet',{'id':trainee.id})}}">{{ faIco('edit') }} {{ 'action.edit'|trans }}</a>
 								{% if is_granted('ROLE_ADMIN') %}<a class="btn btn-sm btn-danger deleteConfirmTrainee" href="{{path('ilcfrance_passportstagiaire_front_trainee_delete',{'id':trainee.id})}}">{{ faIco('trash') }} {{ 'action.delete'|trans }}</a>{% endif %}
@@ -50,7 +50,7 @@
 						{% endfor %}
 					{% else %}
 						<tr>
-							<td colspan="6">{{ 'Trainee.empty'|trans|raw }}</td>
+							<td colspan="5">{{ 'Trainee.empty'|trans|raw }}</td>
 						</tr>
 					{% endif %}
 					</tbody>
@@ -60,7 +60,7 @@
 	</div>
 </div>
 {% if is_granted('ROLE_ADMIN') %}
-<div id="deleteConfirmTrainee" class="modal modal-info fade in" tabindex="-1" trainee="dialog" aria-labelledby="myModalLabel">
+<div id="deleteConfirmTrainee" class="modal modal-info fade in" tabindex="-1" trainee="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -86,10 +86,9 @@ $(function() {
 	{% if trainees|length != 0 %}
 	$('#traineeList').DataTable({
 		"language": {
-			"url": "{{ asset('/res/js/dataTablesI18N/')~(app.request.locale~'_datatables')|trans }}"
+			"url": "{{ preload(asset('/res/js/dataTablesI18N/'~(app.request.locale~'_datatables')|trans)) }}"
 		},
 		"columns": [
-			null,
 			null,
 			null,
 			null,

@@ -36,11 +36,14 @@
 !/web/res/imgs/.gitkeep
 /web/res/js/*
 !/web/res/js/.gitkeep
-!/web/res/js/dataTablesI18N
+/web/res/js/dataTablesI18N/*
+!/web/res/js/dataTablesI18N/.gitkeep
 /web/res/programs/*
 !/web/res/programs/.gitkeep
 /web/res/traineerecorddocuments/*
 !/web/res/traineerecorddocuments/.gitkeep
+/web/res/UserPictures/*
+!/web/res/UserPictures/.gitkeep
 /node_modules/
 /.settings/
 /.buildpath

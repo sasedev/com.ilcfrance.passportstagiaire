@@ -6,6 +6,8 @@ DROP TABLE IF EXISTS "ilcfrance_trainee_record_documents";
 
 DROP TABLE IF EXISTS "ilcfrance_trainee_records";
 
+DROP TABLE IF EXISTS "ilcfrance_trainee_historicals";
+
 DROP TABLE IF EXISTS "ilcfrance_trainees";
 
 DROP TABLE IF EXISTS "ilcfrance_users_pictures";

@@ -21,138 +21,20 @@ doctrine:
                          dir: "%kernel.root_dir%/../src/Ilcfrance/Passportstagiaire/DataBundle/Entity"
                          prefix: Ilcfrance\Passportstagiaire\DataBundle\Entity
                          alias: IlcfrancePassportstagiaireDataBundle
-                naming_strategy: doctrine.orm.naming_strategy.underscore
-                metadata_cache_driver: 
-                    type: service
-                    id: doctrine.cache.predis
-                query_cache_driver: 
-                    type: service
-                    id: doctrine.cache.predis
-                result_cache_driver: 
-                    type: service
-                    id: doctrine.cache.predis
+            mig:
+                connection: default
+                mappings:
+                    IlcfrancePassportstagiaireDataBundle:
+                         type: annotation
+                         dir: "%kernel.root_dir%/../src/Ilcfrance/Passportstagiaire/DataBundle/Entity"
+                         prefix: Ilcfrance\Passportstagiaire\DataBundle\Entity
+                         alias: IlcfrancePassportstagiaireDataBundle
+                metadata_cache_driver: apcu
+                query_cache_driver: apcu
+                result_cache_driver: apcu
                 second_level_cache:
                     enabled: true
                     log_enabled: true
-                    region_cache_driver:
-                        type: service
-                        id: doctrine.cache.predis
-                    region_lock_lifetime: 3000
-                    region_lifetime: 3000
-                    regions:
-                        region_Document:
-                            lifetime: 3000
-                            cache_driver:
-                                type: service
-                                id: doctrine.cache.predis
-                        region_Locale:
-                            lifetime: 3000
-                            cache_driver:
-                                type: service
-                                id: doctrine.cache.predis
-                        region_Locale_users:
-                            lifetime: 3000
-                            cache_driver:
-                                type: service
-                                id: doctrine.cache.predis
-                        region_Program:
-                            lifetime: 3000
-                            cache_driver:
-                                type: service
-                                id: doctrine.cache.predis
-                        region_Role:
-                            lifetime: 3000
-                            cache_driver:
-                                type: service
-                                id: doctrine.cache.predis
-                        region_Role_parents:
-                            lifetime: 3000
-                            cache_driver:
-                                type: service
-                                id: doctrine.cache.predis
-                        region_Role_childs:
-                            lifetime: 3000
-                            cache_driver:
-                                type: service
-                                id: doctrine.cache.predis
-                        region_Role_users:
-                            lifetime: 3000
-                            cache_driver:
-                                type: service
-                                id: doctrine.cache.predis
-                        region_Trainee:
-                            lifetime: 3000
-                            cache_driver:
-                                type: service
-                                id: doctrine.cache.predis
-                        region_Trainee_records:
-                            lifetime: 3000
-                            cache_driver:
-                                type: service
-                                id: doctrine.cache.predis
-                        region_TraineeRecord:
-                            lifetime: 3000
-                            cache_driver:
-                                type: service
-                                id: doctrine.cache.predis
-                        region_TraineeRecord_trainee:
-                            lifetime: 3000
-                            cache_driver:
-                                type: service
-                                id: doctrine.cache.predis
-                        region_TraineeRecord_teacher:
-                            lifetime: 3000
-                            cache_driver:
-                                type: service
-                                id: doctrine.cache.predis
-                        region_TraineeRecord_docs:
-                            lifetime: 3000
-                            cache_driver:
-                                type: service
-                                id: doctrine.cache.predis
-                        region_TraineeRecordDocument:
-                            lifetime: 3000
-                            cache_driver:
-                                type: service
-                                id: doctrine.cache.predis
-                        region_TraineeRecordDocument_traineeRecord:
-                            lifetime: 3000
-                            cache_driver:
-                                type: service
-                                id: doctrine.cache.predis
-                        region_User:
-                            lifetime: 3000
-                            cache_driver:
-                                type: service
-                                id: doctrine.cache.predis
-                        region_User_locale:
-                            lifetime: 3000
-                            cache_driver:
-                                type: service
-                                id: doctrine.cache.predis
-                        region_User_picture:
-                            lifetime: 3000
-                            cache_driver:
-                                type: service
-                                id: doctrine.cache.predis
-                        region_User_userRoles:
-                            lifetime: 3000
-                            cache_driver:
-                                type: service
-                                id: doctrine.cache.predis
-                        region_User_records:
-                            lifetime: 3000
-                            cache_driver:
-                                type: service
-                                id: doctrine.cache.predis
-                        region_UserPicture:
-                            lifetime: 3000
-                            cache_driver:
-                                type: service
-                                id: doctrine.cache.predis
-                        region_UserPicture_id:
-                            lifetime: 3000
-                            cache_driver:
-                                type: service
-                                id: doctrine.cache.predis
-
+                    region_cache_driver: apcu
+                    region_lock_lifetime: 20
+                    region_lifetime: 86400

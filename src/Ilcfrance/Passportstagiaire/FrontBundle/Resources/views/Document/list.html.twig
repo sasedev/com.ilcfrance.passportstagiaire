@@ -67,7 +67,7 @@
 	</div>
 </div>
 {% if is_granted('ROLE_ADMIN') %}
-<div id="deleteConfirmDocument" class="modal modal-info fade in" tabindex="-1" document="dialog" aria-labelledby="myModalLabel">
+<div id="deleteConfirmDocument" class="modal modal-info fade in" tabindex="-1" document="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -93,7 +93,7 @@ $(function() {
 	{% if documents|length != 0 %}
 	$('#documentList').DataTable({
 		"language": {
-			"url": "{{ asset('/res/js/dataTablesI18N/')~(app.request.locale~'_datatables')|trans }}"
+			"url": "{{ preload(asset('/res/js/dataTablesI18N/'~(app.request.locale~'_datatables')|trans)) }}"
 		},
 		"columns": [
 			null,

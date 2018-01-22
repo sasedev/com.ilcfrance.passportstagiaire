@@ -7,7 +7,7 @@ use Symfony\Component\Intl\Intl;
 
 /**
  *
- * @author sasedev <seif.salah@gmail.com>
+ * @author sasedev <sinus@saseprod.net>
  */
 class TwigCountryExtension extends Twig_Extension
 {

@@ -7,7 +7,7 @@ use Sasedev\SharedBundle\Util\DateFormatter;
 
 /**
  *
- * @author sasedev <seif.salah@gmail.com>
+ * @author sasedev <sinus@saseprod.net>
  */
 class TwigDateFormatterExtension extends Twig_Extension
 {

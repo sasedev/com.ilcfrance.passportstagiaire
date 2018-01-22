@@ -1,3 +1,0 @@
-sasedev_shared_homepage:
-    path:     /
-    defaults: { _controller: SasedevSharedBundle:Default:index }

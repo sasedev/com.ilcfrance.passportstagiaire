@@ -34,7 +34,7 @@
 							<td>{{ ('Locale.direction.' ~ locale.direction)|trans }}</td>
 							<td>{{ ('Locale.status.' ~ locale.status)|trans }}</td>
 							<td>
-								{{bsLabel(locale.users|length)}}
+								{{bsLabel(locale.users.count())}}
 							</td>
 							<td>
 								<a class="btn btn-sm btn-info" href="{{path('ilcfrance_passportstagiaire_front_locale_editGet',{'id':locale.id})}}">{{ faIco('edit') }} {{ 'action.edit'|trans }}</a>
@@ -53,7 +53,7 @@
 		</div>
 	</div>
 </div>
-<div id="deleteConfirmLocale" class="modal modal-info fade in" tabindex="-1" locale="dialog" aria-labelledby="myModalLabel">
+<div id="deleteConfirmLocale" class="modal modal-info fade in" tabindex="-1" locale="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -78,7 +78,7 @@ $(function() {
 	{% if locales|length != 0 %}
 	$('#localeList').DataTable({
 		"language": {
-			"url": "{{ asset('/res/js/dataTablesI18N/')~(app.request.locale~'_datatables')|trans }}"
+			"url": "{{ preload(asset('/res/js/dataTablesI18N/'~(app.request.locale~'_datatables')|trans)) }}"
 		},
 		"columns": [
 			null,

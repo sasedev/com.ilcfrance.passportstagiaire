@@ -1,13 +1,7 @@
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
 security:
-    access_denied_url:    ~ # Example: /foo/error403
-    session_fixation_strategy:  migrate
     hide_user_not_found:  true
-    always_authenticate_before_granting:  true
-    erase_credentials:    true
-    access_decision_manager:
-        strategy:             affirmative # One of affirmative, consensus, unanimous
-        allow_if_all_abstain:  false
-        allow_if_equal_granted_denied:  true
 
     encoders:
         Ilcfrance\Passportstagiaire\DataBundle\Entity\User:
@@ -16,6 +10,8 @@ security:
             encode_as_base64:     true
             iterations:           1000
             key_length:           40
+
+    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         user_provider:
             entity:
@@ -37,21 +33,23 @@ security:
             security: false
             anonymous:  true
         secoff:
-            pattern:  ^/(login|login_check|logout|register|lostid|lostpass|resetpass)/
+            pattern:  ^/(logout|login|login_check|lostId|lostPassword|generateNewPassword)/
             security: false
             anonymous:  true
+
         main:
             pattern:      .*
-            host: "%domain%"
+#            host: "%domain%"
             provider: chain_provider
             form_login:
-                login_path:     _security_login
-                check_path:     _security_check
+                login_path:     /login
+                check_path:     /login_check
                 post_only:      true
                 username_parameter:     "LoginForm[username]"
                 password_parameter:     "LoginForm[password]"
-#                target_path_parameter:  "LoginForm[target_path]"
-#                default_target_path: /
+                target_path_parameter:  "LoginForm[target_path]"
+                default_target_path: /myProfile
+                always_use_default_target_path: false
                 use_referer:    true
                 use_forward:    false
 #                intention: authentication
@@ -59,7 +57,9 @@ security:
                 remember_me:    true
 #                success_handler: login.listener
             logout:
-                path:   _security_logout
+                path:   /logout
+                target: /
+                invalidate_session: true
 #                target: '%schemes%://%domain%/'
 #                success_handler: logout_listener
             remember_me:
@@ -67,31 +67,21 @@ security:
                 name: ILCFrancePassportstagiaireSec
                 lifetime: 2592000 # optional, it is set to 30 days here
                 path: ^/
-                domain: "%domain%"
-                always_remember_me: false
+#                domain: "%domain%"
+                always_remember_me: true
                 remember_me_parameter: "LoginForm[remember_me]"
             security: true
             anonymous:    true
+            logout_on_user_change: true
     access_control:
         # Liste des pages accessibles à tous les utilisateurs (ne pas toucher)
-        - { path: ^/_wdt/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/_profiler/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/css/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/js/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/images/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/img/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/imgs/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/fonts/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/webfonts/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/assets/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/bundles/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/res/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/lostid, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/lostpassword, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetpass.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/_gcb.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/*, host: "%domain%", roles: ROLE_USER }
-    access_denied_url: /
+        - { path: ^/_wdt/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/_profiler/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/logout, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login_check, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/lostId, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/lostPassword, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/generateNewPassword.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/*, role: ROLE_USER }
+    access_denied_url: /login

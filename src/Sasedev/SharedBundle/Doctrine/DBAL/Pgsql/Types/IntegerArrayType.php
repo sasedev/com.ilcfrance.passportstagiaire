@@ -4,7 +4,7 @@ namespace Sasedev\SharedBundle\Doctrine\DBAL\Pgsql\Types;
 /**
  * IntegerArrayType
  *
- * @author sasedev <seif.salah@gmail.com>
+ * @author sasedev <sinus@saseprod.net>
  */
 class IntegerArrayType extends AbstractArrayType
 {

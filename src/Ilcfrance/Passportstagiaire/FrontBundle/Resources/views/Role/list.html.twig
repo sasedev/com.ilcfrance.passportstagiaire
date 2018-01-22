@@ -34,7 +34,7 @@
 							<td>{{ role.id }} </td>
 							<td>{{ role.description|raw }}</td>
 							<td>
-								{%if role.parents|length==0%}
+								{%if role.parents.count()==0%}
 								{{bsLabel('_NONE'|trans)}}
 								{%else%}
 								<ul class="list-unstyled">
@@ -45,7 +45,7 @@
 								{%endif%}
 							</td>
 							<td>
-								{%if role.childs|length==0%}
+								{%if role.childs.count()==0%}
 								{{bsLabel('_NONE'|trans)}}
 								{%else%}
 								<ul class="list-unstyled">
@@ -56,7 +56,7 @@
 								{%endif%}
 							</td>
 							<td>
-								{{bsLabel(role.users|length)}}
+								{{bsLabel(role.users.count())}}
 							</td>
 							<td>
 								<a class="btn btn-sm btn-info" href="{{path('ilcfrance_passportstagiaire_front_role_editGet',{'id':role.id})}}">{{ faIco('edit') }} {{ 'action.edit'|trans }}</a>
@@ -75,7 +75,7 @@
 		</div>
 	</div>
 </div>
-<div id="deleteConfirmRole" class="modal modal-info fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div id="deleteConfirmRole" class="modal modal-info fade in" tabindex="-1" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -100,7 +100,7 @@ $(function() {
 	{% if roles|length != 0 %}
 	$('#roleList').DataTable({
 		"language": {
-			"url": "{{ asset('/res/js/dataTablesI18N/')~(app.request.locale~'_datatables')|trans }}"
+			"url": "{{ preload(asset('/res/js/dataTablesI18N/'~(app.request.locale~'_datatables')|trans)) }}"
 		},
 		"columns": [
 			null,

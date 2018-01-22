@@ -36,7 +36,7 @@
 							<td>{{ user.email }} </td>
 							<td>{{ ('User.lockout.' ~ user.lockout)|trans }}</td>
 							<td>
-								{%if user.userRoles|length==0%}
+								{%if user.userRoles.count()==0%}
 								{{bsLabel('_NONE'|trans)}}
 								{%else%}
 								<ul class="list-unstyled">
@@ -63,7 +63,7 @@
 		</div>
 	</div>
 </div>
-<div id="deleteConfirmUser" class="modal modal-info fade in" tabindex="-1" user="dialog" aria-labelledby="myModalLabel">
+<div id="deleteConfirmUser" class="modal modal-info fade in" tabindex="-1" user="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -88,7 +88,7 @@ $(function() {
 	{% if users|length != 0 %}
 	$('#userList').DataTable({
 		"language": {
-			"url": "{{ asset('/res/js/dataTablesI18N/')~(app.request.locale~'_datatables')|trans }}"
+			"url": "{{ preload(asset('/res/js/dataTablesI18N/'~(app.request.locale~'_datatables')|trans)) }}"
 		},
 		"columns": [
 			null,

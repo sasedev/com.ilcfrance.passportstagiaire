@@ -4,15 +4,12 @@
   "author": "SASEdev seif@sasedev.net",
   "private": "true",
   "dependencies": {
-        "less": "~2.7",
-        "uglify-js": "~2.4",
-        "uglifycss": "~0.0",
-        "bower": "~1.3",
-        "node-sass": "~4.5",
-        "pngout-bin": "~3.0"
+    "less": "~2.7",
+    "uglify-js": "~3.3",
+    "bower": "~1.7"
   },
   "scripts": {
-    "postinstall" : "node_modules/.bin/bower install"
+    "postinstall": "node_modules/.bin/bower install"
   },
   "license": "MIT"
 }

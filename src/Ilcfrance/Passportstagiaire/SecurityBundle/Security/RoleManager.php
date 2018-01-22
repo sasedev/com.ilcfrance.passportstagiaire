@@ -5,99 +5,101 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Sasedev\SharedBundle\Security\RoleManagerInterface;
-use Symfony\Component\Security\Core\Role\RoleInterface;
+use Symfony\Component\Security\Core\Role\Role;
 
 /**
  *
- * @author sasedev <seif.salah@gmail.com>
+ * @author sasedev <sinus@saseprod.net>
  */
 class RoleManager implements RoleManagerInterface
 {
 
-	/**
-	 *
-	 * @var string
-	 */
-	protected $class;
+    /**
+     *
+     * @var string
+     */
+    protected $class;
 
-	/**
-	 *
-	 * @var ObjectManager
-	 */
-	protected $entity_manager;
+    /**
+     *
+     * @var ObjectManager
+     */
+    protected $entityManager;
 
-	/**
-	 *
-	 * @var ObjectRepository
-	 */
-	protected $entity_repository;
+    /**
+     *
+     * @var ObjectRepository
+     */
+    protected $entityRepository;
 
-	/**
-	 *
-	 * @param ManagerRegistry $manager_registry
-	 * @param string $class
-	 */
-	public function __construct(ManagerRegistry $manager_registry, $class)
-	{
-		$this->class = $class;
-		$this->entity_manager = $manager_registry->getManagerForClass($class);
-		$this->entity_repository = $this->entity_manager->getRepository($class);
-	}
+    /**
+     *
+     * @param ManagerRegistry $managerRegistry
+     * @param string $class
+     */
+    public function __construct(ManagerRegistry $managerRegistry, $class)
+    {
+        $this->class = $class;
+        $this->entityManager = $managerRegistry->getManagerForClass($class);
+        $this->entityRepository = $this->entityManager->getRepository($class);
+    }
 
-	/**
-	 *
-	 * {@inheritdoc} @see RoleManagerInterface::getEntityManager()
-	 */
-	public function getEntityManager()
-	{
-		return $this->entity_manager;
-	}
+    /**
+     *
+     * {@inheritdoc} @see RoleManagerInterface::getEntityManager()
+     */
+    public function getEntityManager()
+    {
+        return $this->entityManager;
+    }
 
-	/**
-	 *
-	 * {@inheritdoc} @see RoleManagerInterface::getEntityRepository()
-	 */
-	public function getEntityRepository()
-	{
-		return $this->entity_repository;
-	}
+    /**
+     *
+     * {@inheritdoc} @see RoleManagerInterface::getEntityRepository()
+     */
+    public function getEntityRepository()
+    {
+        return $this->entityRepository;
+    }
 
-	/**
-	 *
-	 * {@inheritdoc} @see RoleManagerInterface::getRoles()
-	 */
-	public function getRoles()
-	{
-		return $this->getEntityRepository()->findAll();
-	}
+    /**
+     *
+     * {@inheritdoc} @see RoleManagerInterface::getRoles()
+     */
+    public function getRoles()
+    {
+        return $this->getEntityRepository()->findAll();
+    }
 
-	/**
-	 *
-	 * {@inheritdoc} @see RoleManagerInterface::getClass()
-	 */
-	public function getClass()
-	{
-		return $this->class;
-	}
+    /**
+     *
+     * {@inheritdoc} @see RoleManagerInterface::getClass()
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
 
-	/**
-	 *
-	 * {@inheritdoc} @see RoleManagerInterface::createRole()
-	 */
-	public function createRole()
-	{
-		$class = $this->getClass();
-		return new $class();
-	}
+    /**
+     *
+     * {@inheritdoc} @see RoleManagerInterface::createRole()
+     */
+    public function createRole()
+    {
+        $class = $this->getClass();
 
-	/**
-	 *
-	 * {@inheritdoc} @see RoleManagerInterface::saveRole()
-	 */
-	public function saveRole(RoleInterface $role)
-	{
-		$this->getEntityManager()->persist($role);
-		$this->getEntityManager()->flush();
-		return $this;
-	}
+        return new $class();
+    }
+
+    /**
+     *
+     * {@inheritdoc} @see RoleManagerInterface::saveRole()
+     */
+    public function saveRole(Role $role)
+    {
+        $this->getEntityManager()->persist($role);
+        $this->getEntityManager()->flush();
+
+        return $this;
+    }
 }

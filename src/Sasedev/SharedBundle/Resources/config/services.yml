@@ -45,4 +45,3 @@ services:
 #        class: %sasedev_shared.bootstrap.form.type.collection.class%
 #        tags:
 #            - { name: form.type, alias: bootstrap_collection }
-

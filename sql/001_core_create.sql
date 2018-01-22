@@ -8,7 +8,7 @@ CREATE TABLE "ilcfrance_locales" (
 );
 
 CREATE TABLE "ilcfrance_roles" (
-	"id"                                                              TEXT NOT NULL,
+	"id"                                                                TEXT NOT NULL,
 	"description"                                                       TEXT NULL,
 	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
 	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
@@ -16,8 +16,8 @@ CREATE TABLE "ilcfrance_roles" (
 );
 
 CREATE TABLE "ilcfrance_role_parents" (
-	"child_id"                                                             TEXT NOT NULL,
-	"parent_id"                                                            TEXT NOT NULL,
+	"child_id"                                                          TEXT NOT NULL,
+	"parent_id"                                                         TEXT NOT NULL,
 	CONSTRAINT "pk_ilcfrance_role_parents" PRIMARY KEY ("child_id", "parent_id"),
 	CONSTRAINT "fk_ilcfrance_role_parents_child" FOREIGN KEY ("child_id") REFERENCES "ilcfrance_roles" ("id") ON UPDATE CASCADE ON DELETE CASCADE,
 	CONSTRAINT "fk_ilcfrance_role_parents_parend" FOREIGN KEY ("parent_id") REFERENCES "ilcfrance_roles" ("id") ON UPDATE CASCADE ON DELETE CASCADE
@@ -82,9 +82,26 @@ CREATE TABLE "ilcfrance_trainees" (
 	CONSTRAINT "pk_ilcfrance_trainees" PRIMARY KEY ("id")
 );
 
+CREATE TABLE "ilcfrance_trainee_historicals" (
+	"id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+	"trainee_id"                                                        UUID NOT NULL,
+	"year"                                                              TEXT NOT NULL,
+	"initlevel"                                                         TEXT NULL,
+	"level"                                                             TEXT NULL,
+	"needs"                                                             TEXT NULL,
+	"courses"                                                           TEXT NULL,
+	"origine"                                                           TEXT NULL DEFAULT 'PASSPORT',
+	"lockout"                                                           INT8 NOT NULL DEFAULT 1,
+	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+	CONSTRAINT "pk_ilcfrance_trainee_historicals" PRIMARY KEY ("id"),
+	CONSTRAINT "fk_ilcfrance_trainee_historicals_trainee" FOREIGN KEY ("trainee_id") REFERENCES "ilcfrance_trainees" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+);
+
 CREATE TABLE "ilcfrance_trainee_records" (
 	"id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
-	"trainee_id"                                                      UUID NOT NULL,
+	"trainee_id"                                                        UUID NOT NULL,
+	"hist_id"                                                           UUID NULL,
 	"teacher_id"                                                        TEXT NULL,
 	"teacher_name"                                                      TEXT NULL,
 	"record_date"                                                       TIMESTAMP WITH TIME ZONE NULL,
@@ -96,6 +113,7 @@ CREATE TABLE "ilcfrance_trainee_records" (
 	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
 	CONSTRAINT "pk_ilcfrance_trainee_records" PRIMARY KEY ("id"),
 	CONSTRAINT "fk_ilcfrance_trainee_records_trainee" FOREIGN KEY ("trainee_id") REFERENCES "ilcfrance_trainees" ("id") ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT "fk_ilcfrance_trainee_records_hist" FOREIGN KEY ("hist_id") REFERENCES "ilcfrance_trainee_historicals" ("id") ON UPDATE CASCADE ON DELETE SET NULL,
 	CONSTRAINT "fk_ilcfrance_trainee_records_teacher" FOREIGN KEY ("teacher_id") REFERENCES "ilcfrance_users" ("id") ON UPDATE CASCADE ON DELETE SET NULL
 );
 

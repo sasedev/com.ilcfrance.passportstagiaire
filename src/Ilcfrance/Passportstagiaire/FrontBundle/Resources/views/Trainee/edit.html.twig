@@ -11,13 +11,20 @@
 	<div class="col-lg-12">
 		<div class="well well-sm text-right">
 			<a href="{{ path('ilcfrance_passportstagiaire_front_trainee_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+			{% if is_granted('ROLE_ADMIN') %}
 			<a href="{{ path('ilcfrance_passportstagiaire_front_trainee_addGet') }}" class="btn btn-primary">{{ faIco('plus') }} {{ 'action.add'|trans }}</a>
+			{% endif %}
 		</div>
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs">
 				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'Trainee.tab.admin.overview'|trans|raw}}</a></li>
 				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'Trainee.tab.admin.edit'|trans|raw}}</a></li>
-				<li {%if tabActive==3%} class="active"{%endif%}><a href="#addRecord" data-toggle="tab">{{'Trainee.tab.admin.addRecord'|trans|raw}}</a></li>
+				{% if is_granted('ROLE_ADMIN') %}
+				<li {%if tabActive==3%} class="active"{%endif%}><a href="#addHistorical" data-toggle="tab">{{'Trainee.tab.admin.addHistorical'|trans|raw}}</a></li>
+				{% endif %}
+				{% if trainee.historicals.count() != 0 %}
+				<li {%if tabActive==4%} class="active"{%endif%}><a href="#addRecord" data-toggle="tab">{{'Trainee.tab.admin.addRecord'|trans|raw}}</a></li>
+				{% endif %}
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
@@ -54,21 +61,129 @@
 								<div class="col-lg-12">&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'Trainee.records'|trans|raw}} :</div>
 								<div class="col-lg-9">
-									{{bsLabel(trainee.records|length)}}&nbsp;
+									{{bsLabel(trainee.records.count())}}&nbsp;
 								</div>
 								<div class="col-lg-12">&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'Trainee.dtCrea'|trans|raw}} :</div>
 								<div class="col-lg-9">{{trainee.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{trainee.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'Trainee.dtUpdate'|trans|raw}} :</div>
 								<div class="col-lg-9">{{trainee.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{trainee.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
-								<br>
 							</div>
 						</div>
 					</div>
+					{% for historical in trainee.historicals %}
+					<div class="panel box box-warning">
+						<div class="box-header">
+							<h3 class="box-title">{{historical.smallName}}</h3>
+							{% if is_granted('ROLE_ADMIN') %}
+							<a class="pull-right btn btn-sm btn-danger deleteConfirmTraineeHistorical" href="{{path('ilcfrance_passportstagiaire_front_trainee_historical_delete',{'id':historical.id})}}">{{ faIco('trash') }}</a>
+							{% endif %}
+							<a class="pull-right btn btn-sm btn-success" href="{{path('ilcfrance_passportstagiaire_front_trainee_historical_editGet',{'id':historical.id})}}">{{ faIco('edit') }}</a>
+						</div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'TraineeHistorical.year'|trans|raw}} :</div>
+								<div class="col-lg-9">{{historical.year}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'TraineeHistorical.origine'|trans|raw}} :</div>
+								<div class="col-lg-9">{{historical.origine}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'TraineeHistorical.initLevel'|trans|raw}} :</div>
+								<div class="col-lg-9">{{historical.initLevel}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'TraineeHistorical.level'|trans|raw}} :</div>
+								<div class="col-lg-9">{{historical.level}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'TraineeHistorical.courses'|trans|raw}} :</div>
+								<div class="col-lg-9">{{historical.courses}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'TraineeHistorical.needs'|trans|raw}} :</div>
+								<div class="col-lg-9">{{historical.needs|raw}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'TraineeHistorical.records'|trans|raw}} :</div>
+								<div class="col-lg-9">
+									{{bsLabel(historical.records.count())}}&nbsp;
+								</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'TraineeHistorical.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{historical.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{historical.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'TraineeHistorical.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{historical.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{historical.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+							</div>
+							{% for record in historical.records %}
+							<div class="box box-info">
+								<div class="box-header">
+									<h3 class="box-title">{{record.smallName}} <small>({{record.teacherName}})</small></h3>
+									{% if is_granted('ROLE_ADMIN') %}
+									<a class="pull-right btn btn-sm btn-danger deleteConfirmTraineeRecord" href="{{path('ilcfrance_passportstagiaire_front_trainee_record_delete',{'id':record.id})}}">{{ faIco('trash') }}</a>
+									{% endif %}
+									{% if is_granted('ROLE_ADMIN') or app.user.id == record.teacher.id %}
+									<a class="pull-right btn btn-sm btn-success" href="{{path('ilcfrance_passportstagiaire_front_trainee_record_editGet',{'id':record.id})}}">{{ faIco('edit') }}</a>
+									{% endif %}
+								</div>
+								<div class="box-body">
+									<div class="row">
+										<div class="col-lg-3 text-right">{{'TraineeRecord.worksCovered'|trans|raw}} :</div>
+										<div class="col-lg-9">{{record.worksCovered|raw}}&nbsp;</div>
+										<div class="col-lg-3 text-right">{{'TraineeRecord.takeaways'|trans|raw}} :</div>
+										<div class="col-lg-9">{{record.takeaways|raw}}&nbsp;</div>
+										<div class="col-lg-3 text-right">{{'TraineeRecord.comments'|trans|raw}} :</div>
+										<div class="col-lg-9">{{record.comments|raw}}&nbsp;</div>
+										<div class="col-lg-3 text-right">{{'TraineeRecord.homeworks'|trans|raw}} :</div>
+										<div class="col-lg-9">{{record.homeworks|raw}}&nbsp;</div>
+										<div class="col-lg-3 text-right">{{'TraineeRecord.docs'|trans|raw}} :</div>
+										<div class="col-lg-9">{{bsLabel(record.docs.count())}}&nbsp;</div>
+										<div class="col-lg-12">&nbsp;</div>
+									</div>
+									{% if record.docs.count() != 0 %}
+									<div class="row table-responsive">
+										<div class="col-lg-12">
+											<table class="table table-bordered table-hover">
+											<thead>
+												<tr>
+													<th>{{ 'TraineeRecordDocument.originalName.label'|trans|raw }}</th>
+													<th>{{ 'TraineeRecordDocument.description.label'|trans|raw }}</th>
+													<th>{{ 'TraineeRecordDocument.mimeType.label'|trans|raw }}</th>
+													<th>{{ 'TraineeRecordDocument.size.label'|trans|raw }}</th>
+													<th>{{ 'table.actions'|trans|raw }}</th>
+												</tr>
+											</thead>
+											<tbody>
+											{% for doc in record.docs %}
+												<tr>
+													<td>{{ doc.originalName }} </td>
+													<td>{{ doc.description|raw }}</td>
+													<td>{{ doc.mimeType }} </td>
+													<td>
+														{%if doc.size<1024%}
+														{{doc.size}} o
+														{%elseif doc.size<(1024*1024)%}
+														{{'%.2f'|format(doc.size/1024)}} Ko
+														{%elseif doc.size<(1024*1024*1024)%}
+														{{'%.2f'|format(doc.size/1024/1024)}} Mo
+														{%else%}
+														{{'%.2f'|format(doc.size/1024/1024/1024)}} Go
+														{% endif %}
+													</td>
+													<td>
+														<a class="btn btn-sm btn-success" href="{{path('ilcfrance_passportstagiaire_front_trainee_record_document_download',{'id':doc.id})}}">{{ faIco('edit') }} {{ 'action.btnDownload'|trans }}</a>
+														{% if is_granted('ROLE_ADMIN') or app.user.id == record.teacher.id %}
+														<a class="btn btn-sm btn-info" href="{{path('ilcfrance_passportstagiaire_front_trainee_record_document_editGet',{'id':doc.id})}}">{{ faIco('edit') }} {{ 'action.edit'|trans }}</a>
+														{% endif %}
+													</td>
+												</tr>
+											{% endfor %}
+											</tbody>
+										</table>
+										</div>
+									</div>
+									{% endif %}
+								</div>
+							</div>
+							{% endfor %}
+						</div>
+					</div>
+					{% endfor %}
 					{% for record in trainee.records %}
+					{% if record.historical is null %}
 					<div class="panel box box-info">
 						<div class="box-header">
-							<h3 class="box-title">{{record.recordDate|localeDate('medium')}} {{ '_at'|trans }} {{record.recordDate|localeDate('none', 'medium')}} ({{record.teacherName}})</h3>
+							<h3 class="box-title">{{record.smallName}} <small>({{record.teacherName}})</small></h3>
 							{% if is_granted('ROLE_ADMIN') %}
 							<a class="pull-right btn btn-sm btn-danger deleteConfirmTraineeRecord" href="{{path('ilcfrance_passportstagiaire_front_trainee_record_delete',{'id':record.id})}}">{{ faIco('trash') }}</a>
 							{% endif %}
@@ -87,10 +202,10 @@
 								<div class="col-lg-3 text-right">{{'TraineeRecord.homeworks'|trans|raw}} :</div>
 								<div class="col-lg-9">{{record.homeworks|raw}}&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'TraineeRecord.docs'|trans|raw}} :</div>
-								<div class="col-lg-9">{{bsLabel(record.docs|length)}}&nbsp;</div>
+								<div class="col-lg-9">{{bsLabel(record.docs.count())}}&nbsp;</div>
 								<div class="col-lg-12">&nbsp;</div>
 							</div>
-							{% if record.docs|length != 0 %}
+							{% if record.docs.count() != 0 %}
 							<div class="row table-responsive">
 							<div class="col-lg-12">
 								<table class="table table-bordered table-hover">
@@ -135,6 +250,7 @@
 							{% endif %}
 						</div>
 					</div>
+					{% endif %}
 					{% endfor %}
 				</div>
 				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
@@ -176,30 +292,12 @@
 						</div>
 					</div>
 					<div class="panel box box-danger">
-						<div class="box-header"><h3 class="box-title">{{'Trainee.tlabel.admin.editLevel'|trans}}</h3></div>
+						<div class="box-header"><h3 class="box-title">{{'Trainee.tlabel.admin.editAddress'|trans}}</h3></div>
 						<div class="box-body">
-							{{form_start(TraineeUpdateLevelForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_editPost', {'id': trainee.id}), 'style': 'horizontal'})}}
-							{{form_row(TraineeUpdateLevelForm.level, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_start(TraineeUpdateAddressForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_editPost', {'id': trainee.id}), 'style': 'horizontal'})}}
+							{{form_row(TraineeUpdateAddressForm.address, {'label_col': 3, 'widget_col': 8 })}}
 							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
-							{{form_end(TraineeUpdateLevelForm)}}
-						</div>
-					</div>
-					<div class="panel box box-danger">
-						<div class="box-header"><h3 class="box-title">{{'Trainee.tlabel.admin.editOrigine'|trans}}</h3></div>
-						<div class="box-body">
-							{{form_start(TraineeUpdateOrigineForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_editPost', {'id': trainee.id}), 'style': 'horizontal'})}}
-							{{form_row(TraineeUpdateOrigineForm.origine, {'label_col': 3, 'widget_col': 8 })}}
-							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
-							{{form_end(TraineeUpdateOrigineForm)}}
-						</div>
-					</div>
-					<div class="panel box box-danger">
-						<div class="box-header"><h3 class="box-title">{{'Trainee.tlabel.admin.editJob'|trans}}</h3></div>
-						<div class="box-body">
-							{{form_start(TraineeUpdateJobForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_editPost', {'id': trainee.id}), 'style': 'horizontal'})}}
-							{{form_row(TraineeUpdateJobForm.job, {'label_col': 3, 'widget_col': 8 })}}
-							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
-							{{form_end(TraineeUpdateJobForm)}}
+							{{form_end(TraineeUpdateAddressForm)}}
 						</div>
 					</div>
 					<div class="panel box box-danger">
@@ -212,12 +310,48 @@
 						</div>
 					</div>
 					<div class="panel box box-danger">
-						<div class="box-header"><h3 class="box-title">{{'Trainee.tlabel.admin.editAddress'|trans}}</h3></div>
+						<div class="box-header"><h3 class="box-title">{{'Trainee.tlabel.admin.editJob'|trans}}</h3></div>
 						<div class="box-body">
-							{{form_start(TraineeUpdateAddressForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_editPost', {'id': trainee.id}), 'style': 'horizontal'})}}
-							{{form_row(TraineeUpdateAddressForm.address, {'label_col': 3, 'widget_col': 8 })}}
+							{{form_start(TraineeUpdateJobForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_editPost', {'id': trainee.id}), 'style': 'horizontal'})}}
+							{{form_row(TraineeUpdateJobForm.job, {'label_col': 3, 'widget_col': 8 })}}
 							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
-							{{form_end(TraineeUpdateAddressForm)}}
+							{{form_end(TraineeUpdateJobForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Trainee.tlabel.admin.editOrigine'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(TraineeUpdateOrigineForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_editPost', {'id': trainee.id}), 'style': 'horizontal'})}}
+							{{form_row(TraineeUpdateOrigineForm.origine, {'label_col': 3, 'widget_col': 8 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(TraineeUpdateOrigineForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Trainee.tlabel.admin.editInitLevel'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(TraineeUpdateInitLevelForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_editPost', {'id': trainee.id}), 'style': 'horizontal'})}}
+							{{form_row(TraineeUpdateInitLevelForm.initLevel, {'label_col': 3, 'widget_col': 8 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(TraineeUpdateInitLevelForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Trainee.tlabel.admin.editLevel'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(TraineeUpdateLevelForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_editPost', {'id': trainee.id}), 'style': 'horizontal'})}}
+							{{form_row(TraineeUpdateLevelForm.level, {'label_col': 3, 'widget_col': 8 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(TraineeUpdateLevelForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Trainee.tlabel.admin.editCourses'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(TraineeUpdateCoursesForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_editPost', {'id': trainee.id}), 'style': 'horizontal'})}}
+							{{form_row(TraineeUpdateCoursesForm.courses, {'label_col': 3, 'widget_col': 8 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(TraineeUpdateCoursesForm)}}
 						</div>
 					</div>
 					<div class="panel box box-danger">
@@ -230,11 +364,35 @@
 						</div>
 					</div>
 				</div>
-				<div class="tab-pane fade{%if tabActive==3%} in active{%endif%}" id="addRecord">
+				{% if is_granted('ROLE_ADMIN') %}
+				<div class="tab-pane fade{%if tabActive==3%} in active{%endif%}" id="addHistorical">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Trainee.tlabel.admin.addHistorical'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(TraineeHistoricalAddForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_editPost', {'id': trainee.id}), 'style': 'horizontal'})}}
+							{{form_row(TraineeHistoricalAddForm.trainee, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
+							{{form_row(TraineeHistoricalAddForm.year, {'label_col': 3, 'widget_col': 8, 'widget_col': 8 })}}
+							{{form_row(TraineeHistoricalAddForm.origine, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(TraineeHistoricalAddForm.initLevel, {'label_col': 3, 'widget_col': 8, 'widget_col': 8 })}}
+							{{form_row(TraineeHistoricalAddForm.level, {'label_col': 3, 'widget_col': 8, 'widget_col': 8 })}}
+							{{form_row(TraineeHistoricalAddForm.courses, {'label_col': 3, 'widget_col': 8})}}
+							{{form_row(TraineeHistoricalAddForm.needs, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+							{{form_row(TraineeHistoricalAddForm.lockout, {'label_col': 3, 'widget_col': 8, 'widget_col': 8 , 'attr': {'class': 'select2', 'style': 'width:100%', 'placeholder': 'TraineeHistorical.lockout.placeholder' } })}}
+							{{form_row(TraineeHistoricalAddForm.traineeOverride, {'label_col': 3, 'widget_col': 8, 'widget_col': 8 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
+							{{form_end(TraineeHistoricalAddForm)}}
+						</div>
+					</div>
+				</div>
+				{% endif %}
+				{% if trainee.historicals.count() != 0 %}
+				<div class="tab-pane fade{%if tabActive==4%} in active{%endif%}" id="addRecord">
 					<div class="panel box box-danger">
 						<div class="box-header"><h3 class="box-title">{{'Trainee.tlabel.admin.addRecord'|trans}}</h3></div>
 						<div class="box-body">
 							{{form_start(TraineeRecordAddForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_editPost', {'id': trainee.id}), 'style': 'horizontal'})}}
+							{{form_row(TraineeRecordAddForm.trainee, {'label_col': 3, 'widget_col': 8, 'attr': {'row_class': 'hidden'} })}}
+							{{form_row(TraineeRecordAddForm.historical, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'select2', 'style': 'width:100%', 'placeholder': 'TraineeRecord.historical.placeholder' } })}}
 							{{form_row(TraineeRecordAddForm.recordDate, {'label_col': 3, 'widget_col': 8, 'widget_col': 8, 'attr': {'class': 'datetimepicker'} })}}
 							{{form_row(TraineeRecordAddForm.worksCovered, {'label_col': 3, 'widget_col': 8, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
 							{{form_row(TraineeRecordAddForm.takeaways, {'label_col': 3, 'widget_col': 8, 'widget_col': 8 })}}
@@ -245,11 +403,29 @@
 						</div>
 					</div>
 				</div>
+				{% endif %}
 			</div>
 		</div>
 	</div>
 </div>
-<div id="deleteConfirmTraineeRecord" class="modal modal-info fade in" tabindex="-1" trainee="dialog" aria-labelledby="myModalLabel">
+<div id="deleteConfirmTraineeHistorical" class="modal modal-info fade in" tabindex="-1" trainee="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3 class="modal-title">{{'TraineeHistorical.delete.confirm.title'|trans|raw}}</h3>
+			</div>
+			<div class="modal-body">
+				{{'TraineeHistorical.delete.confirm.txt'|trans|raw}}
+			</div>
+			<div class="modal-footer">
+				<a href="" class="btn btn-primary danger btn-outline pull-left">{{'_yes'|trans|raw}}</a>
+				<button type="button" class="btn btn-danger btn-outline pull-right" data-dismiss="modal">{{'_no'|trans|raw}}</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="deleteConfirmTraineeRecord" class="modal modal-info fade in" tabindex="-1" trainee="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -274,7 +450,7 @@ $(function() {
 	$('textarea.wysiwyg').each(function() {
 		var options = {
 			theme: "modern",
-			content_css : '{{ absolute_url(asset('/res/css/app.min.css')) }}',
+			content_css : '{{ preload(asset('/res/css/app.min.css')) }}',
 			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
 			language : '{{ (app.request.locale~'_tinymce')|trans }}',
 			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
@@ -288,6 +464,14 @@ $(function() {
 			}
 		}
 		$this.tinymce(options);
+	});
+		
+	$('.deleteConfirmTraineeHistorical').on("click", function(e) {
+		e.preventDefault();
+		var lnk = $(this).attr('href');
+		modalDeleteBtn = $('#deleteConfirmTraineeHistorical').find('.danger');
+		modalDeleteBtn.attr('href', lnk);
+		$('#deleteConfirmTraineeHistorical').modal('show');
 	});
 		
 	$('.deleteConfirmTraineeRecord').on("click", function(e) {

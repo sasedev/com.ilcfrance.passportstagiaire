@@ -9,66 +9,66 @@ use Symfony\Component\Validator\Constraints\File;
 
 /**
  *
- * @author sasedev <seif.salah@gmail.com>
+ * @author sasedev <sinus@saseprod.net>
  */
 class UpdateContentTForm extends AbstractType
 {
 
-	/**
-	 * Form builder
-	 *
-	 * @param FormBuilderInterface $builder
-	 * @param array $options
-	 *
-	 * @return null
-	 */
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder->add('file', FileType::class, array(
-			'label' => 'Document.fileName.label',
-			'constraints' => array(
-				new File(array(
-					'maxSize' => '20480k'
-				))
-			),
-			'mapped' => false
-		));
-	}
+    /**
+     * Form builder
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return null
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('file', FileType::class, array(
+            'label' => 'Document.fileName.label',
+            'constraints' => array(
+                new File(array(
+                    'maxSize' => '20480k'
+                ))
+            ),
+            'mapped' => false
+        ));
+    }
 
-	public function getName()
-	{
-		return 'DocumentUpdateContentForm';
-	}
+    public function getName()
+    {
+        return 'DocumentUpdateContentForm';
+    }
 
-	/**
-	 *
-	 * {@inheritdoc} @see AbstractType::getBlockPrefix()
-	 */
-	public function getBlockPrefix()
-	{
-		return $this->getName();
-	}
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::getBlockPrefix()
+     */
+    public function getBlockPrefix()
+    {
+        return $this->getName();
+    }
 
-	/**
-	 * get the default options
-	 *
-	 * @return multitype:string multitype:string
-	 */
-	public function getDefaultOptions()
-	{
-		return array(
-			'validation_groups' => array(
-				'file'
-			)
-		);
-	}
+    /**
+     * get the default options
+     *
+     * @return multitype:string multitype:string
+     */
+    public function getDefaultOptions()
+    {
+        return array(
+            'validation_groups' => array(
+                'file'
+            )
+        );
+    }
 
-	/**
-	 *
-	 * {@inheritdoc} @see AbstractType::configureOptions()
-	 */
-	public function configureOptions(OptionsResolver $resolver)
-	{
-		$resolver->setDefaults($this->getDefaultOptions());
-	}
+    /**
+     *
+     * {@inheritdoc} @see AbstractType::configureOptions()
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults($this->getDefaultOptions());
+    }
 }

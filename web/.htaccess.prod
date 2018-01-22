@@ -1,0 +1,29 @@
+DirectoryIndex app_prod.php
+Options FollowSymlinks
+<IfModule mod_negotiation.c>
+	Options -MultiViews
+</IfModule>
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	
+	RewriteRule ^(bundles|res)($|/) - [L]
+	
+	RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
+	RewriteRule ^(.*) - [E=BASE:%1]
+	
+	RewriteCond %{HTTP:Authorization} .
+	RewriteRule ^ - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+	
+	RewriteCond %{ENV:REDIRECT_STATUS} ^$
+	RewriteRule ^app_prod\.php(?:/(.*)|$) %{ENV:BASE}/$1 [R=301,L]
+	
+	RewriteCond %{REQUEST_FILENAME} -f
+	RewriteRule ^ - [L]
+	
+	RewriteRule ^ %{ENV:BASE}/app_prod.php [L]
+</IfModule>
+<IfModule !mod_rewrite.c>
+	<IfModule mod_alias.c>
+		RedirectMatch 302 ^/$ /app_prod.php/
+	</IfModule>
+</IfModule>

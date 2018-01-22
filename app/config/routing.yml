@@ -1,3 +1,4 @@
+
 ilcfrance_passportstagiaire_security:
     resource: "@IlcfrancePassportstagiaireSecurityBundle/Resources/config/routing.yml"
     prefix:   /

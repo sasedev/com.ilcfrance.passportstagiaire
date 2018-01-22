@@ -1,51 +1,211 @@
+# Redis Service
+services:
+    doctrine.cache.predis:
+        class: "%snc_redis.doctrine_cache_predis.class%"
+        arguments: [ "@snc_redis.cache" ]
+        calls:
+            - ["setNamespace", [""]] #Optional
+
 # Redis
 snc_redis:
     clients:
         default:
             type: predis
             dsn: "%redis_dns%"
+            logging: "%kernel.debug%"
             alias: default
             options:
-                prefix: "com.ilcfrance.passportstagiaire"
+                prefix: "%domain%"
         session:
             type: predis
             alias: session
             dsn: "%redis_dns%"
+            logging: "%kernel.debug%"
 #        swiftmailer:
 #            type: predis
 #            dsn: "%redis_dns%"
-#            alias: swiftmailer
+#            alias: "snc_redis.swiftmailer"
         cache:
             type: predis
             dsn: "%redis_dns%"
+            logging: "%kernel.debug%"
             alias: cache
             options:
-                prefix: "com.ilcfrance.passportstagiaire:cache"
+                prefix: "%domain%:cache:"
+        framework:
+            type: predis
+            dsn: "%redis_dns%"
+            logging: "%kernel.debug%"
+            alias: framework
+            options:
+                prefix: "%domain%:frmcache:"
+        app:
+            type: predis
+            dsn: "%redis_dns%"
+            logging: "%kernel.debug%"
+            alias: app
+            options:
+                prefix: "%domain%:frmcache:app:"
+        system:
+            type: predis
+            dsn: "%redis_dns%"
+            logging: "%kernel.debug%"
+            alias: system
+            options:
+                prefix: "%domain%:frmcache:system:"
+        validator:
+            type: predis
+            dsn: "%redis_dns%"
+            logging: "%kernel.debug%"
+            alias: validator
+            options:
+                prefix: "%domain%:frmcache:validator:"
+        serializer:
+            type: predis
+            dsn: "%redis_dns%"
+            logging: "%kernel.debug%"
+            alias: serializer
+            options:
+                prefix: "%domain%:frmcache:serializer:"
+        annotations:
+            type: predis
+            dsn: "%redis_dns%"
+            logging: "%kernel.debug%"
+            alias: annotations
+            options:
+                prefix: "%domain%:frmcache:annotations:"
+        orm:
+            type: predis
+            dsn: "%redis_dns%"
+            logging: "%kernel.debug%"
+            alias: orm
+            options:
+                prefix: "%domain%:orm:"
+        orm_metadata_cache:
+            type: predis
+            dsn: "%redis_dns%"
+            logging: "%kernel.debug%"
+            alias: orm_metadata_cache
+            options:
+                prefix: "%domain%:orm:metadata_cache:"
+        orm_result_cache:
+            type: predis
+            dsn: "%redis_dns%"
+            logging: "%kernel.debug%"
+            alias: orm_result_cache
+            options:
+                prefix: "%domain%:orm:result_cache:"
+        orm_query_cache:
+            type: predis
+            dsn: "%redis_dns%"
+            logging: "%kernel.debug%"
+            alias: orm_query_cache
+            options:
+                prefix: "%domain%:orm:query_cache:"
+        orm_second_level_cache:
+            type: predis
+            dsn: "%redis_dns%"
+            logging: "%kernel.debug%"
+            alias: orm_second_level_cache
+            options:
+                prefix: "%domain%:orm:second_level_cache:"
+        doctrine_mongodb:
+            type: predis
+            dsn: "%redis_dns%"
+            logging: "%kernel.debug%"
+            alias: mongodb
+            options:
+                prefix: "%domain%:doctrine_mongodb:"
 
     session:
         client: session
-        prefix: "com.ilcfrance.passportstagiaire:session"
+        prefix: "%domain%:frmcache:session:"
+
 #    swiftmailer:
 #        client: swiftmailer
 #        key: swiftmailer
+
     doctrine:
         metadata_cache:
-            client: cache
+            client: orm_metadata_cache
             entity_manager: "default"          # the name of your entity_manager connection
-#            document_manager: "default"        # the name of your document_manager connection
+            document_manager: "default"        # the name of your document_manager connection
             namespace: ""
         result_cache:
-            client: cache
+            client: orm_result_cache
             entity_manager: "default"          # the name of your entity_manager connection
-#            document_manager: "default"        # the name of your document_manager connection
+            document_manager: "default"        # the name of your document_manager connection
             namespace: ""
         query_cache:
-            client: cache
+            client: orm_query_cache
             entity_manager: "default"          # the name of your entity_manager connection
-#            document_manager: "default"        # the name of your document_manager connection
+            document_manager: "default"        # the name of your document_manager connection
             namespace: ""
         second_level_cache:
-            client: cache
+            client: orm_second_level_cache
             entity_manager: "default"          # the name of your entity_manager connection
-#            document_manager: "default"        # the name of your document_manager connection
+            document_manager: "default"        # the name of your document_manager connection
             namespace: ""
+
+# Doctrine Configuration
+doctrine:
+    orm:
+        entity_managers:
+            default:
+                metadata_cache_driver:
+                    type: service
+                    id: doctrine.cache.predis
+                query_cache_driver:
+                    type: service
+                    id: doctrine.cache.predis
+                result_cache_driver:
+                    type: service
+                    id: doctrine.cache.predis
+                second_level_cache:
+                    enabled: true
+                    log_enabled: true
+                    region_cache_driver:
+                        type: service
+                        id: doctrine.cache.predis
+                    region_lock_lifetime: 20
+                    region_lifetime: 86400
+
+# Doctrine MongoDB Configuration
+doctrine_mongodb:
+    document_managers:
+        default:
+            metadata_cache_driver:
+               type: service
+               id: doctrine.cache.predis
+
+
+# Framework session with redis
+framework:
+    session:
+        handler_id:  snc_redis.session.handler
+    cache:
+        default_redis_provider: snc_redis.cache
+        app: cache.adapter.redis
+        system: cache.adapter.redis
+        pools:
+            cache.validator:
+                adapter: cache.app
+                default_lifetime: 86400
+                public: true
+                provider: snc_redis.validator
+            cache.serializer:
+                adapter: cache.app
+                default_lifetime: 86400
+                public: true
+                provider: snc_redis.serializer
+            cache.annotations: 
+                adapter: cache.app
+                default_lifetime: 86400
+                public: true
+                provider: snc_redis.annotations
+            cache.framework:
+                adapter: cache.app
+                default_lifetime: 86400
+                public: true
+                provider: snc_redis.framework
+

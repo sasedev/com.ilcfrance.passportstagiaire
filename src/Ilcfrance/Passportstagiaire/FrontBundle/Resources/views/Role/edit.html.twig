@@ -31,7 +31,7 @@
 								<div class="col-lg-12">&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'Role.parents'|trans|raw}} :</div>
 								<div class="col-lg-9">
-									{%if role.parents|length!=0%}
+									{%if role.parents.count()!=0%}
 									<ul class="list-unstyled">
 									{% for r in role.parents %}
 										<li><a href="{{path('ilcfrance_passportstagiaire_front_role_editGet', {'id': r.id})}}">{{r.id}}</a></li>
@@ -44,7 +44,7 @@
 								<div class="col-lg-12">&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'Role.childs'|trans|raw}} :</div>
 								<div class="col-lg-9">
-									{%if role.childs|length!=0%}
+									{%if role.childs.count()!=0%}
 									<ul class="list-unstyled">
 									{% for r in role.childs %}
 										<li><a href="{{path('ilcfrance_passportstagiaire_front_role_editGet', {'id': r.id})}}">{{r.id}}</a></li>
@@ -53,6 +53,11 @@
 									{%else%}
 									{{bsLabelWarning('_NONE'|trans)}}
 									{%endif%}&nbsp;
+								</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Role.users'|trans|raw}} :</div>
+								<div class="col-lg-9">
+									{{bsLabel(role.users.count())}}&nbsp;
 								</div>
 								<div class="col-lg-12">&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'Role.dtCrea'|trans|raw}} :</div>
@@ -105,7 +110,7 @@ $(function() {
 	$('textarea.wysiwyg').each(function() {
 		var options = {
 			theme: "modern",
-			content_css : '{{ absolute_url(asset('/res/css/app.min.css')) }}',
+			content_css : '{{ preload(asset('/res/css/app.min.css')) }}',
 			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
 			language : '{{ (app.request.locale~'_tinymce')|trans }}',
 			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "

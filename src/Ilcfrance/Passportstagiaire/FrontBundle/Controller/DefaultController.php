@@ -8,22 +8,22 @@ use Symfony\Component\HttpFoundation\Request;
 class DefaultController extends IlcfranceController
 {
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		$this->addTwigVar('menu_active', 'admin');
-		$this->addTwigVar('admmenu_active', 'home');
-	}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->addTwigVar('menu_active', 'admin');
+        $this->addTwigVar('admmenu_active', 'home');
+    }
 
-	/**
-	 *
-	 * @param Request $request
-	 * @return RedirectResponse
-	 */
-	public function indexAction(Request $request)
-	{
-		return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_front_trainee_list'));
-	}
+    /**
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function indexAction(Request $request)
+    {
+        return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_front_trainee_list'));
+    }
 }

@@ -1,3 +1,10 @@
+services:
+    Twig\Extensions\ArrayExtension: ~
+    Twig\Extensions\DateExtension: ~
+    Twig\Extensions\I18nExtension: ~
+    Twig\Extensions\IntlExtension: ~
+    Twig\Extensions\TextExtension: ~
+    
 # Twig Configuration
 twig:
     debug:            "%kernel.debug%"

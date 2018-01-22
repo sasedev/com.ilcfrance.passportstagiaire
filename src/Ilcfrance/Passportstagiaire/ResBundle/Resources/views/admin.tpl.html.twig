@@ -24,15 +24,15 @@
 {% endblock htmlHeadMetas %}
 {% block htmlHeadLinks %}
 {{ parent() }}
-	<link rel="icon" type="image/x-icon" href="{{ absolute_url(asset('/favicon.ico')) }}">
-	<link href="{{ absolute_url(asset('/res/css/app.min.css')) }}" rel="stylesheet" media="all">
+	<link rel="icon" type="image/x-icon" href="{{ preload(asset('/favicon.ico')) }}">
+	<link href="{{ preload(asset('/res/css/app.min.css')) }}" rel="stylesheet" media="all">
 {% endblock htmlHeadLinks %}
 {% block htmlHeadScripts %}
 {{ parent() }}
 	<!--[if lt IE 9]><!-->
-	<script src="{{ absolute_url(asset('/res/js/html5shiv.respond.min.js')) }}"></script>
+	<script src="{{ preload(asset('/res/js/html5shiv.respond.min.js')) }}"></script>
 	<!--<![endif]-->
-	<script src="{{ absolute_url(asset('/res/js/jq.migrate.v1.min.js')) }}"></script>
+	<script src="{{ preload(asset('/res/js/jq.migrate.v1.min.js')) }}"></script>
 {% endblock htmlHeadScripts %}
 {% block htmlBodyContent %}
 {{ parent() }}
@@ -43,7 +43,7 @@
 					<div class="container-fluid">
 						<div class="navbar-header">
 							<a href="{{ path('ilcfrance_passportstagiaire_front_homepage') }}" class="logo">
-								<img alt="{{ sitename }}" src="{{asset('/res/images/logo.png')}}" class="img-responsive" />
+								<img alt="{{ sitename }}" src="{{ preload(asset('/res/images/logo.png')) }}" class="img-responsive" />
 							</a>
 							<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#navbar-collapse">
 								<i class="fa fa-bars"></i>
@@ -103,5 +103,5 @@
 {% endblock htmlBodyContent %}
 {% block htmlBodyScripts %}
 {{ parent() }}
-<script src="{{ absolute_url(asset('/res/js/app.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/app.min.js')) }}"></script>
 {% endblock htmlBodyScripts %}

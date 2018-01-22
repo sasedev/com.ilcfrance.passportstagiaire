@@ -6,7 +6,7 @@ use Twig_SimpleFunction;
 
 /**
  *
- * @author sasedev <seif.salah@gmail.com>
+ * @author sasedev <sinus@saseprod.net>
  */
 class TwigCallPhpExtension extends Twig_Extension
 {

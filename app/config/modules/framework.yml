@@ -8,15 +8,19 @@ framework:
     form:            ~
     csrf_protection: ~
     validation:      { enable_annotations: true }
+    serializer: { enable_annotations: true }
     templating:
-        engines: ['twig', 'php']
+        engines: ['twig']
         #assets_version: SomeVersionScheme
         hinclude_default_template: 'SasedevSharedBundle::hinclude.html.twig'
     default_locale:  "%locale%"
     trusted_hosts:   ~
-    trusted_proxies: ~
     session:
-        handler_id:  snc_redis.session.handler # session.mongo.handler
+        handler_id:  ~
+#        handler_id:  session.handler.native_file
+#        handler_id:  snc_redis.session.handler
+#        handler_id:  session.mongo.handler 
+# 
         name: "ILCFrancePassportstagiaire"
         cookie_lifetime: 2592000 # optional, it is set to 30 days here #3600
         cookie_domain: ".%domain%"
@@ -26,9 +30,8 @@ framework:
     fragments: { path: /_fragment }
     http_method_override: true
     assets: ~
-    cache:
-        app: cache.adapter.redis
-        default_redis_provider: "%redis_dns%"
-    serializer:
-        enable_annotations: true
-        cache: serializer.mapping.cache.apc
+    php_errors:
+        log: true
+#    serializer:
+#        enable_annotations: true
+#        cache: serializer.mapping.cache.apc
