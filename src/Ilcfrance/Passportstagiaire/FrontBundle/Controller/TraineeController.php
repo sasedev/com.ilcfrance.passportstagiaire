@@ -157,6 +157,10 @@ class TraineeController extends IlcfranceController
         $workSheet->getStyle('S1')
             ->getFont()
             ->setBold(true);
+        $workSheet->setCellValue('T1', $this->translate('TraineeHistorical.lockout'));
+        $workSheet->getStyle('T1')
+            ->getFont()
+            ->setBold(true);
 
         $workSheet->getStyle('A1:M1')->applyFromArray(array(
             'fill' => array(
@@ -167,7 +171,7 @@ class TraineeController extends IlcfranceController
             )
         ));
 
-        $workSheet->getStyle('N1:S1')->applyFromArray(array(
+        $workSheet->getStyle('N1:T1')->applyFromArray(array(
             'fill' => array(
                 'type' => \PHPExcel_Style_Fill::FILL_SOLID,
                 'color' => array(
@@ -237,6 +241,11 @@ class TraineeController extends IlcfranceController
                     $workSheet->setCellValue('Q' . $i, $historical->getLevel(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $workSheet->setCellValue('R' . $i, $historical->getNeeds(), \PHPExcel_Cell_DataType::TYPE_STRING2);
                     $workSheet->setCellValue('S' . $i, $historical->getCourses(), \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    if ($historical->getLockout() == TraineeHistorical::LOCKOUT_UNLOCKED) {
+                        $workSheet->setCellValue('T' . $i, 'IN_PROGRESS', \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    } else {
+                        $workSheet->setCellValue('T' . $i, 'FINISHED', \PHPExcel_Cell_DataType::TYPE_STRING2);
+                    }
 
                     if ($i % 2 == 1) {
                         $workSheet->getStyle('A' . $i . ':M' . $i)->applyFromArray(array(
@@ -258,7 +267,7 @@ class TraineeController extends IlcfranceController
                         ));
                     }
                     if ($i % 2 == 1) {
-                        $workSheet->getStyle('N' . $i . ':S' . $i)->applyFromArray(array(
+                        $workSheet->getStyle('N' . $i . ':T' . $i)->applyFromArray(array(
                             'fill' => array(
                                 'type' => \PHPExcel_Style_Fill::FILL_SOLID,
                                 'color' => array(
@@ -267,7 +276,7 @@ class TraineeController extends IlcfranceController
                             )
                         ));
                     } else {
-                        $workSheet->getStyle('N' . $i . ':S' . $i)->applyFromArray(array(
+                        $workSheet->getStyle('N' . $i . ':T' . $i)->applyFromArray(array(
                             'fill' => array(
                                 'type' => \PHPExcel_Style_Fill::FILL_SOLID,
                                 'color' => array(
@@ -299,6 +308,7 @@ class TraineeController extends IlcfranceController
         $workSheet->getColumnDimension('Q')->setAutoSize(true);
         $workSheet->getColumnDimension('R')->setAutoSize(true);
         $workSheet->getColumnDimension('S')->setAutoSize(true);
+        $workSheet->getColumnDimension('T')->setAutoSize(true);
 
         $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
         $response = $this->get('phpexcel')->createStreamedResponse($writer);
@@ -500,6 +510,7 @@ class TraineeController extends IlcfranceController
                     $histLevel = \trim(\strval($worksheet->getCellByColumnAndRow(16, $row)->getValue()));
                     $histNeeds = \trim(\strval($worksheet->getCellByColumnAndRow(17, $row)->getValue()));
                     $histCourses = \trim(\strval($worksheet->getCellByColumnAndRow(18, $row)->getValue()));
+                    $histLockout = \trim(\strval($worksheet->getCellByColumnAndRow(19, $row)->getValue()));
 
                     if ($origine == '') {
                         $origine = 'PASSPORT';
@@ -558,6 +569,14 @@ class TraineeController extends IlcfranceController
                                 $histCourses = $courses;
                             }
 
+                            if (\strtolower(\trim($histLockout)) == 'in_progress' || \strtolower(\trim($histLockout)) == 'no' || \strtolower(\trim($histLockout)) == \strtolower(TraineeHistorical::LOCKOUT_UNLOCKED)) {
+                                $histLockout = TraineeHistorical::LOCKOUT_UNLOCKED;
+                            } elseif (\strtolower(\trim($histLockout)) == 'finished' || \strtolower(\trim($histLockout)) == 'yes' || \strtolower(\trim($histLockout)) == \strtolower(TraineeHistorical::LOCKOUT_LOCKED)) {
+                                $histLockout = TraineeHistorical::LOCKOUT_LOCKED;
+                            } else {
+                                $histLockout = '';
+                            }
+
                             $hist = new TraineeHistorical();
                             $hist->setTrainee($trainee);
                             $hist->setYear($histYear);
@@ -566,6 +585,9 @@ class TraineeController extends IlcfranceController
                             $hist->setLevel($histLevel);
                             $hist->setNeeds($histNeeds);
                             $hist->setCourses($histCourses);
+                            if ($histLockout != '') {
+                                $hist->setLockout($histLockout);
+                            }
 
                             $em->persist($hist);
                             $log .= "Nouveau Parcours " . $histYear . ' ' . $histOrigine . '.<br>';
@@ -647,6 +669,20 @@ class TraineeController extends IlcfranceController
                                         $updateHist = true;
                                     }
 
+                                    if (\strtolower(\trim($histLockout)) == 'in_progress' || \strtolower(\trim($histLockout)) == 'no' || \strtolower(\trim($histLockout)) == \strtolower(TraineeHistorical::LOCKOUT_UNLOCKED)) {
+                                        $histLockout = TraineeHistorical::LOCKOUT_UNLOCKED;
+                                        if ($hist->getLockout() != $histLockout) {
+                                            $hist->setLockout($histLockout);
+                                            $updateHist = true;
+                                        }
+                                    } elseif (\strtolower(\trim($histLockout)) == 'finished' || \strtolower(\trim($histLockout)) == 'yes' || \strtolower(\trim($histLockout)) == \strtolower(TraineeHistorical::LOCKOUT_LOCKED)) {
+                                        $histLockout = TraineeHistorical::LOCKOUT_LOCKED;
+                                        if ($hist->getLockout() != $histLockout) {
+                                            $hist->setLockout($histLockout);
+                                            $updateHist = true;
+                                        }
+                                    }
+
                                     if ($updateHist) {
                                         if (!$updateTrainee) {
                                             $log .= 'L' . $row . ': ';
@@ -662,6 +698,14 @@ class TraineeController extends IlcfranceController
                                 } else {
                                     $histNew++;
 
+                                    if (\strtolower(\trim($histLockout)) == 'in_progress' || \strtolower(\trim($histLockout)) == 'no' || \strtolower(\trim($histLockout)) == \strtolower(TraineeHistorical::LOCKOUT_UNLOCKED)) {
+                                        $histLockout = TraineeHistorical::LOCKOUT_UNLOCKED;
+                                    } elseif (\strtolower(\trim($histLockout)) == 'finished' || \strtolower(\trim($histLockout)) == 'yes' || \strtolower(\trim($histLockout)) == \strtolower(TraineeHistorical::LOCKOUT_LOCKED)) {
+                                        $histLockout = TraineeHistorical::LOCKOUT_LOCKED;
+                                    } else {
+                                        $histLockout = '';
+                                    }
+
                                     $hist = new TraineeHistorical();
                                     $hist->setTrainee($trainee);
                                     $hist->setYear($histYear);
@@ -670,6 +714,9 @@ class TraineeController extends IlcfranceController
                                     $hist->setLevel($histLevel);
                                     $hist->setNeeds($histNeeds);
                                     $hist->setCourses($histCourses);
+                                    if ($histLockout != '') {
+                                        $hist->setLockout($histLockout);
+                                    }
 
                                     $em->persist($hist);
 
