@@ -91,44 +91,23 @@
 			"keep-outdated" : "true"
 		},
 		"filescopier" : [{
-				"source" : "src/Ilcfrance/Passportstagiaire/ResBundle/Resources/css",
-				"destination" : "web/res/css"
-			}, {
-				"source" : "src/Ilcfrance/Passportstagiaire/ResBundle/Resources/js",
-				"destination" : "web/res/js"
-			}, {
-				"source" : "web/res/bower_components/tinymce/plugins/",
+				"source" : "web/res/bower_components/tinymce/plugins",
 				"destination" : "web/res/js/plugins"
 			}, {
-				"source" : "web/res/bower_components/tinymce/skins/",
+				"source" : "web/res/bower_components/tinymce/skins",
 				"destination" : "web/res/js/skins"
 			}, {
-				"source" : "web/res/bower_components/tinymce/themes/",
+				"source" : "web/res/bower_components/tinymce/themes",
 				"destination" : "web/res/js/themes"
 			}, {
 				"source" : "src/Ilcfrance/Passportstagiaire/ResBundle/Resources/images",
 				"destination" : "web/res/images"
-			}, {
-				"source" : "src/Ilcfrance/Passportstagiaire/ResBundle/Resources/imgs",
-				"destination" : "web/res/imgs"
-			}, {
-				"source" : "src/Ilcfrance/Passportstagiaire/ResBundle/Resources/img",
-				"destination" : "web/res/img"
 			}, {
 				"source" : "src/Ilcfrance/Passportstagiaire/ResBundle/Resources/fonts",
 				"destination" : "web/res/fonts"
 			}, {
 				"source" : "web/res/bower_components/font-awesome/fonts",
 				"destination" : "web/res/fonts"
-			}, {
-				"source" : "web/res/bower_components/ionicons/fonts",
-				"destination" : "web/res/fonts"
-			}, {
-				"source" : "src/Ilcfrance/Passportstagiaire/ResBundle/Resources/appicons/*",
-				"destination" : "web"
-			}, {
-				"source" : "web/res/bower_components/bootstrap-colorpicker/dist/img/bootstrap-colorpicker/*",
-				"destination" : "web/res/img/bootstrap-colorpicker"
 			}, {
 				"source" : "web/res/bower_components/bootstrap-fileinput/img/*",
 				"destination" : "web/res/img/bootstrap-fileinput"

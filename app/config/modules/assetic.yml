@@ -483,7 +483,7 @@ assetic:
             filters:
                 - uglifyjs2
             combine: true
-            output: 'res/js/tinymce.min.js'
+            output: 'res/js/tinymce4.min.js'
 
         js_min_jquery_tinymce:
             inputs:
@@ -491,7 +491,7 @@ assetic:
             filters:
                 - uglifyjs2
             combine: true
-            output: 'res/js/jquery.tinymce.min.js'
+            output: 'res/js/jquery.tinymce4.min.js'
 
 # js apps
 
@@ -503,10 +503,11 @@ assetic:
             filters:
                 - uglifyjs2
             combine: true
-            output: 'res/js/secure.min.js'
+            output: 'res/js/ilcsecure.min.js'
 
         js_min_app:
             inputs:
+                - '@js_min_jquery'
                 - '@js_min_bootstrap'
                 - '@js_min_iCheck'
                 - '@js_min_select2'
@@ -522,9 +523,14 @@ assetic:
                 - '@js_min_duallistbox_init'
                 - '@js_min_datetimepicker_init'
                 - '@js_min_fileinput_init'
+                - '@js_min_tinymce'
+                - '@js_min_jquery_tinymce'
+                - '@js_min_jquery_datatables_net'
+                - '@js_min_datatables_net_bs'
+                
             filters:
                 - uglifyjs2
             combine: true
-            output: 'res/js/app.min.js'
+            output: 'res/js/ilcapp.min.js'
 
 

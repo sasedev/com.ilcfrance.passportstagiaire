@@ -25,7 +25,7 @@ $(function() {
 							{
 								height : ($(window).height() - headerHeight - footerHeight)
 										+ "px",
-								color : "#00b300",
+								color : "#33CCFF",
 								size : "5px"
 							});
 		}

@@ -73,8 +73,6 @@
 {% endblock main %}
 {% block htmlBodyScripts %}
 {{ parent() }}
-<script src="{{ preload(asset('/res/js/dataTables.jquery.min.js')) }}"></script>
-<script src="{{ preload(asset('/res/js/dataTables.bs.min.js')) }}"></script>
 <script type="text/javascript">
 $(function() {
 	{% if locales|length != 0 %}

@@ -242,29 +242,25 @@
 {% endblock main %}
 {% block htmlBodyScripts %}
 {{ parent() }}
-<script src="{{ preload(asset('/res/js/tinymce.min.js')) }}"></script>
 <script type="text/javascript">
 $(function() {
 	tinymce.init({
 		selector: 'textarea.wysiwyg',
+		branding: false,
 		theme: "modern",
-		content_css : '{{ preload(asset('/res/css/app.min.css')) }}',
+		content_css : '{{ asset('/res/css/app.min.css') }}',
 		plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
 		toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview ",
-		init_instance_callback: function (editor) {
-			editor.on('change', function (e) {
+		setup: function (editor) {
+			editor.on('init', function (e) {
 				editor.save();
 			});
 		},
-		branding: false
-	});
-
-	$('.deleteConfirmTraineeRecord').on("click", function(e) {
-		e.preventDefault();
-		var lnk = $(this).attr('href');
-		modalDeleteBtn = $('#deleteConfirmTraineeRecord').find('.danger');
-		modalDeleteBtn.attr('href', lnk);
-		$('#deleteConfirmTraineeRecord').modal('show');
+		init_instance_callback: function (editor) {
+			editor.on('Change', function (e) {
+				editor.save();
+			});
+		}
 	});
 });
 </script>

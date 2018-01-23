@@ -123,18 +123,15 @@ class AddTForm extends AbstractType
         ));
 
         $builder->add('worksCovered', TextareaType::class, array(
-            'label' => 'TraineeRecord.worksCovered.label',
-            'required' => false
+            'label' => 'TraineeRecord.worksCovered.label'
         ));
 
         $builder->add('takeaways', TextType::class, array(
-            'label' => 'TraineeRecord.takeaways.label',
-            'required' => false
+            'label' => 'TraineeRecord.takeaways.label'
         ));
 
         $builder->add('comments', TextareaType::class, array(
-            'label' => 'TraineeRecord.comments.label',
-            'required' => false
+            'label' => 'TraineeRecord.comments.label'
         ));
 
         $builder->add('homeworks', TextareaType::class, array(
