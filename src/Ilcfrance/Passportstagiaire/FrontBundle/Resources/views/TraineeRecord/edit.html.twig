@@ -22,7 +22,9 @@
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs">
 				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'TraineeRecord.tab.admin.overview'|trans|raw}}</a></li>
+				{% if is_granted('ROLE_ADMIN') or traineeRecord.historical is null or (traineeRecord.historical is not null and  traineeRecord.historical.lockout == constant('LOCKOUT_UNLOCKED', traineeRecord.historical)) %}
 				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'TraineeRecord.tab.admin.edit'|trans|raw}}</a></li>
+				{% endif %}
 				<li {%if tabActive==3%} class="active"{%endif%}><a href="#docs" data-toggle="tab">{{'TraineeRecord.tab.admin.docs'|trans|raw}}</a></li>
 			</ul>
 			<div class="tab-content">
@@ -61,6 +63,7 @@
 						</div>
 					</div>
 				</div>
+				{% if is_granted('ROLE_ADMIN') or traineeRecord.historical is null or (traineeRecord.historical is not null and  traineeRecord.historical.lockout == constant('LOCKOUT_UNLOCKED', traineeRecord.historical)) %}
 				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
 					{% if is_granted('ROLE_ADMIN') %}
 					<div class="panel box box-danger">
@@ -137,7 +140,9 @@
 						</div>
 					</div>
 				</div>
+				{% endif %}
 				<div class="tab-pane fade{%if tabActive==3%} in active{%endif%}" id="docs">
+					{% if is_granted('ROLE_ADMIN') or traineeRecord.historical is null or (traineeRecord.historical is not null and  traineeRecord.historical.lockout == constant('LOCKOUT_UNLOCKED', traineeRecord.historical)) %}
 					<div class="panel box box-danger">
 						<div class="box-header"><h3 class="box-title">{{'TraineeRecord.tlabel.admin.addDoc'|trans}}</h3></div>
 						<div class="box-body">
@@ -149,6 +154,7 @@
 							{{form_end(TraineeRecordDocumentAddForm)}}
 						</div>
 					</div>
+					{% endif %}
 					<div class="panel box box">
 						<div class="box-header">
 							<h3 class="box-title">{{ 'TraineeRecordDocument.tlabel.admin.list'|trans|raw}}</h3>
@@ -184,7 +190,7 @@
 										</td>
 										<td>
 											<a class="btn btn-sm btn-success" href="{{path('ilcfrance_passportstagiaire_front_trainee_record_document_download',{'id':doc.id})}}">{{ faIco('edit') }} {{ 'action.btnDownload'|trans }}</a>
-											{% if is_granted('ROLE_ADMIN') or app.user.id == traineeRecord.teacher.id %}
+											{% if is_granted('ROLE_ADMIN') or traineeRecord.historical is null or  (traineeRecord.historical is not null and  traineeRecord.historical.lockout == constant('LOCKOUT_UNLOCKED', traineeRecord.historical)) %}
 											<a class="btn btn-sm btn-info" href="{{path('ilcfrance_passportstagiaire_front_trainee_record_document_editGet',{'id':doc.id})}}">{{ faIco('edit') }} {{ 'action.edit'|trans }}</a>
 											<a class="btn btn-sm btn-danger deleteConfirmDoc" href="{{path('ilcfrance_passportstagiaire_front_trainee_record_document_delete',{'id':doc.id})}}">{{ faIco('trash') }} {{ 'action.delete'|trans }}</a>
 											{% endif %}
@@ -205,7 +211,7 @@
 		</div>
 	</div>
 </div>
-{% if is_granted('ROLE_ADMIN') or app.user.id == traineeRecord.teacher.id %}
+{% if is_granted('ROLE_ADMIN') or traineeRecord.historical is null or  (traineeRecord.historical is not null and  traineeRecord.historical.lockout == constant('LOCKOUT_UNLOCKED', traineeRecord.historical)) %}
 <div id="deleteConfirmDoc" class="modal modal-info fade in" tabindex="-1" doc="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -227,13 +233,29 @@
 {% endblock main %}
 {% block htmlBodyScripts %}
 {{ parent() }}
+<script src="{{ preload(asset('/res/js/dataTables.jquery.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/dataTables.bs.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/tinymce.min.js')) }}"></script>
 <script type="text/javascript">
 $(function() {
+	tinymce.init({
+		selector: 'textarea.wysiwyg',
+		theme: "modern",
+		content_css : '{{ preload(asset('/res/css/app.min.css')) }}',
+		plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+		toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview ",
+		init_instance_callback: function (editor) {
+			editor.on('change', function (e) {
+				editor.save();
+			});
+		},
+		branding: false
+	});
+
+	$("#TraineeRecordDocumentAddForm_file").fileinput({'showUpload':false, 'previewFileType':'image', browseClass: "btn btn-success", browseLabel: " {{ 'action.btnSelect'|trans}}", browseIcon: '{{faIco('file')}}', removeClass: "btn btn-danger", removeLabel: " {{ 'action.btnCancel'|trans}}", removeIcon: '{{faIco('trash')}}'});
+	
 	{% if traineeRecord.docs.count() != 0 %}
 	$('#docList').DataTable({
-		"language": {
-			"url": "{{ preload(asset('/res/js/dataTablesI18N/'~(app.request.locale~'_datatables')|trans)) }}"
-		},
 		"columns": [
 			null,
 			null,
@@ -253,27 +275,6 @@ $(function() {
 		}{% endif %}
 	});
 	{% endif %}
-
-	$("#TraineeRecordDocumentAddForm_file").fileinput({'showUpload':false, 'previewFileType':'image', browseClass: "btn btn-success", browseLabel: " {{ 'action.btnSelect'|trans}}", browseIcon: '{{faIco('file')}}', removeClass: "btn btn-danger", removeLabel: " {{ 'action.btnCancel'|trans}}", removeIcon: '{{faIco('trash')}}'});
-	
-	$('textarea.wysiwyg').each(function() {
-		var options = {
-			theme: "modern",
-			content_css : '{{ preload(asset('/res/css/app.min.css')) }}',
-			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
-			language : '{{ (app.request.locale~'_tinymce')|trans }}',
-			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
-		};
-		$this = $(this);
-		if($this.is('[required]')) {
-			options.oninit = function(editor) {
-				editor.on('change', function(e) {
-					editor.save();
-				});
-			}
-		}
-		$this.tinymce(options);
-	});
 });
 </script>
 {% endblock htmlBodyScripts %}

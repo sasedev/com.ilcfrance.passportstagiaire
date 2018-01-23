@@ -73,13 +73,12 @@
 {% endblock main %}
 {% block htmlBodyScripts %}
 {{ parent() }}
+<script src="{{ preload(asset('/res/js/dataTables.jquery.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/dataTables.bs.min.js')) }}"></script>
 <script type="text/javascript">
 $(function() {
 	{% if locales|length != 0 %}
 	$('#localeList').DataTable({
-		"language": {
-			"url": "{{ preload(asset('/res/js/dataTablesI18N/'~(app.request.locale~'_datatables')|trans)) }}"
-		},
 		"columns": [
 			null,
 			null,

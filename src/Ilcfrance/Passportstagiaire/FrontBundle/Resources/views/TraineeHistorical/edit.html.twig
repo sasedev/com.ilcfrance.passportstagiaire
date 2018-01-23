@@ -19,8 +19,8 @@
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs">
 				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'TraineeHistorical.tab.admin.overview'|trans|raw}}</a></li>
+				{% if is_granted('ROLE_ADMIN') or traineeHistorical.lockout == constant('LOCKOUT_UNLOCKED', traineeHistorical) %}
 				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'TraineeHistorical.tab.admin.edit'|trans|raw}}</a></li>
-				{% if traineeHistorical.lockout == constant('LOCKOUT_UNLOCKED', traineeHistorical) %}
 				<li {%if tabActive==3%} class="active"{%endif%}><a href="#addRecord" data-toggle="tab">{{'TraineeHistorical.tab.admin.addRecord'|trans|raw}}</a></li>
 				{% endif %}
 			</ul>
@@ -62,7 +62,7 @@
 							{% if is_granted('ROLE_ADMIN') %}
 							<a class="pull-right btn btn-sm btn-danger deleteConfirmTraineeRecord" href="{{path('ilcfrance_passportstagiaire_front_trainee_record_delete',{'id':record.id})}}">{{ faIco('trash') }}</a>
 							{% endif %}
-							{% if is_granted('ROLE_ADMIN') or app.user.id == record.teacher.id %}
+							{% if is_granted('ROLE_ADMIN') or (record.teacher is not null and app.user.id == record.teacher.id and record.historical.lockout == constant('LOCKOUT_UNLOCKED', record.historical)) %}
 							<a class="pull-right btn btn-sm btn-success" href="{{path('ilcfrance_passportstagiaire_front_trainee_record_editGet',{'id':record.id})}}">{{ faIco('edit') }}</a>
 							{% endif %}
 						</div>
@@ -112,7 +112,7 @@
 											</td>
 											<td>
 												<a class="btn btn-sm btn-success" href="{{path('ilcfrance_passportstagiaire_front_trainee_record_document_download',{'id':doc.id})}}">{{ faIco('edit') }} {{ 'action.btnDownload'|trans }}</a>
-												{% if is_granted('ROLE_ADMIN') or app.user.id == record.teacher.id %}
+												{% if is_granted('ROLE_ADMIN') or (record.teacher is not null and app.user.id == record.teacher.id and record.historical.lockout == constant('LOCKOUT_UNLOCKED', record.historical)) %}
 												<a class="btn btn-sm btn-info" href="{{path('ilcfrance_passportstagiaire_front_trainee_record_document_editGet',{'id':doc.id})}}">{{ faIco('edit') }} {{ 'action.edit'|trans }}</a>
 												{% endif %}
 											</td>
@@ -127,6 +127,7 @@
 					</div>
 					{% endfor %}
 				</div>
+				{% if is_granted('ROLE_ADMIN') or traineeHistorical.lockout == constant('LOCKOUT_UNLOCKED', traineeHistorical) %}
 				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
 					{% if is_granted('ROLE_ADMIN') %}
 					<div class="panel box box-danger">
@@ -147,7 +148,6 @@
 							{{form_end(TraineeHistoricalUpdateYearForm)}}
 						</div>
 					</div>
-					{% endif %}
 					<div class="panel box box-danger">
 						<div class="box-header"><h3 class="box-title">{{'TraineeHistorical.tlabel.admin.editOrigine'|trans}}</h3></div>
 						<div class="box-body">
@@ -168,6 +168,7 @@
 							{{form_end(TraineeHistoricalUpdateInitLevelForm)}}
 						</div>
 					</div>
+					{% endif %}
 					<div class="panel box box-danger">
 						<div class="box-header"><h3 class="box-title">{{'TraineeHistorical.tlabel.admin.editLevel'|trans}}</h3></div>
 						<div class="box-body">
@@ -199,7 +200,6 @@
 						</div>
 					</div>
 				</div>
-				{% if traineeHistorical.lockout == constant('LOCKOUT_UNLOCKED', traineeHistorical) %}
 				<div class="tab-pane fade{%if tabActive==4%} in active{%endif%}" id="addRecord">
 					<div class="panel box box-danger">
 						<div class="box-header"><h3 class="box-title">{{'TraineeHistorical.tlabel.admin.addRecord'|trans}}</h3></div>
@@ -242,27 +242,23 @@
 {% endblock main %}
 {% block htmlBodyScripts %}
 {{ parent() }}
+<script src="{{ preload(asset('/res/js/tinymce.min.js')) }}"></script>
 <script type="text/javascript">
 $(function() {
-	$('textarea.wysiwyg').each(function() {
-		var options = {
-			theme: "modern",
-			content_css : '{{ preload(asset('/res/css/app.min.css')) }}',
-			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
-			language : '{{ (app.request.locale~'_tinymce')|trans }}',
-			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
-		};
-		$this = $(this);
-		if($this.is('[required]')) {
-			options.oninit = function(editor) {
-				editor.on('change', function(e) {
-					editor.save();
-				});
-			}
-		}
-		$this.tinymce(options);
+	tinymce.init({
+		selector: 'textarea.wysiwyg',
+		theme: "modern",
+		content_css : '{{ preload(asset('/res/css/app.min.css')) }}',
+		plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+		toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview ",
+		init_instance_callback: function (editor) {
+			editor.on('change', function (e) {
+				editor.save();
+			});
+		},
+		branding: false
 	});
-		
+
 	$('.deleteConfirmTraineeRecord').on("click", function(e) {
 		e.preventDefault();
 		var lnk = $(this).attr('href');

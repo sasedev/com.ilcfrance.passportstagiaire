@@ -32,7 +32,6 @@
 	<!--[if lt IE 9]><!-->
 	<script src="{{ preload(asset('/res/js/html5shiv.respond.min.js')) }}"></script>
 	<!--<![endif]-->
-	<script src="{{ preload(asset('/res/js/jq.migrate.v1.min.js')) }}"></script>
 {% endblock htmlHeadScripts %}
 {% block htmlBodyContent %}
 {{ parent() }}
@@ -103,5 +102,20 @@
 {% endblock htmlBodyContent %}
 {% block htmlBodyScripts %}
 {{ parent() }}
-<script src="{{ preload(asset('/res/js/app.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/jquery.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/bootstrap.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/iCheck.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/select2.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/bootstrap.duallistbox.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/moment.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/bootstrap.datetimepicker.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/blueimp-canvas-to-blob.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/bootstrap.fileinput.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/jquery.slimscroll.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/dashboard.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/iCheck_init.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/select2_init.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/duallistbox_init.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/datetimepicker_init.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/fileinput_init.min.js')) }}"></script>
 {% endblock htmlBodyScripts %}

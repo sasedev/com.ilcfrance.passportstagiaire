@@ -4,7 +4,7 @@
 	<li><a href="{{ path('ilcfrance_passportstagiaire_front_homepage') }}">{{ faIco('dashboard') }} {{'breadcrumb.admin.dasboard'|trans|raw}}</a></li>
 	<li><a href="{{ path('ilcfrance_passportstagiaire_front_trainee_list') }}">{{faIco('user-circle')}} {{'Trainee.breadcrumb.admin.list'|trans|raw}}</a></li>
 	<li><a href="{{ path('ilcfrance_passportstagiaire_front_trainee_editGet', {'id': traineeRecordDocument.traineeRecord.trainee.id}) }}">{{faIco('edit')}} {{'Trainee.breadcrumb.admin.edit'|trans({'%trainee%': traineeRecordDocument.traineeRecord.trainee.fullName})|raw}}</a></li>
-	{% if null !=  traineeRecord.historical %}
+	{% if null !=  traineeRecordDocument.traineeRecord.historical %}
 	<li><a href="{{ path('ilcfrance_passportstagiaire_front_trainee_historical_editGet', {'id': traineeRecordDocument.traineeRecord.historical.id}) }}">{{faIco('edit')}} {{'TraineeHistorical.breadcrumb.admin.edit'|trans({'%traineeHistorical%': traineeRecordDocument.traineeRecord.historical.smallName })|raw}}</a></li>
 	{% endif %}
 	<li><a href="{{ path('ilcfrance_passportstagiaire_front_trainee_record_editGet', {'id': traineeRecordDocument.traineeRecord.id}) }}">{{faIco('edit')}} {{'TraineeRecord.breadcrumb.admin.edit'|trans({'%traineeRecord%': traineeRecordDocument.traineeRecord.smallName })|raw}}</a></li>
@@ -23,7 +23,9 @@
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs">
 				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'TraineeRecordDocument.tab.admin.overview'|trans|raw}}</a></li>
+				{% if is_granted('ROLE_ADMIN') or traineeRecordDocument.traineeRecord.historical is null or (traineeRecordDocument.traineeRecord.historical is not null and  traineeRecordDocument.traineeRecord.historical.lockout == constant('LOCKOUT_UNLOCKED', traineeRecordDocument.traineeRecord.historical)) %}
 				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'TraineeRecordDocument.tab.admin.edit'|trans|raw}}</a></li>
+				{% endif %}
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
@@ -63,6 +65,7 @@
 						</div>
 					</div>
 				</div>
+				{% if is_granted('ROLE_ADMIN') or traineeRecordDocument.traineeRecord.historical is null or (traineeRecordDocument.traineeRecord.historical is not null and  traineeRecordDocument.traineeRecord.historical.lockout == constant('LOCKOUT_UNLOCKED', traineeRecordDocument.traineeRecord.historical)) %}
 				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
 					<div class="panel box box-danger">
 						<div class="box-header"><h3 class="box-title">{{'TraineeRecordDocument.tlabel.admin.editOriginalName'|trans}}</h3></div>
@@ -92,6 +95,7 @@
 						</div>
 					</div>
 				</div>
+				{% endif %}
 			</div>
 		</div>
 	</div>
@@ -99,28 +103,24 @@
 {% endblock main %}
 {% block htmlBodyScripts %}
 {{ parent() }}
+<script src="{{ preload(asset('/res/js/tinymce.min.js')) }}"></script>
 <script type="text/javascript">
 $(function() {
-	$('textarea.wysiwyg').each(function() {
-		var options = {
-			theme: "modern",
-			content_css : '{{ preload(asset('/res/css/app.min.css')) }}',
-			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
-			language : '{{ (app.request.locale~'_tinymce')|trans }}',
-			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
-		};
-		$this = $(this);
-		if($this.is('[required]')) {
-			options.oninit = function(editor) {
-				editor.on('change', function(e) {
-					editor.save();
-				});
-			}
-		}
-		$this.tinymce(options);
+	tinymce.init({
+		selector: 'textarea.wysiwyg',
+		theme: "modern",
+		content_css : '{{ preload(asset('/res/css/app.min.css')) }}',
+		plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+		toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview ",
+		init_instance_callback: function (editor) {
+			editor.on('change', function (e) {
+				editor.save();
+			});
+		},
+		branding: false
 	});
 
-		$("#TraineeRecordDocumentUpdateContentForm_file").fileinput({'showUpload':false, 'previewFileType':'image', browseClass: "btn btn-success", browseLabel: " {{ 'action.btnSelect'|trans}}", browseIcon: '{{faIco('file')}}', removeClass: "btn btn-danger", removeLabel: " {{ 'action.btnCancel'|trans}}", removeIcon: '{{faIco('trash')}}'});
+	$("#TraineeRecordDocumentUpdateContentForm_file").fileinput({'showUpload':false, 'previewFileType':'image', browseClass: "btn btn-success", browseLabel: " {{ 'action.btnSelect'|trans}}", browseIcon: '{{faIco('file')}}', removeClass: "btn btn-danger", removeLabel: " {{ 'action.btnCancel'|trans}}", removeIcon: '{{faIco('trash')}}'});
 });
 </script>
 {% endblock htmlBodyScripts %}

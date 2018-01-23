@@ -135,7 +135,7 @@
 						<div class="box-header"><h3 class="box-title">{{'User.tlabel.admin.editRoles'|trans}}</h3></div>
 						<div class="box-body">
 							{{form_start(UserUpdateRolesForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_user_editPost', {'id': user.id}), 'style': 'horizontal'})}}
-							{{form_row(UserUpdateRolesForm.userRoles, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'duallistbox', 'placeholder': 'User.userRoles.placeholder'} })}}
+							{{form_row(UserUpdateRolesForm.userRoles, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'duallistbox'} })}}
 							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
 							{{form_end(UserUpdateRolesForm)}}
 						</div>
@@ -195,6 +195,8 @@
 {% endblock main %}
 {% block htmlBodyScripts %}
 {{ parent() }}
+<script src="{{ preload(asset('/res/js/jquery.form.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/jquery.cropper.min.js')) }}"></script>
 <script type="text/javascript">
 $(function() {
 

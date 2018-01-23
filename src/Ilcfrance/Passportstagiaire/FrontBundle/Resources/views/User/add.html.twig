@@ -26,7 +26,7 @@
 				{{form_row(UserAddForm.firstName, {'label_col': 3, 'widget_col': 8, 'attr': {'placeholder': 'User.firstName.placeholder'} })}}
 				{{form_row(UserAddForm.locale, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'select2', 'style': 'width:100%', 'placeholder': 'User.locale.placeholder'} })}}
 				{{form_row(UserAddForm.lockout, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'select2', 'style': 'width:100%', 'placeholder': 'User.lockout.placeholder'} })}}
-				{{form_row(UserAddForm.userRoles, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'duallistbox', 'placeholder': 'User.userRoles.placeholder'} })}}
+				{{form_row(UserAddForm.userRoles, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'duallistbox'} })}}
 				<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
 				{{form_end(UserAddForm)}}
 			</div>

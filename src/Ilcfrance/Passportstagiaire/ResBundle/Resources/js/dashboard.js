@@ -90,20 +90,4 @@ $(function() {
 	$(window).resize(function() {
 		fixScroll();
 	});
-	
-	$('input[type="checkbox"], input[type="radio"]')
-	.iCheck({
-		checkboxClass : 'icheckbox_flat-red',
-		radioClass : 'iradio_flat-red'
-	});
-	$(".select2").select2({theme: "bootstrap"});
-	$(".duallistbox").bootstrapDualListbox({
-		moveOnSelect : false
-	});
-	$(".fileinput").fileinput({'showUpload':false});
-	$('.datetimepicker').datetimepicker({
-		format: 'YYYY-MM-DD HH:mm:ss',
-		showClose: true
-	});
-	
 });

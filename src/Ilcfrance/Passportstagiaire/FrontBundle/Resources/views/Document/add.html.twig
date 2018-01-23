@@ -29,25 +29,21 @@
 {% endblock main %}
 {% block htmlBodyScripts %}
 {{ parent() }}
+<script src="{{ preload(asset('/res/js/tinymce.min.js')) }}"></script>
 <script type="text/javascript">
 $(function() {
-	$('textarea.wysiwyg').each(function() {
-		var options = {
-			theme: "modern",
-			content_css : '{{ preload(asset('/res/css/app.min.css')) }}',
-			plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
-			language : '{{ (app.request.locale~'_tinymce')|trans }}',
-			toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview "
-		};
-		$this = $(this);
-		if($this.is('[required]')) {
-			options.oninit = function(editor) {
-				editor.on('change', function(e) {
-					editor.save();
-				});
-			}
+	tinymce.init({
+		selector: 'textarea.wysiwyg',
+		branding: false,
+		theme: "modern",
+		content_css : '{{ preload(asset('/res/css/app.min.css')) }}',
+		plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+		toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview ",
+		init_instance_callback: function (editor) {
+			editor.on('change', function (e) {
+				editor.save();
+			});
 		}
-		$this.tinymce(options);
 	});
 
 	$("#DocumentAddForm_file").fileinput({'showUpload':false, 'previewFileType':'image', browseClass: "btn btn-success", browseLabel: " {{ 'action.btnSelect'|trans}}", browseIcon: '{{faIco('file')}}', removeClass: "btn btn-danger", removeLabel: " {{ 'action.btnCancel'|trans}}", removeIcon: '{{faIco('trash')}}'});

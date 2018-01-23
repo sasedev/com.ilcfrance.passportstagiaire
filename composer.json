@@ -106,9 +106,6 @@
 				"source" : "web/res/bower_components/tinymce/themes/",
 				"destination" : "web/res/js/themes"
 			}, {
-				"source" : "web/res/bower_components/ivan-chkv.tinymce-i18n/langs",
-				"destination" : "web/res/js/langs"
-			}, {
 				"source" : "src/Ilcfrance/Passportstagiaire/ResBundle/Resources/images",
 				"destination" : "web/res/images"
 			}, {

@@ -39,7 +39,7 @@
 							<td>{% if trainee.level is not empty %}{{ trainee.level }}{% else %}{{ bsLabel('_NA'|trans)}}{% endif %}</td>
 							<td>
 								{% for hist in trainee.historicals %}
-								{{ hist.year }} - {{ hist.origine }} {{bsLabel(hist.records.count())}}
+								<span{% if hist.lockout != constant('LOCKOUT_UNLOCKED', hist) %} class="label label-warning"{% endif %}>{{ hist.year }} - {{ hist.origine }} {{bsLabel(hist.records.count())}}</span><br>
 								{% endfor %}
 							</td>
 							<td>
@@ -81,13 +81,12 @@
 {% endblock main %}
 {% block htmlBodyScripts %}
 {{ parent() }}
+<script src="{{ preload(asset('/res/js/dataTables.jquery.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/dataTables.bs.min.js')) }}"></script>
 <script type="text/javascript">
 $(function() {
 	{% if trainees|length != 0 %}
 	$('#traineeList').DataTable({
-		"language": {
-			"url": "{{ preload(asset('/res/js/dataTablesI18N/'~(app.request.locale~'_datatables')|trans)) }}"
-		},
 		"columns": [
 			null,
 			null,
@@ -104,7 +103,8 @@ $(function() {
 				modalDeleteBtn.attr('href', lnk);
 				$('#deleteConfirmTrainee').modal('show');
 			});
-		}{%  endif %}
+		}
+		{%  endif %}
 	});
 	{% endif %}
 });

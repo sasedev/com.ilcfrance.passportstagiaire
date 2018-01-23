@@ -138,6 +138,8 @@
 {% endblock main %}
 {% block htmlBodyScripts %}
 {{ parent() }}
+<script src="{{ preload(asset('/res/js/jquery.form.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/jquery.cropper.min.js')) }}"></script>
 <script type="text/javascript">
 $(function() {
 

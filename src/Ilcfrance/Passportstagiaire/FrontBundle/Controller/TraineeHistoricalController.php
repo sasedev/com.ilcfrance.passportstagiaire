@@ -101,6 +101,15 @@ class TraineeHistoricalController extends IlcfranceController
                 $traineeHistoricalUpdateYearForm = $this->createForm(TraineeHistoricalUpdateYearTForm::class, $traineeHistorical);
 
                 $traineeRecord = new TraineeRecord();
+                $teacher = $this->getSecurityTokenStorage()
+                    ->getToken()
+                    ->getUser();
+                $traineeRecord->setTeacher($teacher);
+                $traineeRecord->setTeacherName($teacher->getFullName());
+                $now = new \DateTime();
+                $hour = \date('H');
+                $now->setTime($hour, 0, 0);
+                $traineeRecord->setRecordDate($now);
                 $traineeRecord->setHistorical($traineeHistorical);
                 $traineeRecordAddForm = $this->createForm(TraineeRecordAddTForm::class, $traineeRecord, array(
                     'trainee' => $traineeHistorical->getTrainee(),
@@ -169,6 +178,15 @@ class TraineeHistoricalController extends IlcfranceController
                 $traineeHistoricalUpdateYearForm = $this->createForm(TraineeHistoricalUpdateYearTForm::class, $traineeHistorical);
 
                 $traineeRecord = new TraineeRecord();
+                $teacher = $this->getSecurityTokenStorage()
+                    ->getToken()
+                    ->getUser();
+                $traineeRecord->setTeacher($teacher);
+                $traineeRecord->setTeacherName($teacher->getFullName());
+                $now = new \DateTime();
+                $hour = \date('H');
+                $now->setTime($hour, 0, 0);
+                $traineeRecord->setRecordDate($now);
                 $traineeRecord->setHistorical($traineeHistorical);
                 $traineeRecordAddForm = $this->createForm(TraineeRecordAddTForm::class, $traineeRecord, array(
                     'trainee' => $traineeHistorical->getTrainee(),
@@ -273,7 +291,7 @@ class TraineeHistoricalController extends IlcfranceController
                             '%traineeHistorical%' => $traineeHistorical->getFullName()
                         )));
                     }
-                } elseif (isset($reqData['TraineeHistoricalUpdateLockouForm'])) {
+                } elseif (isset($reqData['TraineeHistoricalUpdateLockoutForm'])) {
                     $this->addTwigVar('tabActive', 2);
                     $this->getSession()->set('tabActive', 2);
                     $traineeHistoricalUpdateLockoutForm->handleRequest($request);

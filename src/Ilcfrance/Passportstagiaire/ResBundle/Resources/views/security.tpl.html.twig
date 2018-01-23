@@ -32,7 +32,6 @@
 	<!--[if lt IE 9]><!-->
 	<script src="{{ preload(asset('/res/js/html5shiv.respond.min.js')) }}"></script>
 	<!--<![endif]-->
-	<script src="{{ preload(asset('/res/js/jq.migrate.v1.min.js')) }}"></script>
 {% endblock htmlHeadScripts %}
 {% block htmlBodyAttributes %}class="security-page"{% endblock htmlBodyAttributes %}
 {% block htmlBodyContent %}
@@ -89,5 +88,8 @@
 {% endblock htmlBodyContent %}
 {% block htmlBodyScripts %}
 {{ parent() }}
-<script src="{{ preload(asset('/res/js/app.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/jquery.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/bootstrap.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/iCheck.min.js')) }}"></script>
+<script src="{{ preload(asset('/res/js/iCheck_init.min.js')) }}"></script>
 {% endblock htmlBodyScripts %}
