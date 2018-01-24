@@ -497,18 +497,21 @@ assetic:
 
         js_min_secure:
             inputs:
+                - '@js_min_jquery'
                 - '@js_min_bootstrap'
                 - '@js_min_iCheck'
                 - '@js_min_iCheck_init'
             filters:
                 - uglifyjs2
             combine: true
-            output: 'res/js/ilcsecure.min.js'
+            output: 'res/js/secure.ilc.min.js'
 
         js_min_app:
             inputs:
                 - '@js_min_jquery'
+                - '@js_min_jquery_datatables_net'
                 - '@js_min_bootstrap'
+                - '@js_min_datatables_net_bs'
                 - '@js_min_iCheck'
                 - '@js_min_select2'
                 - '@js_min_bootstrap_duallistbox'
@@ -524,13 +527,10 @@ assetic:
                 - '@js_min_datetimepicker_init'
                 - '@js_min_fileinput_init'
                 - '@js_min_tinymce'
-                - '@js_min_jquery_tinymce'
-                - '@js_min_jquery_datatables_net'
-                - '@js_min_datatables_net_bs'
                 
             filters:
                 - uglifyjs2
             combine: true
-            output: 'res/js/ilcapp.min.js'
+            output: 'res/js/app.ilc.min.js'
 
 

@@ -83,5 +83,5 @@ security:
         - { path: ^/lostId, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/lostPassword, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/generateNewPassword.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/*, role: ROLE_USER }
+        - { path: ^/*, roles: ["ROLE_USER", "IS_AUTHENTICATED_FULLY"] }
     access_denied_url: /login
