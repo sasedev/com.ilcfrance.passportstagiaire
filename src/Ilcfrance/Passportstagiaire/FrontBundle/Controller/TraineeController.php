@@ -504,7 +504,7 @@ class TraineeController extends IlcfranceController
                     $courses = \trim(\strval($worksheet->getCellByColumnAndRow(11, $row)->getValue()));
                     $origine = \trim(\strval($worksheet->getCellByColumnAndRow(12, $row)->getValue()));
 
-                    $histYear = \trim(\intval($worksheet->getCellByColumnAndRow(13, $row)->getValue()));
+                    $histYear = \trim(\strval($worksheet->getCellByColumnAndRow(13, $row)->getValue()));
                     $histOrigine = \trim(\strval($worksheet->getCellByColumnAndRow(14, $row)->getValue()));
                     $histInitLevel = \trim(\strval($worksheet->getCellByColumnAndRow(15, $row)->getValue()));
                     $histLevel = \trim(\strval($worksheet->getCellByColumnAndRow(16, $row)->getValue()));
@@ -550,7 +550,7 @@ class TraineeController extends IlcfranceController
                             $em->persist($trainee);
                             $log .= 'L' . $row . ": le Stagiaire " . $lastName . ' ' . $firstName . ' est nouveau. ';
 
-                            if (\trim($histYear) == '') {
+                            if (\trim($histYear) == '' || !\is_int($histYear)) {
                                 $histYear = \date('Y');
                             }
                             if (\trim($histOrigine) == '') {

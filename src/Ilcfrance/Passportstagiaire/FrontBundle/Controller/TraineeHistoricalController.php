@@ -134,7 +134,7 @@ class TraineeHistoricalController extends IlcfranceController
                 $this->addTwigVar('pageTitle', $this->translate('TraineeHistorical.pageTitle.admin.edit', array(
                     '%traineeHistorical%' => $traineeHistorical->getFullName()
                 )));
-                $this->setHtmlHeadPageTitle($this->translate('TraineeRecord.htmlHeadPageTitle.admin.edit', array(
+                $this->setHtmlHeadPageTitle($this->translate('TraineeHistorical.htmlHeadPageTitle.admin.edit', array(
                     '%traineeHistorical%' => $traineeHistorical->getFullName()
                 )) . ' - ' . $this->getParameter('sitename'));
 
@@ -449,7 +449,7 @@ class TraineeHistoricalController extends IlcfranceController
                 $this->addTwigVar('pageTitle', $this->translate('TraineeHistorical.pageTitle.admin.edit', array(
                     '%traineeHistorical%' => $traineeHistorical->getFullName()
                 )));
-                $this->setHtmlHeadPageTitle($this->translate('TraineeRecord.htmlHeadPageTitle.admin.edit', array(
+                $this->setHtmlHeadPageTitle($this->translate('TraineeHistorical.htmlHeadPageTitle.admin.edit', array(
                     '%traineeHistorical%' => $traineeHistorical->getFullName()
                 )) . ' - ' . $this->getParameter('sitename'));
 
