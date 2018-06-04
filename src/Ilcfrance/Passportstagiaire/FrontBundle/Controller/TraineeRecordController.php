@@ -62,7 +62,7 @@ class TraineeRecordController extends IlcfranceController
                 $em->flush();
 
                 $this->addFlash('success', $this->translate('TraineeRecord.delete.success', array(
-                    '%traineRecord%' => $traineeRecord->getFullName()
+                    '%traineeRecord%' => $traineeRecord->getFullName()
                 )));
             }
         } catch (\Exception $e) {
@@ -214,7 +214,7 @@ class TraineeRecordController extends IlcfranceController
                         $em->flush();
 
                         $this->addFlash('success', $this->translate('TraineeRecord.edit.success', array(
-                            '%traineRecord%' => $traineeRecord->getFullName()
+                            '%traineeRecord%' => $traineeRecord->getFullName()
                         )));
 
                         return $this->redirect($urlFrom);
@@ -222,7 +222,7 @@ class TraineeRecordController extends IlcfranceController
                         $em->refresh($traineeRecord);
 
                         $this->addFlash('error', $this->translate('TraineeRecord.edit.failure', array(
-                            '%traineRecord%' => $traineeRecord->getFullName()
+                            '%traineeRecord%' => $traineeRecord->getFullName()
                         )));
                     }
                 } elseif (isset($reqData['TraineeRecordUpdateHistoricalForm'])) {
@@ -234,7 +234,7 @@ class TraineeRecordController extends IlcfranceController
                         $em->flush();
 
                         $this->addFlash('success', $this->translate('TraineeRecord.edit.success', array(
-                            '%traineRecord%' => $traineeRecord->getFullName()
+                            '%traineeRecord%' => $traineeRecord->getFullName()
                         )));
 
                         return $this->redirect($urlFrom);
@@ -242,7 +242,7 @@ class TraineeRecordController extends IlcfranceController
                         $em->refresh($traineeRecord);
 
                         $this->addFlash('error', $this->translate('TraineeRecord.edit.failure', array(
-                            '%traineRecord%' => $traineeRecord->getFullName()
+                            '%traineeRecord%' => $traineeRecord->getFullName()
                         )));
                     }
                 } elseif (isset($reqData['TraineeRecordUpdateHomeworksForm'])) {
@@ -254,7 +254,7 @@ class TraineeRecordController extends IlcfranceController
                         $em->flush();
 
                         $this->addFlash('success', $this->translate('TraineeRecord.edit.success', array(
-                            '%traineRecord%' => $traineeRecord->getFullName()
+                            '%traineeRecord%' => $traineeRecord->getFullName()
                         )));
 
                         return $this->redirect($urlFrom);
@@ -262,7 +262,7 @@ class TraineeRecordController extends IlcfranceController
                         $em->refresh($traineeRecord);
 
                         $this->addFlash('error', $this->translate('TraineeRecord.edit.failure', array(
-                            '%traineRecord%' => $traineeRecord->getFullName()
+                            '%traineeRecord%' => $traineeRecord->getFullName()
                         )));
                     }
                 } elseif (isset($reqData['TraineeRecordUpdateRecordDateForm'])) {
@@ -274,7 +274,7 @@ class TraineeRecordController extends IlcfranceController
                         $em->flush();
 
                         $this->addFlash('success', $this->translate('TraineeRecord.edit.success', array(
-                            '%traineRecord%' => $traineeRecord->getFullName()
+                            '%traineeRecord%' => $traineeRecord->getFullName()
                         )));
 
                         return $this->redirect($urlFrom);
@@ -282,7 +282,7 @@ class TraineeRecordController extends IlcfranceController
                         $em->refresh($traineeRecord);
 
                         $this->addFlash('error', $this->translate('TraineeRecord.edit.failure', array(
-                            '%traineRecord%' => $traineeRecord->getFullName()
+                            '%traineeRecord%' => $traineeRecord->getFullName()
                         )));
                     }
                 } elseif (isset($reqData['TraineeRecordUpdateTakeawaysForm'])) {
@@ -294,7 +294,7 @@ class TraineeRecordController extends IlcfranceController
                         $em->flush();
 
                         $this->addFlash('success', $this->translate('TraineeRecord.edit.success', array(
-                            '%traineRecord%' => $traineeRecord->getFullName()
+                            '%traineeRecord%' => $traineeRecord->getFullName()
                         )));
 
                         return $this->redirect($urlFrom);
@@ -302,7 +302,7 @@ class TraineeRecordController extends IlcfranceController
                         $em->refresh($traineeRecord);
 
                         $this->addFlash('error', $this->translate('TraineeRecord.edit.failure', array(
-                            '%traineRecord%' => $traineeRecord->getFullName()
+                            '%traineeRecord%' => $traineeRecord->getFullName()
                         )));
                     }
                 } elseif (isset($reqData['TraineeRecordUpdateTeacherForm'])) {
@@ -314,7 +314,7 @@ class TraineeRecordController extends IlcfranceController
                         $em->flush();
 
                         $this->addFlash('success', $this->translate('TraineeRecord.edit.success', array(
-                            '%traineRecord%' => $traineeRecord->getFullName()
+                            '%traineeRecord%' => $traineeRecord->getFullName()
                         )));
 
                         return $this->redirect($urlFrom);
@@ -322,7 +322,7 @@ class TraineeRecordController extends IlcfranceController
                         $em->refresh($traineeRecord);
 
                         $this->addFlash('error', $this->translate('TraineeRecord.edit.failure', array(
-                            '%traineRecord%' => $traineeRecord->getFullName()
+                            '%traineeRecord%' => $traineeRecord->getFullName()
                         )));
                     }
                 } elseif (isset($reqData['TraineeRecordUpdateTraineeForm'])) {
@@ -334,7 +334,7 @@ class TraineeRecordController extends IlcfranceController
                         $em->flush();
 
                         $this->addFlash('success', $this->translate('TraineeRecord.edit.success', array(
-                            '%traineRecord%' => $traineeRecord->getFullName()
+                            '%traineeRecord%' => $traineeRecord->getFullName()
                         )));
 
                         return $this->redirect($urlFrom);
@@ -342,7 +342,7 @@ class TraineeRecordController extends IlcfranceController
                         $em->refresh($traineeRecord);
 
                         $this->addFlash('error', $this->translate('TraineeRecord.edit.failure', array(
-                            '%traineRecord%' => $traineeRecord->getFullName()
+                            '%traineeRecord%' => $traineeRecord->getFullName()
                         )));
                     }
                 } elseif (isset($reqData['TraineeRecordUpdateWorksCoveredForm'])) {
@@ -354,7 +354,7 @@ class TraineeRecordController extends IlcfranceController
                         $em->flush();
 
                         $this->addFlash('success', $this->translate('TraineeRecord.edit.success', array(
-                            '%traineRecord%' => $traineeRecord->getFullName()
+                            '%traineeRecord%' => $traineeRecord->getFullName()
                         )));
 
                         return $this->redirect($urlFrom);
@@ -362,7 +362,7 @@ class TraineeRecordController extends IlcfranceController
                         $em->refresh($traineeRecord);
 
                         $this->addFlash('error', $this->translate('TraineeRecord.edit.failure', array(
-                            '%traineRecord%' => $traineeRecord->getFullName()
+                            '%traineeRecord%' => $traineeRecord->getFullName()
                         )));
                     }
                 } elseif (isset($reqData['TraineeRecordDocumentAddForm'])) {
@@ -400,7 +400,7 @@ class TraineeRecordController extends IlcfranceController
                         $em->refresh($traineeRecord);
 
                         $this->addFlash('error', $this->translate('Trainee.edit.failure', array(
-                            '%traineRecord%' => $traineeRecord->getFullName()
+                            '%traineeRecord%' => $traineeRecord->getFullName()
                         )));
                     }
                 }

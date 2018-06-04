@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * TraineeHistorical
+ *
  * @ORM\Table(name="ilcfrance_trainee_historicals")
  * @ORM\Entity(repositoryClass="Ilcfrance\Passportstagiaire\DataBundle\EntityRepository\TraineeHistoricalRepository")
  * @ORM\HasLifecycleCallbacks

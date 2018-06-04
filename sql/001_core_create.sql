@@ -127,6 +127,7 @@ CREATE TABLE "ilcfrance_trainee_record_documents" (
 	"filemd5"                                                           TEXT NOT NULL,
 	"filedesc"                                                          TEXT NULL,
 	"filedls"                                                           INT8 NOT NULL DEFAULT 0,
+	"fileemls"                                                          INT8 NOT NULL DEFAULT 0,
 	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
 	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
 	CONSTRAINT "pk_ilcfrance_trainee_record_documents" PRIMARY KEY ("id"),

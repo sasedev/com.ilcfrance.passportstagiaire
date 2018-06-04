@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * TraineeRecord
+ *
  * @ORM\Table(name="ilcfrance_trainee_records")
  * @ORM\Entity(repositoryClass="Ilcfrance\Passportstagiaire\DataBundle\EntityRepository\TraineeRecordRepository")
  * @ORM\HasLifecycleCallbacks

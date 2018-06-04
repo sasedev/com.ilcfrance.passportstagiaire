@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
+ *
  * @ORM\Table(name="ilcfrance_users")
  * @ORM\Entity(repositoryClass="Ilcfrance\Passportstagiaire\DataBundle\EntityRepository\UserRepository")
  * @ORM\HasLifecycleCallbacks
@@ -161,6 +162,7 @@ class User implements UserInterface, \Serializable, EntityTraceable
     protected $dtUpdate;
 
     /**
+     *
      * @ORM\ManyToOne(targetEntity="Locale", inversedBy="users", cascade={"persist"})
      * @ORM\JoinColumns({@ORM\JoinColumn(name="locale_id", referencedColumnName="id")})
      * @ORM\Cache(usage="NONSTRICT_READ_WRITE", region="region_User_locale")

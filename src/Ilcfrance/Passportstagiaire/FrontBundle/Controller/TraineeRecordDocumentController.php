@@ -1,6 +1,8 @@
 <?php
 namespace Ilcfrance\Passportstagiaire\FrontBundle\Controller;
 
+use Swift_EmbeddedFile;
+use Swift_Message;
 use Ilcfrance\Passportstagiaire\FrontBundle\Form\TraineeRecordDocument\UpdateContentTForm as TraineeRecordDocumentUpdateContentTForm;
 use Ilcfrance\Passportstagiaire\FrontBundle\Form\TraineeRecordDocument\UpdateDescriptionTForm as TraineeRecordDocumentUpdateDescriptionTForm;
 use Ilcfrance\Passportstagiaire\FrontBundle\Form\TraineeRecordDocument\UpdateOriginalNameTForm as TraineeRecordDocumentUpdateOriginalNameTForm;
@@ -130,6 +132,80 @@ class TraineeRecordDocumentController extends IlcfranceController
             $logger = $this->getLogger();
             $logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
             $this->addFlash('warning', $this->translate('TraineeRecordDocument.download.notfound'));
+        }
+
+        return $this->redirect($urlFrom);
+    }
+
+    /**
+     *
+     * @param string $uid
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function sendmailAction($id, Request $request)
+    {
+        $urlFrom = $this->getReferer();
+        if (null == $urlFrom || trim($urlFrom) == '') {
+            $urlFrom = $this->generateUrl('ilcfrance_passportstagiaire_front_trainee_list');
+        }
+        $em = $this->getEntityManager();
+        try {
+            $traineeRecordDocument = $em->getRepository('IlcfrancePassportstagiaireDataBundle:TraineeRecordDocument')->find($id);
+
+            if (null == $traineeRecordDocument) {
+                $this->addFlash('warning', $this->translate('TraineeRecordDocument.sendmail.notfound'));
+            } else {
+                $traineeRecordDocumentDir = $this->getParameter('kernel.root_dir') . '/../web/res/traineerecorddocuments';
+                $fileName = $traineeRecordDocument->getFileName();
+                $user = $traineeRecordDocument->getTraineeRecord()->getTrainee();
+                $email = $user->getEmail();
+                if (null == $email || \trim($email) == '') {
+                    $this->addFlash('warning', $this->translate('TraineeRecordDocument.sendmail.notemail'));
+                } else {
+                    try {
+                        $dlFile = new File($traineeRecordDocumentDir . '/' . $fileName);
+
+                        $mvars = array();
+                        $mvars['user'] = $user;
+                        $nfilename = $this->normalize($traineeRecordDocument->getOriginalName());
+                        $mvars['filename'] = $nfilename;
+
+                        $attachement = Swift_EmbeddedFile::fromPath($dlFile->getRealPath());
+                        $attachement->setFilename($nfilename);
+                        $attachement->setContentType($traineeRecordDocument->getMimeType());
+                        $attachement->setDisposition('attachement');
+
+                        $from = $this->getParameter('mail_from');
+                        $fromName = $this->getParameter('mail_from_name');
+                        $subject = $this->translate('_mail.TraineeRecordDocument_subject', array());
+                        $message = Swift_Message::newInstance();
+
+                        $mvars['attachment'] = $message->embed($attachement);
+
+                        $message->setFrom($from, $fromName)
+                            ->setTo($user->getEmail(), $user->getFullname())
+                            ->setSubject($subject)
+                            ->setBody($this->renderView('IlcfrancePassportstagiaireFrontBundle:TraineeRecordDocument:sendmail.html.twig', $mvars), 'text/html');
+                        // $message->attach(Swift_EmbeddedFile::fromPath($dlFile->getRealPath())->setFilename($this->normalize($traineeRecordDocument->getOriginalName()))
+                        // ->setContentType($traineeRecordDocument->getMimeType()));
+
+                        $this->sendmail($message);
+
+                        $traineeRecordDocument->setNbrEmails($traineeRecordDocument->getNbrEmails() + 1);
+                        $em->persist($traineeRecordDocument);
+                        $em->flush();
+                        $this->addFlash('success', $this->translate('TraineeRecordDocument.sendmail.success', array(
+                            '%traineeRecordDocument%' => $traineeRecordDocument->getOriginalName()
+                        )));
+                    } catch (FileNotFoundException $fnfex) {
+                        $this->addFlash('warning', $this->translate('TraineeRecordDocument.sendmail.notfound'));
+                    }
+                }
+            }
+        } catch (\Exception $e) {
+            $logger = $this->getLogger();
+            $logger->addCritical($e->getLine() . ' ' . $e->getMessage() . ' ' . $e->getTraceAsString());
+            $this->addFlash('warning', $this->translate('TraineeRecordDocument.sendmail.notfound'));
         }
 
         return $this->redirect($urlFrom);

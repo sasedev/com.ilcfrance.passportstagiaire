@@ -90,6 +90,7 @@
 											<th>{{ 'TraineeRecordDocument.description.label'|trans|raw }}</th>
 											<th>{{ 'TraineeRecordDocument.mimeType.label'|trans|raw }}</th>
 											<th>{{ 'TraineeRecordDocument.size.label'|trans|raw }}</th>
+											<th>{{ 'TraineeRecordDocument.nbrEmails.label'|trans|raw }}</th>
 											<th>{{ 'table.actions'|trans|raw }}</th>
 										</tr>
 									</thead>
@@ -110,9 +111,11 @@
 													{{'%.2f'|format(doc.size/1024/1024/1024)}} Go
 												{% endif %}
 											</td>
+											<td>{{ doc.nbrEmails }} </td>
 											<td>
-												<a class="btn btn-sm btn-success" href="{{path('ilcfrance_passportstagiaire_front_trainee_record_document_download',{'id':doc.id})}}">{{ faIco('edit') }} {{ 'action.btnDownload'|trans }}</a>
+												<a class="btn btn-sm btn-success" href="{{path('ilcfrance_passportstagiaire_front_trainee_record_document_download',{'id':doc.id})}}">{{ faIco('download') }} {{ 'action.btnDownload'|trans }}</a>
 												{% if is_granted('ROLE_ADMIN') or (record.teacher is not null and app.user.id == record.teacher.id and record.historical.lockout == constant('LOCKOUT_UNLOCKED', record.historical)) %}
+												<a class="btn btn-sm btn-success" href="{{path('ilcfrance_passportstagiaire_front_trainee_record_document_sendmail',{'id':doc.id})}}">{{ faIco('envelope') }} {{ 'action.btnSend'|trans }}</a>
 												<a class="btn btn-sm btn-info" href="{{path('ilcfrance_passportstagiaire_front_trainee_record_document_editGet',{'id':doc.id})}}">{{ faIco('edit') }} {{ 'action.edit'|trans }}</a>
 												{% endif %}
 											</td>

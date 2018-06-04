@@ -631,6 +631,8 @@ TraineeRecordDocument.description.placeholder: "Description"
 TraineeRecordDocument.nbrDownloads: "Downloads"
 TraineeRecordDocument.nbrDownloads.label: "Downloads :"
 TraineeRecordDocument.nbrDownloads.placeholder: "Downloads"
+TraineeRecordDocument.nbrEmails: "Email(s) Sent "
+TraineeRecordDocument.nbrEmails.label: "Email(s) Sent :"
 TraineeRecordDocument.dtCrea: "Creation Date"
 TraineeRecordDocument.dtCrea.label: "Creation Date :"
 TraineeRecordDocument.dtUpdate: "Update Date"
@@ -666,7 +668,12 @@ TraineeRecordDocument.delete.success: "Document <b>%traineeRecordDocument%</b> h
 TraineeRecordDocument.delete.failure: "An error occured while trying to delete Document"
 TraineeRecordDocument.edit.success: "Document <b>%traineeRecordDocument%</b> has been successfully updated"
 TraineeRecordDocument.edit.failure: "An error occured while trying to update Document <b>%traineeRecordDocument%</b>"
+TraineeRecordDocument.download.notfound: "An error occured while trying to download Document"
+TraineeRecordDocument.sendmail.notfound: "An error occured while trying to email Document"
+TraineeRecordDocument.sendmail.notemail: "An error occured while trying to email Document (Trainee has no email address set)"
+TraineeRecordDocument.sendmail.success: "Document <b>%traineeRecordDocument%</b> has been successfully sended by email"
 
+_mail.TraineeRecordDocument_subject: "New Document From PassportStagiaire.ILCFrance.com"
 
 # Documents
 Document.trace.1: "Add Document "

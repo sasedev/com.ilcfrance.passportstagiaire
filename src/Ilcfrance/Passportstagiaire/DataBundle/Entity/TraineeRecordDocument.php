@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * TraineeRecordDocument
+ *
  * @ORM\Table(name="ilcfrance_trainee_record_documents")
  * @ORM\Entity(repositoryClass="Ilcfrance\Passportstagiaire\DataBundle\EntityRepository\TraineeRecordDocumentRepository")
  * @ORM\HasLifecycleCallbacks
@@ -81,6 +82,12 @@ class TraineeRecordDocument implements EntityTraceable
 
     /**
      *
+     * @var integer @ORM\Column(name="fileemls", type="bigint", nullable=false)
+     */
+    protected $nbrEmails;
+
+    /**
+     *
      * @var \DateTime @ORM\Column(name="created_at", type="datetimetz", nullable=true)
      */
     protected $dtCrea;
@@ -99,6 +106,7 @@ class TraineeRecordDocument implements EntityTraceable
     {
         $this->size = 0;
         $this->nbrDownloads = 0;
+        $this->nbrEmails = 0;
         $this->dtCrea = new \DateTime('now');
     }
 
@@ -299,6 +307,30 @@ class TraineeRecordDocument implements EntityTraceable
     public function setNbrDownloads($nbrDownloads)
     {
         $this->nbrDownloads = $nbrDownloads;
+
+        return $this;
+    }
+
+    /**
+     * Get $nbrEmails
+     *
+     * @return integer
+     */
+    public function getNbrEmails()
+    {
+        return $this->nbrEmails;
+    }
+
+    /**
+     * Set $nbrEmails
+     *
+     * @param integer $nbrEmails
+     *
+     * @return TraineeRecordDocument $this
+     */
+    public function setNbrEmails($nbrEmails)
+    {
+        $this->nbrEmails = $nbrEmails;
 
         return $this;
     }

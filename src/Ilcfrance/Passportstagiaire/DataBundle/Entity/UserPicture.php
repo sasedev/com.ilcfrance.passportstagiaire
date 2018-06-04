@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * UserPicture
+ *
  * @ORM\Table(name="ilcfrance_users_pictures")
  * @ORM\Entity(repositoryClass="Ilcfrance\Passportstagiaire\DataBundle\EntityRepository\UserPictureRepository")
  * @ORM\HasLifecycleCallbacks

@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Document
+ *
  * @ORM\Table(name="ilcfrance_documents")
  * @ORM\Entity(repositoryClass="Ilcfrance\Passportstagiaire\DataBundle\EntityRepository\DocumentRepository")
  * @ORM\HasLifecycleCallbacks

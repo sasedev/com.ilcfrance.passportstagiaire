@@ -56,6 +56,9 @@
 								<div class="col-lg-3 text-right">{{'TraineeRecordDocument.nbrDownloads'|trans|raw}} :</div>
 								<div class="col-lg-9">{{traineeRecordDocument.nbrDownloads}}&nbsp;</div>
 								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'TraineeRecordDocument.nbrEmails'|trans|raw}} :</div>
+								<div class="col-lg-9">{{traineeRecordDocument.nbrEmails}}&nbsp;&nbsp;<a class="btn btn-sm btn-success" href="{{path('ilcfrance_passportstagiaire_front_trainee_record_document_sendmail',{'id':traineeRecordDocument.id})}}">{{ faIco('envelope') }} {{ 'action.btnSend'|trans }}</a></div>
+								<div class="col-lg-12">&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'TraineeRecordDocument.dtCrea'|trans|raw}} :</div>
 								<div class="col-lg-9">{{traineeRecordDocument.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{traineeRecordDocument.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'TraineeRecordDocument.dtUpdate'|trans|raw}} :</div>

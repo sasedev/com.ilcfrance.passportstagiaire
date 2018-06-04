@@ -12,6 +12,7 @@ use Symfony\Component\Intl\Intl;
 
 /**
  * Locale
+ *
  * @ORM\Table(name="ilcfrance_locales")
  * @ORM\Entity(repositoryClass="Ilcfrance\Passportstagiaire\DataBundle\EntityRepository\LocaleRepository")
  * @ORM\HasLifecycleCallbacks
