@@ -169,6 +169,7 @@ class TraineeRecordDocumentController extends IlcfranceController
                         $mvars['user'] = $user;
                         $nfilename = $this->normalize($traineeRecordDocument->getOriginalName());
                         $mvars['filename'] = $nfilename;
+                        $mvars['filedesc'] = $traineeRecordDocument->getDescription();
 
                         $attachement = Swift_EmbeddedFile::fromPath($dlFile->getRealPath());
                         $attachement->setFilename($nfilename);

@@ -1,5 +1,21 @@
 <html>
 <body>
-New Document  <a href="{{ attachment }}">{{ filename }}</a> recived from ILCFrance.
+<p>
+    Hello <b>{{ user.fullName }}</b><br>
+    We hope you are enjoying your English classes.<br>
+    Please find attached the Document <a href="{{ attachment }}">{{ filename }}</a>.
+    {% if filedesc is not empty %}<br>
+    {{ filedesc|raw }}
+    {% endif %}
+</p>
+<p>
+    For any schedule change, please contact Judite Goncalves 01 44 41 80 24.
+</p>
+<p>
+    For any other questions regarding your English course, please contact Léa Paolini 01 44 41 80 22.
+</p>
+<p>
+    <small>ILC France Teaching Team</small>
+</p>
 </body>
 </html>

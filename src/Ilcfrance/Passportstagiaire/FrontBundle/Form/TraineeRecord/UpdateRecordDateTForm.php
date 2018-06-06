@@ -26,7 +26,8 @@ class UpdateRecordDateTForm extends AbstractType
         $builder->add('recordDate', DateTimeType::class, array(
             'label' => 'TraineeRecord.recordDate.label',
             'widget' => 'single_text',
-            'date_format' => 'Y-m-d H:i:s'
+            'date_format' => 'Y-m-d H:i:s',
+            'html5' => false
         ));
     }
 

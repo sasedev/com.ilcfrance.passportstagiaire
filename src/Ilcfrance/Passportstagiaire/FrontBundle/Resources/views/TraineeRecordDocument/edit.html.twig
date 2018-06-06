@@ -57,7 +57,7 @@
 								<div class="col-lg-9">{{traineeRecordDocument.nbrDownloads}}&nbsp;</div>
 								<div class="col-lg-12">&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'TraineeRecordDocument.nbrEmails'|trans|raw}} :</div>
-								<div class="col-lg-9">{{traineeRecordDocument.nbrEmails}}&nbsp;&nbsp;<a class="btn btn-sm btn-success" href="{{path('ilcfrance_passportstagiaire_front_trainee_record_document_sendmail',{'id':traineeRecordDocument.id})}}">{{ faIco('envelope') }} {{ 'action.btnSend'|trans }}</a></div>
+								<div class="col-lg-9">{{traineeRecordDocument.nbrEmails}}&nbsp;&nbsp;<a class="btn btn-sm btn-default sendmailConfirmTraineeRecordDocument" href="{{path('ilcfrance_passportstagiaire_front_trainee_record_document_sendmail',{'id':traineeRecordDocument.id})}}">{{ faIco('envelope') }} {{ 'action.btnSend'|trans }}</a></div>
 								<div class="col-lg-12">&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'TraineeRecordDocument.dtCrea'|trans|raw}} :</div>
 								<div class="col-lg-9">{{traineeRecordDocument.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{traineeRecordDocument.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
@@ -103,6 +103,23 @@
 		</div>
 	</div>
 </div>
+<div id="sendmailConfirmTraineeRecordDocument" class="modal modal-info fade in" tabindex="-1" trainee="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 class="modal-title">{{'TraineeRecordDocument.sendmail.confirm.title'|trans|raw}}</h3>
+            </div>
+            <div class="modal-body">
+                {{'TraineeRecordDocument.sendmail.confirm.txt'|trans|raw}}
+            </div>
+            <div class="modal-footer">
+                <a href="" class="btn btn-primary danger btn-outline pull-left">{{'_yes'|trans|raw}}</a>
+                <button type="button" class="btn btn-danger btn-outline pull-right" data-dismiss="modal">{{'_no'|trans|raw}}</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock main %}
 {% block htmlBodyScripts %}
 {{ parent() }}
@@ -126,6 +143,14 @@ $(function() {
 			});
 		}
 	});
+
+    $('.sendmailConfirmTraineeRecordDocument').on("click", function(e) {
+        e.preventDefault();
+        var lnk = $(this).attr('href');
+        modalDeleteBtn = $('#sendmailConfirmTraineeRecordDocument').find('.danger');
+        modalDeleteBtn.attr('href', lnk);
+        $('#sendmailConfirmTraineeRecordDocument').modal('show');
+    });
 	
 	$("#TraineeRecordDocumentUpdateContentForm_file").fileinput({'showUpload':false, 'previewFileType':'image', browseClass: "btn btn-success", browseLabel: " {{ 'action.btnSelect'|trans}}", browseIcon: '{{faIco('file')}}', removeClass: "btn btn-danger", removeLabel: " {{ 'action.btnCancel'|trans}}", removeIcon: '{{faIco('trash')}}'});
 });

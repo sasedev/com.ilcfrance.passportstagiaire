@@ -625,9 +625,9 @@ TraineeRecordDocument.size.placeholder: "File Size"
 TraineeRecordDocument.mimeType: "Mime Type"
 TraineeRecordDocument.mimeType.label: "Mime Type :"
 TraineeRecordDocument.mimeType.placeholder: "Mime Type"
-TraineeRecordDocument.description: "Description"
-TraineeRecordDocument.description.label: "Description :"
-TraineeRecordDocument.description.placeholder: "Description"
+TraineeRecordDocument.description: "Description / Email Desc"
+TraineeRecordDocument.description.label: "Description / Email Desc:"
+TraineeRecordDocument.description.placeholder: "Description / Email Desc"
 TraineeRecordDocument.nbrDownloads: "Downloads"
 TraineeRecordDocument.nbrDownloads.label: "Downloads :"
 TraineeRecordDocument.nbrDownloads.placeholder: "Downloads"
@@ -673,7 +673,11 @@ TraineeRecordDocument.sendmail.notfound: "An error occured while trying to email
 TraineeRecordDocument.sendmail.notemail: "An error occured while trying to email Document (Trainee has no email address set)"
 TraineeRecordDocument.sendmail.success: "Document <b>%traineeRecordDocument%</b> has been successfully sended by email"
 
-_mail.TraineeRecordDocument_subject: "New Document From PassportStagiaire.ILCFrance.com"
+TraineeRecordDocument.sendmail.confirm.title: "Confirmation ask"
+TraineeRecordDocument.sendmail.confirm.txt: "Are You sure you would like to send this File by Mail ?"
+
+
+_mail.TraineeRecordDocument_subject: "New Document From ILCFrance.com"
 
 # Documents
 Document.trace.1: "Add Document "
