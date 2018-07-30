@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="Ilcfrance\Passportstagiaire\DataBundle\EntityRepository\TraineeRepository")
  * @ORM\HasLifecycleCallbacks
  * @ORM\Cache(usage="NONSTRICT_READ_WRITE", region="region_Trainee")
- * @UniqueEntity(fields={"firstName", "lastName"}, errorPath="lastName", groups={"firstName", "lastName"})
+ * @UniqueEntity(fields={"firstName", "lastName"}, errorPath="firstName", groups={"firstName", "lastName"})
  *
  * @author sasedev <sinus@saseprod.net>
  */
@@ -611,11 +611,11 @@ class Trainee implements EntityTraceable
     public function getFullName()
     {
         $fullName = '';
-        if (\trim($this->getLastName()) != '') {
-            $fullName .= $this->getLastName() . ' ';
-        }
         if (\trim($this->getFirstName()) != '') {
-            $fullName .= $this->getFirstName();
+            $fullName .= $this->getFirstName() . ' ';
+        }
+        if (\trim($this->getLastName()) != '') {
+            $fullName .= $this->getLastName();
         }
 
         return $fullName;
