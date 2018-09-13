@@ -52,7 +52,7 @@ class DocumentController extends IlcfranceController
     public function addGetAction(Request $request)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
-            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_document_list'));
+            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_front_document_list'));
         }
         $document = new Document();
         $documentAddForm = $this->createForm(DocumentAddTForm::class, $document);
@@ -72,11 +72,11 @@ class DocumentController extends IlcfranceController
     public function addPostAction(Request $request)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
-            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_document_list'));
+            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_front_document_list'));
         }
         $urlFrom = $this->getReferer($request);
         if (null == $urlFrom || trim($urlFrom) == '') {
-            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_document_addGet'));
+            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_front_document_addGet'));
         }
         $document = new Document();
         $documentAddForm = $this->createForm(DocumentAddTForm::class, $document);
@@ -114,7 +114,7 @@ class DocumentController extends IlcfranceController
                     '%document%' => $document->getOriginalName()
                 )));
 
-                return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_document_editGet', array(
+                return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_front_document_editGet', array(
                     'id' => $document->getId()
                 )));
             } else {
@@ -138,11 +138,11 @@ class DocumentController extends IlcfranceController
     public function deleteAction($id, Request $request)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
-            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_document_list'));
+            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_front_document_list'));
         }
         $urlFrom = $this->getReferer($request);
         if (null == $urlFrom || trim($urlFrom) == '') {
-            $urlFrom = $this->generateUrl('ilcfrance_passportstagiaire_document_list');
+            $urlFrom = $this->generateUrl('ilcfrance_passportstagiaire_front_document_list');
         }
         $em = $this->getEntityManager();
         try {
@@ -177,7 +177,7 @@ class DocumentController extends IlcfranceController
     {
         $urlFrom = $this->getReferer();
         if (null == $urlFrom || trim($urlFrom) == '') {
-            $urlFrom = $this->generateUrl('ilcfrance_passportstagiaire_document_list');
+            $urlFrom = $this->generateUrl('ilcfrance_passportstagiaire_front_document_list');
         }
         $em = $this->getEntityManager();
         try {
@@ -237,11 +237,11 @@ class DocumentController extends IlcfranceController
     public function editGetAction($id, Request $request)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
-            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_document_list'));
+            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_front_document_list'));
         }
         $urlFrom = $this->getReferer($request);
         if (null == $urlFrom || trim($urlFrom) == '') {
-            $urlFrom = $this->generateUrl('ilcfrance_passportstagiaire_document_list');
+            $urlFrom = $this->generateUrl('ilcfrance_passportstagiaire_front_document_list');
         }
 
         $em = $this->getEntityManager();
@@ -250,7 +250,7 @@ class DocumentController extends IlcfranceController
 
             if (null == $document) {
                 $this->addFlash('warning', $this->translate('Document.notfound'));
-                return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_document_list'));
+                return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_front_document_list'));
             } else {
                 $documentUpdateDescriptionForm = $this->createForm(DocumentUpdateDescriptionTForm::class, $document);
                 $documentUpdateContentForm = $this->createForm(DocumentUpdateContentTForm::class, $document);
@@ -291,11 +291,11 @@ class DocumentController extends IlcfranceController
     public function editPostAction($id, Request $request)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
-            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_document_list'));
+            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_front_document_list'));
         }
         $urlFrom = $this->getReferer($request);
         if (null == $urlFrom || trim($urlFrom) == '') {
-            $urlFrom = $this->generateUrl('ilcfrance_passportstagiaire_document_list');
+            $urlFrom = $this->generateUrl('ilcfrance_passportstagiaire_front_document_list');
         }
 
         $em = $this->getEntityManager();
@@ -304,7 +304,7 @@ class DocumentController extends IlcfranceController
 
             if (null == $document) {
                 $this->addFlash('warning', $this->translate('Document.notfound'));
-                return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_document_list'));
+                return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_front_document_list'));
             } else {
                 $documentUpdateDescriptionForm = $this->createForm(DocumentUpdateDescriptionTForm::class, $document);
                 $documentUpdateContentForm = $this->createForm(DocumentUpdateContentTForm::class, $document);

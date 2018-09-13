@@ -1,3 +1,47 @@
+
+
+CREATE TABLE "ilcfrance_documents" (
+    "id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "filename"                                                          TEXT NOT NULL,
+    "filesize"                                                          INT8 NOT NULL DEFAULT 0,
+    "filemimetype"                                                      TEXT NOT NULL,
+    "fileoname"                                                         TEXT NOT NULL,
+    "filemd5"                                                           TEXT NOT NULL,
+    "filedesc"                                                          TEXT NULL,
+    "filedls"                                                           INT8 NOT NULL DEFAULT 0,
+    "created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    "updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    CONSTRAINT "pk_ilcfrance_documents" PRIMARY KEY ("id")
+);
+
+CREATE TABLE "ilcfrance_programs" (
+    "id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "filename"                                                          TEXT NOT NULL,
+    "filesize"                                                          INT8 NOT NULL DEFAULT 0,
+    "filemimetype"                                                      TEXT NOT NULL,
+    "fileoname"                                                         TEXT NOT NULL,
+    "filemd5"                                                           TEXT NOT NULL,
+    "filedesc"                                                          TEXT NULL,
+    "filedls"                                                           INT8 NOT NULL DEFAULT 0,
+    "created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    "updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    CONSTRAINT "pk_ilcfrance_programs" PRIMARY KEY ("id")
+);
+
+CREATE TABLE "ilcfrance_homeworks" (
+    "id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "filename"                                                          TEXT NOT NULL,
+    "filesize"                                                          INT8 NOT NULL DEFAULT 0,
+    "filemimetype"                                                      TEXT NOT NULL,
+    "fileoname"                                                         TEXT NOT NULL,
+    "filemd5"                                                           TEXT NOT NULL,
+    "filedesc"                                                          TEXT NULL,
+    "filedls"                                                           INT8 NOT NULL DEFAULT 0,
+    "created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    "updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    CONSTRAINT "pk_ilcfrance_homeworks" PRIMARY KEY ("id")
+);
+
 CREATE TABLE "ilcfrance_locales" (
 	"id"                                                                TEXT     NOT NULL,
 	"status"                                                            INT4            NOT NULL DEFAULT 0,
@@ -134,32 +178,13 @@ CREATE TABLE "ilcfrance_trainee_record_documents" (
 	CONSTRAINT "fk_ilcfrance_trainee_record_documents_record" FOREIGN KEY ("record_id") REFERENCES "ilcfrance_trainee_records" ("id") ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE "ilcfrance_documents" (
-	"id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
-	"filename"                                                          TEXT NOT NULL,
-	"filesize"                                                          INT8 NOT NULL DEFAULT 0,
-	"filemimetype"                                                      TEXT NOT NULL,
-	"fileoname"                                                         TEXT NOT NULL,
-	"filemd5"                                                           TEXT NOT NULL,
-	"filedesc"                                                          TEXT NULL,
-	"filedls"                                                           INT8 NOT NULL DEFAULT 0,
-	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
-	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
-	CONSTRAINT "pk_ilcfrance_documents" PRIMARY KEY ("id")
+CREATE TABLE "ilcfrance_trainee_record_homeworks" (
+    "id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "record_id"                                                         UUID NOT NULL,
+    "homework_id"                                                       UUID NOT NULL,
+    "created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    "updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    CONSTRAINT "pk_ilcfrance_trainee_record_homeworks" PRIMARY KEY ("id"),
+    CONSTRAINT "fk_ilcfrance_trainee_record_homeworks_record" FOREIGN KEY ("record_id") REFERENCES "ilcfrance_trainee_records" ("id") ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT "fk_ilcfrance_trainee_record_homeworks_homework" FOREIGN KEY ("homework_id") REFERENCES "ilcfrance_homeworks" ("id") ON UPDATE CASCADE ON DELETE CASCADE
 );
-
-CREATE TABLE "ilcfrance_programs" (
-	"id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
-	"filename"                                                          TEXT NOT NULL,
-	"filesize"                                                          INT8 NOT NULL DEFAULT 0,
-	"filemimetype"                                                      TEXT NOT NULL,
-	"fileoname"                                                         TEXT NOT NULL,
-	"filemd5"                                                           TEXT NOT NULL,
-	"filedesc"                                                          TEXT NULL,
-	"filedls"                                                           INT8 NOT NULL DEFAULT 0,
-	"created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
-	"updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
-	CONSTRAINT "pk_ilcfrance_programs" PRIMARY KEY ("id")
-);
-
-

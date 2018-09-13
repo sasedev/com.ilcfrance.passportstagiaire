@@ -1,0 +1,129 @@
+{% extends 'SasedevSharedBundle::basehtml.tpl.twig' %}
+{%if menu_active is not defined%}
+{%set menu_active=''%}
+{%endif%}
+{%if smenu_active is not defined%}
+{%set smenu_active=''%}
+{%endif%}
+{%if tabActive is not defined%}
+{%set tabActive=1%}
+{%endif%}
+{%if admmenu_active is not defined%}
+{%set admmenu_active=''%}
+{%endif%}
+{%if sadmmenu_active is not defined%}
+{%set sadmmenu_active=''%}
+{%endif%}
+{% block htmlHeadMetas %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+    <meta name="author" content="{{ siteauthor }}">
+    <meta name="description" content="{{ sitename }}">
+{{ parent() }}
+{% endblock htmlHeadMetas %}
+{% block htmlHeadLinks %}
+{{ parent() }}
+    <link rel="icon" type="image/x-icon" href="{{ preload(asset('/favicon.ico')) }}">
+    <link href="{{ preload(asset('/res/css/app.min.css')) }}" rel="stylesheet" media="all">
+{% endblock htmlHeadLinks %}
+{% block htmlHeadScripts %}
+{{ parent() }}
+    <!--[if lt IE 9]><!-->
+    <script src="{{ preload(asset('/res/js/html5shiv.respond.min.js')) }}"></script>
+    <!--<![endif]-->
+{% endblock htmlHeadScripts %}
+{% block htmlBodyContent %}
+{{ parent() }}
+        <div class="wrapper fixed-top fixed bottom">
+            <div class="content-wrapper">
+                {% block mainwrapper %}
+                <section class="content">
+                    {{ include('SasedevSharedBundle::flash.html.twig', { 'close': true })}}
+                    {% block main %}
+                            <div class="panel">
+                                <div class="box-header">
+                                    <h3 class="box-title">
+                                        <img alt="{{ sitename }}" src="{{ preload(asset('/res/images/logo.png')) }}" class="img-responsive" />
+                                    </h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-xs-3 text-right">
+                                            {{'TraineeRecord.trainee'|trans|raw}}
+                                            :
+                                        </div>
+                                        <div class="col-xs-7">
+                                            {{traineeRecord.trainee.fullName}}
+                                            &nbsp;
+                                        </div>
+                                        <div class="col-xs-3 text-right">
+                                            {{'TraineeRecord.teacher'|trans|raw}}
+                                            :
+                                        </div>
+                                        <div class="col-xs-7">
+                                            {{traineeRecord.teacherName}}
+                                            &nbsp;
+                                        </div>
+                                        <div class="col-xs-3 text-right">
+                                            {{'TraineeRecord.recordDate'|trans|raw}}
+                                            :
+                                        </div>
+                                        <div class="col-xs-7">
+                                            {{traineeRecord.recordDate|localeDate('medium')}}
+                                            {{'_at'|trans}}
+                                            {{traineeRecord.recordDate|localeDate('none', 'short')}}
+                                            &nbsp;
+                                        </div>
+                                        <div class="col-xs-3 text-right">
+                                            {{'TraineeRecord.recordType'|trans|raw}}
+                                            :
+                                        </div>
+                                        <div class="col-xs-7">
+                                            {{('TraineeRecord.recordType.' ~ traineeRecord.recordType)|trans}}
+                                            &nbsp;
+                                        </div>
+                                        <div class="col-xs-12">&nbsp;</div>
+                                        <div class="col-xs-3 text-right">
+                                            {{'TraineeRecord.correctionVocabulairy'|trans|raw}}
+                                            :
+                                        </div>
+                                        <div class="col-xs-7">
+                                            {{traineeRecord.correctionVocabulairy|raw}}
+                                            &nbsp;
+                                        </div>
+                                        <div class="col-xs-12">&nbsp;</div>
+                                        <div class="col-xs-3 text-right">
+                                            {{'TraineeRecord.correctionStructure'|trans|raw}}
+                                            :
+                                        </div>
+                                        <div class="col-xs-7">
+                                            {{traineeRecord.correctionStructure|raw}}
+                                            &nbsp;
+                                        </div>
+                                        <div class="col-xs-12">&nbsp;</div>
+                                        <div class="col-xs-3 text-right">
+                                            {{'TraineeRecord.correctionPrononciation'|trans|raw}}
+                                            :
+                                        </div>
+                                        <div class="col-xs-7">
+                                            {{traineeRecord.correctionPrononciation|raw}}
+                                            &nbsp;
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    {% endblock main %}
+                </section>
+                {% endblock mainwrapper %}
+            </div>
+        </div>
+        {% block mainfooter %}
+        <footer class="site-footer-fixed">
+            <div class="footer-copyright">
+                <div class="container-fluid">
+                    <strong>Copyright &copy; {{ 'now'|date('Y') }} <a href="http://ilcfrance.com">ILCFrance.com</a>.</strong> All rights reserved.
+                </div>
+            </div>
+        </footer>
+        {% endblock mainfooter %}
+{% endblock htmlBodyContent %}

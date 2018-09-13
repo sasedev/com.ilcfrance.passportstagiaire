@@ -60,12 +60,14 @@ class Locale implements EntityTraceable
     /**
      *
      * @var integer @ORM\Column(name="status", type="integer", nullable=false)
+     * @Assert\Choice(callback="choiceStatusCallback", groups={"status"})
      */
     protected $status;
 
     /**
      *
      * @var string @ORM\Column(name="direction", type="text", nullable=false)
+     * @Assert\Choice(callback="choiceDirectionCallback", groups={"direction"})
      */
     protected $direction;
 
@@ -170,17 +172,8 @@ class Locale implements EntityTraceable
     }
 
     /**
-     * Set $status
+     * Get $direction
      *
-     * @param integer $status
-     *
-     * @return Locale Locale public function setStatus($status)
-     *         {
-     *         $this->status = $status;
-     *         return $this;
-     *         }
-     *         /**
-     *         Get $direction
      * @return string
      */
     public function getDirection()

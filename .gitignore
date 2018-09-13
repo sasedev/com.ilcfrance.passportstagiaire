@@ -18,7 +18,6 @@
 !/var/sessions
 /var/sessions/*
 !var/sessions/.gitkeep
-!var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
 /web/res/bower_components/
@@ -40,8 +39,12 @@
 !/web/res/js/dataTablesI18N/.gitkeep
 /web/res/programs/*
 !/web/res/programs/.gitkeep
+/web/res/programs/*
+!/web/res/programs/.gitkeep
 /web/res/traineerecorddocuments/*
 !/web/res/traineerecorddocuments/.gitkeep
+/web/res/homeworks/*
+!/web/res/homeworks/.gitkeep
 /web/res/UserPictures/*
 !/web/res/UserPictures/.gitkeep
 /node_modules/
@@ -49,3 +52,5 @@
 /.buildpath
 /.classpath
 /.project
+/composer.lock
+/package-lock.json

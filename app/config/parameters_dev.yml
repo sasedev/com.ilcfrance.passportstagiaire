@@ -1,10 +1,10 @@
 parameters:
-    mail_from: "system@predator.loc"
+    mail_from: "system@G3-710.predator.loc"
     mail_from_name: "ILCFrance.com"
     sitename: "Passportstagiaire.ILCFrance.com"
     mailtos:
-        - { name: 'Salah Abdelkadeur Seif Eddine', email: 'sasedev@G3-710.predator.loc' }
-    domain: 'passportstagiaire.ilcfrance.predator.loc'
+        - { name: 'Salah Abdelkadeur Seif Eddine', email: 'sasedev@predator.loc' }
+    domain: 'passportstagiaire.ilcfrance.com.predator.loc'
 twig:
     globals:
         default_locale: "%locale%"

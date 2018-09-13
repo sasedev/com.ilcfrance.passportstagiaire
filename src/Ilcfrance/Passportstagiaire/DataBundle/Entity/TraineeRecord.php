@@ -20,6 +20,18 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class TraineeRecord implements EntityTraceable
 {
+    
+    /**
+     *
+     * @var integer
+     */
+    const RT_NORMAL = 1;
+    
+    /**
+     *
+     * @var integer
+     */
+    const RT_PHONE = 2;
 
     /**
      *
@@ -71,6 +83,13 @@ class TraineeRecord implements EntityTraceable
      *      @Assert\NotNull(groups={"recordDate"})
      */
     protected $recordDate;
+    
+    /**
+     *
+     * @var integer @ORM\Column(name="record_type", type="integer", nullable=false)
+     * @Assert\Choice(callback="choiceRecordTypeCallback", groups={"recordType"})
+     */
+    protected $recordType;
 
     /**
      *
@@ -98,6 +117,36 @@ class TraineeRecord implements EntityTraceable
      * @var string @ORM\Column(name="homeworks", type="text", nullable=true)
      */
     protected $homeworks;
+    
+    /**
+     *
+     * @var string @ORM\Column(name="correctionvocabulairy", type="text", nullable=true)
+     */
+    protected $correctionVocabulairy;
+    
+    /**
+     *
+     * @var string @ORM\Column(name="correctionstructure", type="text", nullable=true)
+     */
+    protected $correctionStructure;
+    
+    /**
+     *
+     * @var string @ORM\Column(name="correctionprononciation", type="text", nullable=true)
+     */
+    protected $correctionPrononciation;
+    
+    /**
+     *
+     * @var string @ORM\Column(name="mailcomments", type="text", nullable=true)
+     */
+    protected $mailComments;
+    
+    /**
+     *
+     * @var integer @ORM\Column(name="fileemls",  type="bigint", nullable=false)
+     */
+    protected $nbrEmails;
 
     /**
      *
@@ -119,14 +168,25 @@ class TraineeRecord implements EntityTraceable
      *      @ORM\Cache(usage="NONSTRICT_READ_WRITE", region="region_TraineeRecord_docs")
      */
     protected $docs;
+    
+    /**
+     *
+     * @var Collection @ORM\OneToMany(targetEntity="TraineeRecordHomework", mappedBy="traineeRecord", cascade={"persist", "remove"})
+     *      @ORM\OrderBy({"dtCrea" = "ASC"})
+     *      @ORM\Cache(usage="NONSTRICT_READ_WRITE", region="region_TraineeRecord_hws")
+     */
+    protected $hws;
 
     /**
      * Constructor
      */
     public function __construct()
     {
+        $this->recordType = self::RT_NORMAL;
+        $this->nbrEmails = 0;
         $this->dtCrea = new \DateTime('now');
         $this->docs = new ArrayCollection();
+        $this->hws = new ArrayCollection();
     }
 
     /**
@@ -264,6 +324,30 @@ class TraineeRecord implements EntityTraceable
     }
 
     /**
+     * Get $recordType
+     *
+     * @return integer
+     */
+    public function getRecordType()
+    {
+        return $this->recordType;
+    }
+
+    /**
+     * Set $recordType
+     *
+     * @param integer $recordType
+     *
+     * @return TraineeRecord $this
+     */
+    public function setRecordType($recordType)
+    {
+        $this->recordType = $recordType;
+        
+        return $this;
+    }
+
+    /**
      * Get $worksCovered
      *
      * @return string
@@ -356,6 +440,126 @@ class TraineeRecord implements EntityTraceable
     {
         $this->homeworks = $homeworks;
 
+        return $this;
+    }
+
+    /**
+     * Get $correctionVocabulairy
+     *
+     * @return string
+     */
+    public function getCorrectionVocabulairy()
+    {
+        return $this->correctionVocabulairy;
+    }
+
+    /**
+     * Set $correctionVocabulairy
+     *
+     * @param string $correctionVocabulairy
+     *
+     * @return TraineeRecord $this
+     */
+    public function setCorrectionVocabulairy($correctionVocabulairy)
+    {
+        $this->correctionVocabulairy = $correctionVocabulairy;
+        
+        return $this;
+    }
+
+    /**
+     * Get $correctionStructure
+     *
+     * @return string
+     */
+    public function getCorrectionStructure()
+    {
+        return $this->correctionStructure;
+    }
+
+    /**
+     * Set $correctionStructure
+     *
+     * @param string $correctionStructure
+     *
+     * @return TraineeRecord $this
+     */
+    public function setCorrectionStructure($correctionStructure)
+    {
+        $this->correctionStructure = $correctionStructure;
+        
+        return $this;
+    }
+
+    /**
+     * Get $correctionPrononciation
+     *
+     * @return string
+     */
+    public function getCorrectionPrononciation()
+    {
+        return $this->correctionPrononciation;
+    }
+
+    /**
+     * Set $correctionPrononciation
+     *
+     * @param string $correctionPrononciation
+     *
+     * @return TraineeRecord $this
+     */
+    public function setCorrectionPrononciation($correctionPrononciation)
+    {
+        $this->correctionPrononciation = $correctionPrononciation;
+        
+        return $this;
+    }
+
+    /**
+     * Get $mailComments
+     *
+     * @return string
+     */
+    public function getMailComments()
+    {
+        return $this->mailComments;
+    }
+
+    /**
+     * Set $mailComments
+     *
+     * @param string $mailComments
+     *
+     * @return TraineeRecord $this
+     */
+    public function setMailComments($mailComments)
+    {
+        $this->mailComments = $mailComments;
+        
+        return $this;
+    }
+
+    /**
+     * Get $nbrEmails
+     *
+     * @return integer
+     */
+    public function getNbrEmails()
+    {
+        return $this->nbrEmails;
+    }
+
+    /**
+     * Set $nbrEmails
+     *
+     * @param integer $nbrEmails
+     *
+     * @return TraineeRecord $this
+     */
+    public function setNbrEmails($nbrEmails)
+    {
+        $this->nbrEmails = $nbrEmails;
+        
         return $this;
     }
 
@@ -458,6 +662,58 @@ class TraineeRecord implements EntityTraceable
 
         return $this;
     }
+    
+    /**
+     * Add hw
+     *
+     * @param TraineeRecordHomework $hw
+     *
+     * @return TraineeRecord
+     */
+    public function addHw(TraineeRecordHomework $hw)
+    {
+        $this->hws[] = $hw;
+        
+        return $this;
+    }
+    
+    /**
+     * Remove hw
+     *
+     * @param TraineeRecordHomework $hw
+     *
+     * @return TraineeRecord
+     */
+    public function removeHw(TraineeRecordHomework $hw)
+    {
+        $this->hws->removeElement($hw);
+        
+        return $this;
+    }
+    
+    /**
+     * Get hws
+     *
+     * @return ArrayCollection
+     */
+    public function getHws()
+    {
+        return $this->hws;
+    }
+    
+    /**
+     * Set hws
+     *
+     * @param Collection $hws
+     *
+     * @return TraineeRecord
+     */
+    public function setHws(Collection $hws)
+    {
+        $this->hws = $hws;
+        
+        return $this;
+    }
 
     /**
      * Get $fullName
@@ -496,6 +752,32 @@ class TraineeRecord implements EntityTraceable
 
         return $smallName;
     }
+    
+    /**
+     * Choice Form status
+     *
+     * @return multitype:string
+     */
+    public static function choiceRecordType()
+    {
+        return array(
+            'TraineeRecord.recordType.choice.' . self::RT_NORMAL => self::RT_NORMAL,
+            'TraineeRecord.recordType.choice.' . self::RT_PHONE => self::RT_PHONE
+        );
+    }
+    
+    /**
+     * Choice Validator status
+     *
+     * @return multitype:integer
+     */
+    public static function choiceRecordTypeCallback()
+    {
+        return array(
+            self::RT_NORMAL,
+            self::RT_PHONE
+        );
+    }
 
     public function jsonSerialize()
     {
@@ -523,6 +805,10 @@ class TraineeRecord implements EntityTraceable
         foreach ($this->getDocs() as $doc) {
             $docs[] = $doc->getId();
         }
+        $hws = array();
+        foreach ($this->getHws() as $hw) {
+            $hws[] = $hw->getId();
+        }
 
         return [
             'id' => $this->id,
@@ -531,12 +817,19 @@ class TraineeRecord implements EntityTraceable
             'teacher' => $teacher,
             'teacherName' => $this->teacherName,
             'recordDate' => $recordDate,
+            'recordType' => $this->recordType,
             'worksCovered' => $this->worksCovered,
             'comments' => $this->comments,
             'homeworks' => $this->homeworks,
+            'correctionVocabulairy' => $this->correctionVocabulairy,
+            'correctionStructure' => $this->correctionStructure,
+            'correctionPrononciation' => $this->correctionPrononciation,
+            'mailComments' => $this->mailComments,
+            'nbrEmails' => $this->nbrEmails,
             'dtCrea' => $dtCrea,
             'dtUpdate' => $dtUpdate,
-            'docs' => $docs
+            'docs' => $docs,
+            'hws' => $hws
         ];
     }
 

@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Liuggio\ExcelBundle\LiuggioExcelBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new TFox\MpdfPortBundle\TFoxMpdfPortBundle(),
 
             new Sasedev\SharedBundle\SasedevSharedBundle(),
             new Sasedev\Form\EntityidBundle\SasedevFormEntityidBundle(),

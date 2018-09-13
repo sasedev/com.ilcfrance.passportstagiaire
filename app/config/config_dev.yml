@@ -45,4 +45,4 @@ monolog:
             host: 127.0.0.1:9911
 
 swiftmailer:
-    delivery_address: ['sasedev@G3-710.predator.loc']
+    delivery_address: ['sasedev@predator.loc']

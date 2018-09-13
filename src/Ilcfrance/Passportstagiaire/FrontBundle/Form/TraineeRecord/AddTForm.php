@@ -1,17 +1,19 @@
 <?php
 namespace Ilcfrance\Passportstagiaire\FrontBundle\Form\TraineeRecord;
 
+use Ilcfrance\Passportstagiaire\DataBundle\Entity\TraineeHistorical;
+use Ilcfrance\Passportstagiaire\DataBundle\Entity\TraineeRecord;
 use Ilcfrance\Passportstagiaire\DataBundle\EntityRepository\TraineeHistoricalRepository;
 use Ilcfrance\Passportstagiaire\DataBundle\EntityRepository\TraineeRepository;
 use Sasedev\Form\EntityidBundle\Form\Type\EntityidType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Ilcfrance\Passportstagiaire\DataBundle\Entity\TraineeHistorical;
 
 /**
  *
@@ -122,7 +124,16 @@ class AddTForm extends AbstractType
             'date_format' => 'Y-m-d H:i:s',
             'html5' => false
         ));
-
+        
+        $builder->add('recordType', ChoiceType::class, array(
+            'label' => 'TraineeRecord.recordType.label',
+            'choices' => TraineeRecord::choiceRecordType(),
+            'attr' => array(
+                'choice_label_trans' => true
+            ),
+            'placeholder' => 'TraineeRecord.recordType.placeholder'
+        ));
+        
         $builder->add('worksCovered', TextareaType::class, array(
             'label' => 'TraineeRecord.worksCovered.label'
         ));

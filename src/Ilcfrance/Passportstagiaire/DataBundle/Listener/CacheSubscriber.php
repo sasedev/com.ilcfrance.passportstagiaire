@@ -7,6 +7,7 @@ use Doctrine\ORM\Events;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Ilcfrance\Passportstagiaire\DataBundle\Entity\Document;
+use Ilcfrance\Passportstagiaire\DataBundle\Entity\Homework;
 use Ilcfrance\Passportstagiaire\DataBundle\Entity\Locale;
 use Ilcfrance\Passportstagiaire\DataBundle\Entity\Program;
 use Ilcfrance\Passportstagiaire\DataBundle\Entity\Role;
@@ -14,6 +15,7 @@ use Ilcfrance\Passportstagiaire\DataBundle\Entity\Trainee;
 use Ilcfrance\Passportstagiaire\DataBundle\Entity\TraineeHistorical;
 use Ilcfrance\Passportstagiaire\DataBundle\Entity\TraineeRecord;
 use Ilcfrance\Passportstagiaire\DataBundle\Entity\TraineeRecordDocument;
+use Ilcfrance\Passportstagiaire\DataBundle\Entity\TraineeRecordHomework;
 use Ilcfrance\Passportstagiaire\DataBundle\Entity\User;
 use Ilcfrance\Passportstagiaire\DataBundle\Entity\UserPicture;
 use Ilcfrance\Passportstagiaire\DataBundle\MongoDocument\Trace;
@@ -69,7 +71,7 @@ class CacheSubscriber implements EventSubscriber
     /**
      *
      * {@inheritdoc}
-     * @see \Doctrine\Common\EventSubscriber::getSubscribedEvents()
+     * @see EventSubscriber::getSubscribedEvents()
      */
     public function getSubscribedEvents()
     {
@@ -86,6 +88,8 @@ class CacheSubscriber implements EventSubscriber
 
         if ($entity instanceof Document) {
             $this->persistDocument($args);
+        } elseif ($entity instanceof Homework) {
+            $this->persistHomework($args);
         } elseif ($entity instanceof Locale) {
             $this->persistLocale($args);
         } elseif ($entity instanceof Program) {
@@ -100,6 +104,8 @@ class CacheSubscriber implements EventSubscriber
             $this->persistTraineeRecord($args);
         } elseif ($entity instanceof TraineeRecordDocument) {
             $this->persistTraineeRecordDocument($args);
+        }  elseif ($entity instanceof TraineeRecordHomework) {
+            $this->persistTraineeRecordHomework($args);
         } elseif ($entity instanceof User) {
             $this->persistUser($args);
         } elseif ($entity instanceof UserPicture) {
@@ -126,6 +132,26 @@ class CacheSubscriber implements EventSubscriber
         $trace->setMsg(\json_encode($entity, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
         $this->flushTrace($trace);
     }
+    
+    private function persistHomework(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+        $em = $args->getEntityManager();
+        $cache = $em->getCache();
+        $id = $entity->getId();
+        
+        if (null != $cache && $cache->containsEntity(Homework::class, $id)) {
+            $cache->evictEntity(Homework::class, $id);
+        }
+        
+        $trace = $this->initTrace();
+        $trace->setActionType(Trace::AT_CREATE);
+        
+        $trace->setActionEntity(Homework::class);
+        $trace->setActionId($id);
+        $trace->setMsg(\json_encode($entity, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        $this->flushTrace($trace);
+    }
 
     private function persistLocale(LifecycleEventArgs $args)
     {
@@ -136,16 +162,6 @@ class CacheSubscriber implements EventSubscriber
 
         if (null != $cache && $cache->containsEntity(Locale::class, $id)) {
             $cache->evictEntity(Locale::class, $id);
-        }
-
-        if (null != $cache && $cache->containsCollection(Locale::class, 'users', $id)) {
-            $cache->evictCollection(Locale::class, 'users', $id);
-        }
-
-        foreach ($entity->getUsers() as $user) {
-            if (null != $cache && $cache->containsEntity(User::class, $user->getId())) {
-                $cache->evictEntity(User::class, $user->getId());
-            }
         }
 
         $trace = $this->initTrace();
@@ -189,33 +205,13 @@ class CacheSubscriber implements EventSubscriber
             $cache->evictEntity(Role::class, $id);
         }
 
-        if (null != $cache && $cache->containsCollection(Role::class, 'childs', $id)) {
-            $cache->evictCollection(Role::class, 'childs', $id);
-        }
-
         if (null != $cache && $cache->containsCollection(Role::class, 'parents', $id)) {
             $cache->evictCollection(Role::class, 'parents', $id);
-        }
-
-        if (null != $cache && $cache->containsCollection(Role::class, 'users', $id)) {
-            $cache->evictCollection(Role::class, 'users', $id);
         }
 
         foreach ($entity->getParents() as $role) {
             if (null != $cache && $cache->containsCollection(Role::class, 'childs', $role->getId())) {
                 $cache->evictCollection(Role::class, 'childs', $role->getId());
-            }
-        }
-
-        foreach ($entity->getChilds() as $role) {
-            if (null != $cache && $cache->containsCollection(Role::class, 'parents', $role->getId())) {
-                $cache->evictCollection(Role::class, 'parents', $role->getId());
-            }
-        }
-
-        foreach ($entity->getUsers() as $user) {
-            if (null != $cache && $cache->containsCollection(User::class, 'userRoles', $user->getId())) {
-                $cache->evictCollection(User::class, 'userRoles', $user->getId());
             }
         }
 
@@ -237,26 +233,6 @@ class CacheSubscriber implements EventSubscriber
 
         if (null != $cache && $cache->containsEntity(Trainee::class, $id)) {
             $cache->evictEntity(Trainee::class, $id);
-        }
-
-        if (null != $cache && $cache->containsCollection(Trainee::class, 'records', $id)) {
-            $cache->evictCollection(Trainee::class, 'records', $id);
-        }
-
-        if (null != $cache && $cache->containsCollection(Trainee::class, 'historicals', $id)) {
-            $cache->evictCollection(Trainee::class, 'historicals', $id);
-        }
-
-        foreach ($entity->getRecords() as $record) {
-            if (null != $cache && $cache->containsEntity(TraineeRecord::class, $record->getId())) {
-                $cache->evictEntity(TraineeRecord::class, $record->getId());
-            }
-        }
-
-        foreach ($entity->getHistoricals() as $historical) {
-            if (null != $cache && $cache->containsEntity(TraineeHistorical::class, $historical->getId())) {
-                $cache->evictEntity(TraineeHistorical::class, $historical->getId());
-            }
         }
 
         $trace = $this->initTrace();
@@ -305,14 +281,11 @@ class CacheSubscriber implements EventSubscriber
         if (null != $cache && $cache->containsEntity(TraineeRecord::class, $id)) {
             $cache->evictEntity(TraineeRecord::class, $id);
         }
-
-        if (null != $cache && $cache->containsCollection(TraineeRecord::class, 'docs', $id)) {
-            $cache->evictCollection(TraineeRecord::class, 'docs', $id);
-        }
-
-        foreach ($entity->getDocs() as $doc) {
-            if (null != $cache && $cache->containsEntity(TraineeRecordDocument::class, $doc->getId())) {
-                $cache->evictEntity(TraineeRecordDocument::class, $doc->getId());
+        
+        if (null != $entity->getHistorical()) {
+            $historical = $entity->getHistorical();
+            if (null != $cache && $cache->containsCollection(TraineeHistorical::class, 'records', $historical->getId())) {
+                $cache->evictCollection(TraineeHistorical::class, 'records', $historical->getId());
             }
         }
 
@@ -320,13 +293,6 @@ class CacheSubscriber implements EventSubscriber
             $trainee = $entity->getTrainee();
             if (null != $cache && $cache->containsCollection(Trainee::class, 'records', $trainee->getId())) {
                 $cache->evictCollection(Trainee::class, 'records', $trainee->getId());
-            }
-        }
-
-        if (null != $entity->getHistorical()) {
-            $historical = $entity->getHistorical();
-            if (null != $cache && $cache->containsCollection(TraineeHistorical::class, 'records', $historical->getId())) {
-                $cache->evictCollection(TraineeHistorical::class, 'records', $historical->getId());
             }
         }
 
@@ -367,6 +333,40 @@ class CacheSubscriber implements EventSubscriber
         $trace = $this->initTrace();
         $trace->setActionType(Trace::AT_CREATE);
 
+        $trace->setActionEntity(TraineeRecordDocument::class);
+        $trace->setActionId($id);
+        $trace->setMsg(\json_encode($entity, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        $this->flushTrace($trace);
+    }
+    
+    private function persistTraineeRecordHomework(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+        $em = $args->getEntityManager();
+        $cache = $em->getCache();
+        $id = $entity->getId();
+        
+        if (null != $cache && $cache->containsEntity(TraineeRecordHomework::class, $id)) {
+            $cache->evictEntity(TraineeRecordHomework::class, $id);
+        }
+        
+        if (null != $entity->getTraineeRecord()) {
+            $traineeRecord = $entity->getTraineeRecord();
+            if (null != $cache && $cache->containsCollection(TraineeRecord::class, 'hws', $traineeRecord->getId())) {
+                $cache->evictCollection(TraineeRecord::class, 'hws', $traineeRecord->getId());
+            }
+        }
+        
+        if (null != $entity->getHomework()) {
+            $homework = $entity->getHomework();
+            if (null != $cache && $cache->containsCollection(Homework::class, 'hws', $homework->getId())) {
+                $cache->evictCollection(Homework::class, 'hws', $homework->getId());
+            }
+        }
+        
+        $trace = $this->initTrace();
+        $trace->setActionType(Trace::AT_CREATE);
+        
         $trace->setActionEntity(TraineeRecordDocument::class);
         $trace->setActionId($id);
         $trace->setMsg(\json_encode($entity, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
@@ -444,6 +444,8 @@ class CacheSubscriber implements EventSubscriber
 
         if ($entity instanceof Document) {
             $this->updateDocument($args);
+        } elseif ($entity instanceof Homework) {
+            $this->updateHomework($args);
         } elseif ($entity instanceof Locale) {
             $this->updateLocale($args);
         } elseif ($entity instanceof Program) {
@@ -458,6 +460,8 @@ class CacheSubscriber implements EventSubscriber
             $this->updateTraineeRecord($args);
         } elseif ($entity instanceof TraineeRecordDocument) {
             $this->updateTraineeRecordDocument($args);
+        } elseif ($entity instanceof TraineeRecordHomework) {
+            $this->updateTraineeRecordHomework($args);
         } elseif ($entity instanceof User) {
             $this->updateUser($args);
         } elseif ($entity instanceof UserPicture) {
@@ -566,6 +570,75 @@ class CacheSubscriber implements EventSubscriber
         $trace->setActionType(Trace::AT_UPDATE);
 
         $trace->setActionEntity(Locale::class);
+        $trace->setActionId($id);
+        $trace->setMsg(\json_encode($changes, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        $this->flushTrace($trace);
+    }
+    
+    private function updateHomework(PreUpdateEventArgs $args)
+    {
+        $entity = $args->getEntity();
+        $em = $args->getEntityManager();
+        $cache = $em->getCache();
+        $id = $entity->getId();
+        $uow = $em->getUnitOfWork();
+        
+        if (null != $cache && $cache->containsEntity(Homework::class, $id)) {
+            $cache->evictEntity(Homework::class, $id);
+        }
+        
+        $changes = $args->getEntityChangeSet();
+        foreach ($changes as $changename => &$changevalue) {
+            if ($changename == 'id') {
+                $oldId = $changevalue[0];
+                if (null != $cache && $cache->containsEntity(Homework::class, $oldId)) {
+                    $cache->evictEntity(Homework::class, $oldId);
+                }
+                
+                if (null != $cache && $cache->containsCollection(Homework::class, 'hws', $oldId)) {
+                    $cache->evictCollection(Homework::class, 'hws', $oldId);
+                }
+                
+                foreach ($entity->getHws() as $hw) {
+                    if (null != $cache && $cache->containsEntity(TraineeRecordHomework::class, $hw->getId())) {
+                        $cache->evictEntity(TraineeRecordHomework::class, $hw->getId());
+                    }
+                }
+            } else {
+                if ($changevalue[0] instanceof \DateTime) {
+                    $changevalue[0] = $changevalue[0]->format(\DateTime::ISO8601);
+                }
+                if ($changevalue[1] instanceof \DateTime) {
+                    $changevalue[1] = $changevalue[1]->format(\DateTime::ISO8601);
+                }
+            }
+        }
+        
+        foreach ($uow->getScheduledCollectionUpdates() as $cols) {
+            foreach ($cols->getInsertDiff() as $col) {
+                if ($col instanceof TraineeRecordHomework) {
+                    if (null != $cache && $cache->containsEntity(TraineeRecordHomework::class, $col->getId())) {
+                        $cache->evictEntity(TraineeRecordHomework::class, $col->getId());
+                    }
+                } else {
+                    $this->logger->emergency('CacheSubscriber updateHomework getInsertDiff: ' . \get_class($col));
+                }
+            }
+            foreach ($cols->getDeleteDiff() as $col) {
+                if ($col instanceof TraineeRecordHomework) {
+                    if (null != $cache && $cache->containsEntity(TraineeRecordHomework::class, $col->getId())) {
+                        $cache->evictEntity(TraineeRecordHomework::class, $col->getId());
+                    }
+                } else {
+                    $this->logger->emergency('CacheSubscriber updateHomework getDeleteDiff: ' . \get_class($col));
+                }
+            }
+        }
+        
+        $trace = $this->initTrace();
+        $trace->setActionType(Trace::AT_UPDATE);
+        
+        $trace->setActionEntity(Homework::class);
         $trace->setActionId($id);
         $trace->setMsg(\json_encode($changes, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
         $this->flushTrace($trace);
@@ -969,6 +1042,86 @@ class CacheSubscriber implements EventSubscriber
         $trace->setMsg(\json_encode($changes, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
         $this->flushTrace($trace);
     }
+    
+    private function updateTraineeRecordHomework(PreUpdateEventArgs $args)
+    {
+        $entity = $args->getEntity();
+        $em = $args->getEntityManager();
+        $cache = $em->getCache();
+        $id = $entity->getId();
+        // $uow = $em->getUnitOfWork();
+        
+        if (null != $cache && $cache->containsEntity(TraineeRecordHomework::class, $id)) {
+            $cache->evictEntity(TraineeRecordHomework::class, $id);
+        }
+        
+        $changes = $args->getEntityChangeSet();
+        foreach ($changes as $changename => &$changevalue) {
+            if ($changename == 'id') {
+                $oldId = $changevalue[0];
+                if (null != $cache && $cache->containsEntity(TraineeRecordHomework::class, $oldId)) {
+                    $cache->evictEntity(TraineeRecordHomework::class, $oldId);
+                }
+            } elseif ($changename == 'traineeRecord') {
+                if ($changevalue[0] instanceof TraineeRecord) {
+                    
+                    $traineeRecord = $changevalue[0];
+                    
+                    if (null != $cache && $cache->containsCollection(TraineeRecord::class, 'hws', $traineeRecord->getId())) {
+                        $cache->evictCollection(TraineeRecord::class, 'hws', $traineeRecord->getId());
+                    }
+                    
+                    $changevalue[0] = $changevalue[0]->getId();
+                }
+                if ($changevalue[1] instanceof TraineeRecord) {
+                    
+                    $traineeRecord = $changevalue[1];
+                    
+                    if (null != $cache && $cache->containsCollection(TraineeRecord::class, 'hws', $traineeRecord->getId())) {
+                        $cache->evictCollection(TraineeRecord::class, 'hws', $traineeRecord->getId());
+                    }
+                    
+                    $changevalue[0] = $changevalue[0]->getId();
+                }
+            } elseif ($changename == 'homework') {
+                if ($changevalue[0] instanceof Homework) {
+                    
+                    $homework = $changevalue[0];
+                    
+                    if (null != $cache && $cache->containsCollection(Homework::class, 'hws', $homework->getId())) {
+                        $cache->evictCollection(Homework::class, 'hws', $homework->getId());
+                    }
+                    
+                    $changevalue[0] = $changevalue[0]->getId();
+                }
+                if ($changevalue[1] instanceof Homework) {
+                    
+                    $homework = $changevalue[1];
+                    
+                    if (null != $cache && $cache->containsCollection(Homework::class, 'hws', $homework->getId())) {
+                        $cache->evictCollection(Homework::class, 'hws', $homework->getId());
+                    }
+                    
+                    $changevalue[0] = $changevalue[0]->getId();
+                }
+            } else {
+                if ($changevalue[0] instanceof \DateTime) {
+                    $changevalue[0] = $changevalue[0]->format(\DateTime::ISO8601);
+                }
+                if ($changevalue[1] instanceof \DateTime) {
+                    $changevalue[1] = $changevalue[1]->format(\DateTime::ISO8601);
+                }
+            }
+        }
+        
+        $trace = $this->initTrace();
+        $trace->setActionType(Trace::AT_UPDATE);
+        
+        $trace->setActionEntity(TraineeRecordHomework::class);
+        $trace->setActionId($id);
+        $trace->setMsg(\json_encode($changes, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        $this->flushTrace($trace);
+    }
 
     private function updateUser(PreUpdateEventArgs $args)
     {
@@ -1147,6 +1300,8 @@ class CacheSubscriber implements EventSubscriber
 
         if ($entity instanceof Document) {
             $this->removeDocument($args);
+        } elseif ($entity instanceof Homework) {
+            $this->removeHomework($args);
         } elseif ($entity instanceof Locale) {
             $this->removeLocale($args);
         } elseif ($entity instanceof Program) {
@@ -1161,13 +1316,15 @@ class CacheSubscriber implements EventSubscriber
             $this->removeTraineeRecord($args);
         } elseif ($entity instanceof TraineeRecordDocument) {
             $this->removeTraineeRecordDocument($args);
+        } elseif ($entity instanceof TraineeRecordHomework) {
+            $this->removeTraineeRecordHomework($args);
         } elseif ($entity instanceof User) {
             $this->removeUser($args);
         } elseif ($entity instanceof UserPicture) {
             $this->removeUserPicture($args);
         }
     }
-
+    
     private function removeDocument(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -1175,21 +1332,21 @@ class CacheSubscriber implements EventSubscriber
         $cache = $em->getCache();
         $id = $entity->getId();
         // $uow = $em->getUnitOfWork();
-
+        
         if (null != $cache && $cache->containsEntity(Document::class, $id)) {
             $cache->evictEntity(Document::class, $id);
         }
-
+        
         $trace = $this->initTrace();
         $trace->setActionType(Trace::AT_DELETE);
-
+        
         $trace->setActionEntity(Document::class);
         $trace->setActionId($id);
         $trace->setMsg(\json_encode($entity, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
         $this->flushTrace($trace);
     }
 
-    private function removeLocale(LifecycleEventArgs $args)
+    private function removeHomework(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
         $em = $args->getEntityManager();
@@ -1197,23 +1354,54 @@ class CacheSubscriber implements EventSubscriber
         $id = $entity->getId();
         // $uow = $em->getUnitOfWork();
 
-        if (null != $cache && $cache->containsEntity(Locale::class, $id)) {
-            $cache->evictEntity(Locale::class, $id);
+        if (null != $cache && $cache->containsEntity(Homework::class, $id)) {
+            $cache->evictEntity(Homework::class, $id);
         }
 
-        if (null != $cache && $cache->containsCollection(Locale::class, 'users', $id)) {
-            $cache->evictCollection(Locale::class, 'users', $id);
+        if (null != $cache && $cache->containsCollection(Homework::class, 'hws', $id)) {
+            $cache->evictCollection(Homework::class, 'hws', $id);
         }
 
-        foreach ($entity->getUsers() as $user) {
-            if (null != $cache && $cache->containsEntity(User::class, $user->getId())) {
-                $cache->evictEntity(User::class, $user->getId());
+        foreach ($entity->getHws() as $hw) {
+            if (null != $cache && $cache->containsEntity(TraineeRecordHomework::class, $hw->getId())) {
+                $cache->evictEntity(TraineeRecordHomework::class, $hw->getId());
             }
         }
 
         $trace = $this->initTrace();
         $trace->setActionType(Trace::AT_DELETE);
 
+        $trace->setActionEntity(Homework::class);
+        $trace->setActionId($id);
+        $trace->setMsg(\json_encode($entity, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        $this->flushTrace($trace);
+    }
+    
+    private function removeLocale(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+        $em = $args->getEntityManager();
+        $cache = $em->getCache();
+        $id = $entity->getId();
+        // $uow = $em->getUnitOfWork();
+        
+        if (null != $cache && $cache->containsEntity(Locale::class, $id)) {
+            $cache->evictEntity(Locale::class, $id);
+        }
+        
+        if (null != $cache && $cache->containsCollection(Locale::class, 'users', $id)) {
+            $cache->evictCollection(Locale::class, 'users', $id);
+        }
+        
+        foreach ($entity->getUsers() as $user) {
+            if (null != $cache && $cache->containsEntity(User::class, $user->getId())) {
+                $cache->evictEntity(User::class, $user->getId());
+            }
+        }
+        
+        $trace = $this->initTrace();
+        $trace->setActionType(Trace::AT_DELETE);
+        
         $trace->setActionEntity(Locale::class);
         $trace->setActionId($id);
         $trace->setMsg(\json_encode($entity, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
@@ -1351,6 +1539,12 @@ class CacheSubscriber implements EventSubscriber
                 $cache->evictCollection(Trainee::class, 'historicals', $trainee->getId());
             }
         }
+        
+        foreach ($entity->getRecords() as $record) {
+            if (null != $cache && $cache->containsEntity(TraineeRecord::class, $record->getId())) {
+                $cache->evictEntity(TraineeRecord::class, $record->getId());
+            }
+        }
 
         $trace = $this->initTrace();
         $trace->setActionType(Trace::AT_DELETE);
@@ -1377,6 +1571,18 @@ class CacheSubscriber implements EventSubscriber
             $historical = $entity->getHistorical();
             if (null != $cache && $cache->containsCollection(TraineeHistorical::class, 'records', $historical->getId())) {
                 $cache->evictCollection(TraineeHistorical::class, 'records', $historical->getId());
+            }
+        }
+        
+        foreach ($entity->getDocs() as $doc) {
+            if (null != $cache && $cache->containsEntity(TraineeRecordDocument::class, $doc->getId())) {
+                $cache->evictEntity(TraineeRecordDocument::class, $doc->getId());
+            }
+        }
+        
+        foreach ($entity->getHws() as $hw) {
+            if (null != $cache && $cache->containsEntity(TraineeRecordHomework::class, $hw->getId())) {
+                $cache->evictEntity(TraineeRecordHomework::class, $hw->getId());
             }
         }
 
@@ -1411,6 +1617,41 @@ class CacheSubscriber implements EventSubscriber
         $trace = $this->initTrace();
         $trace->setActionType(Trace::AT_DELETE);
 
+        $trace->setActionEntity(TraineeRecordDocument::class);
+        $trace->setActionId($id);
+        $trace->setMsg(\json_encode($entity, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        $this->flushTrace($trace);
+    }
+    
+    private function removeTraineeRecordHomework(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+        $em = $args->getEntityManager();
+        $cache = $em->getCache();
+        $id = $entity->getId();
+        // $uow = $em->getUnitOfWork();
+        
+        if (null != $cache && $cache->containsEntity(TraineeRecordHomework::class, $id)) {
+            $cache->evictEntity(TraineeRecordHomework::class, $id);
+        }
+        
+        if (null != $entity->getTraineeRecord()) {
+            $traineeRecord = $entity->getTraineeRecord();
+            if (null != $cache && $cache->containsCollection(TraineeRecord::class, 'hws', $traineeRecord->getId())) {
+                $cache->evictCollection(TraineeRecord::class, 'hws', $traineeRecord->getId());
+            }
+        }
+        
+        if (null != $entity->getHomework()) {
+            $homework = $entity->getHomework();
+            if (null != $cache && $cache->containsCollection(Homework::class, 'hws', $homework->getId())) {
+                $cache->evictCollection(Homework::class, 'hws', $homework->getId());
+            }
+        }
+        
+        $trace = $this->initTrace();
+        $trace->setActionType(Trace::AT_DELETE);
+        
         $trace->setActionEntity(TraineeRecordDocument::class);
         $trace->setActionId($id);
         $trace->setMsg(\json_encode($entity, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));

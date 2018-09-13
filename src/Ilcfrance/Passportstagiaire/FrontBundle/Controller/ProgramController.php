@@ -52,7 +52,7 @@ class ProgramController extends IlcfranceController
     public function addGetAction(Request $request)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
-            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_program_list'));
+            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_front_program_list'));
         }
         $program = new Program();
         $programAddForm = $this->createForm(ProgramAddTForm::class, $program);
@@ -72,11 +72,11 @@ class ProgramController extends IlcfranceController
     public function addPostAction(Request $request)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
-            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_program_list'));
+            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_front_program_list'));
         }
         $urlFrom = $this->getReferer($request);
         if (null == $urlFrom || trim($urlFrom) == '') {
-            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_program_addGet'));
+            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_front_program_addGet'));
         }
         $program = new Program();
         $programAddForm = $this->createForm(ProgramAddTForm::class, $program);
@@ -114,7 +114,7 @@ class ProgramController extends IlcfranceController
                     '%program%' => $program->getOriginalName()
                 )));
 
-                return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_program_editGet', array(
+                return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_front_program_editGet', array(
                     'id' => $program->getId()
                 )));
             } else {
@@ -138,11 +138,11 @@ class ProgramController extends IlcfranceController
     public function deleteAction($id, Request $request)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
-            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_program_list'));
+            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_front_program_list'));
         }
         $urlFrom = $this->getReferer($request);
         if (null == $urlFrom || trim($urlFrom) == '') {
-            $urlFrom = $this->generateUrl('ilcfrance_passportstagiaire_program_list');
+            $urlFrom = $this->generateUrl('ilcfrance_passportstagiaire_front_program_list');
         }
         $em = $this->getEntityManager();
         try {
@@ -177,7 +177,7 @@ class ProgramController extends IlcfranceController
     {
         $urlFrom = $this->getReferer();
         if (null == $urlFrom || trim($urlFrom) == '') {
-            $urlFrom = $this->generateUrl('ilcfrance_passportstagiaire_program_list');
+            $urlFrom = $this->generateUrl('ilcfrance_passportstagiaire_front_program_list');
         }
         $em = $this->getEntityManager();
         try {
@@ -237,11 +237,11 @@ class ProgramController extends IlcfranceController
     public function editGetAction($id, Request $request)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
-            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_program_list'));
+            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_front_program_list'));
         }
         $urlFrom = $this->getReferer($request);
         if (null == $urlFrom || trim($urlFrom) == '') {
-            $urlFrom = $this->generateUrl('ilcfrance_passportstagiaire_program_list');
+            $urlFrom = $this->generateUrl('ilcfrance_passportstagiaire_front_program_list');
         }
 
         $em = $this->getEntityManager();
@@ -250,7 +250,7 @@ class ProgramController extends IlcfranceController
 
             if (null == $program) {
                 $this->addFlash('warning', $this->translate('Program.notfound'));
-                return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_program_list'));
+                return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_front_program_list'));
             } else {
                 $programUpdateDescriptionForm = $this->createForm(ProgramUpdateDescriptionTForm::class, $program);
                 $programUpdateContentForm = $this->createForm(ProgramUpdateContentTForm::class, $program);
@@ -291,11 +291,11 @@ class ProgramController extends IlcfranceController
     public function editPostAction($id, Request $request)
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
-            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_program_list'));
+            return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_front_program_list'));
         }
         $urlFrom = $this->getReferer($request);
         if (null == $urlFrom || trim($urlFrom) == '') {
-            $urlFrom = $this->generateUrl('ilcfrance_passportstagiaire_program_list');
+            $urlFrom = $this->generateUrl('ilcfrance_passportstagiaire_front_program_list');
         }
 
         $em = $this->getEntityManager();
@@ -304,7 +304,7 @@ class ProgramController extends IlcfranceController
 
             if (null == $program) {
                 $this->addFlash('warning', $this->translate('Program.notfound'));
-                return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_program_list'));
+                return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_front_program_list'));
             } else {
                 $programUpdateDescriptionForm = $this->createForm(ProgramUpdateDescriptionTForm::class, $program);
                 $programUpdateContentForm = $this->createForm(ProgramUpdateContentTForm::class, $program);
