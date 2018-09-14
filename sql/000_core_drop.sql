@@ -1,6 +1,4 @@
-DROP TABLE IF EXISTS "ilcfrance_programs";
-
-DROP TABLE IF EXISTS "ilcfrance_documents";
+DROP TABLE IF EXISTS "ilcfrance_trainee_record_homeworks";
 
 DROP TABLE IF EXISTS "ilcfrance_trainee_record_documents";
 
@@ -21,3 +19,12 @@ DROP TABLE IF EXISTS "ilcfrance_role_parents";
 DROP TABLE IF EXISTS "ilcfrance_roles";
 
 DROP TABLE IF EXISTS "ilcfrance_locales";
+
+DROP TABLE IF EXISTS "ilcfrance_programs";
+
+DROP TABLE IF EXISTS "ilcfrance_documents";
+
+DROP TABLE IF EXISTS "ilcfrance_homeworks";
+
+DROP TABLE IF EXISTS "ilcfrance_levels";
+

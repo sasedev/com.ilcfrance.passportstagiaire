@@ -9,7 +9,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-
 /**
  *
  * @author sasedev <sinus@saseprod.net>
@@ -58,34 +57,39 @@ class AddTForm extends AbstractType
                 'required' => true
             ));
         }
-        
+
         if (null == $homework) {
             $builder->add('homework', EntityType::class, array(
                 'label' => 'TraineeRecordHomework.homework.label',
                 'class' => 'IlcfrancePassportstagiaireDataBundle:Homework',
                 'query_builder' => function (HomeworkRepository $hr) {
-                return $hr->createQueryBuilder('hr')
-                ->orderBy('hr.dtCrea', 'DESC');
+                    return $hr->createQueryBuilder('hr')
+                        ->join('hr.level', 'l')
+                        ->orderBy('l.name', 'ASC')
+                        ->addOrderBy('hr.fileName', 'ASC');
+                },
+                'group_by' => function ($choiceValue, $key, $value) {
+                    return $choiceValue->getLevel()->getName();
                 },
                 'choice_label' => 'originalName',
                 'multiple' => false,
                 'by_reference' => true,
                 'required' => true
-                ));
+            ));
         } else {
             $builder->add('homework', EntityidType::class, array(
                 'label' => 'TraineeRecordDocument.homework.label',
                 'class' => 'IlcfrancePassportstagiaireDataBundle:Homework',
                 'query_builder' => function (HomeworkRepository $hr) use ($homework) {
-                return $hr->createQueryBuilder('hr')
-                ->where('hr.id = :id')
-                ->setParameter('id', $homework->getId());
+                    return $hr->createQueryBuilder('hr')
+                        ->where('hr.id = :id')
+                        ->setParameter('id', $homework->getId());
                 },
                 'choice_label' => 'id',
                 'multiple' => false,
                 'by_reference' => true,
                 'required' => true
-                ));
+            ));
         }
     }
 

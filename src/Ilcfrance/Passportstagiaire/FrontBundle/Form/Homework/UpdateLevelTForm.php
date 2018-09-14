@@ -1,8 +1,9 @@
 <?php
 namespace Ilcfrance\Passportstagiaire\FrontBundle\Form\Homework;
 
+use Ilcfrance\Passportstagiaire\DataBundle\EntityRepository\LevelRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -10,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @author sasedev <sinus@saseprod.net>
  */
-class UpdateDescriptionTForm extends AbstractType
+class UpdateLevelTForm extends AbstractType
 {
 
     /**
@@ -23,9 +24,17 @@ class UpdateDescriptionTForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('description', TextType::class, array(
-            'label' => 'Homework.description.label',
-            'required' => false
+        $builder->add('level', EntityType::class, array(
+            'label' => 'Homework.level.label',
+            'class' => 'IlcfrancePassportstagiaireDataBundle:Level',
+            'query_builder' => function (LevelRepository $lr) {
+                return $lr->createQueryBuilder('lr')
+                    ->orderBy('lr.name', 'ASC');
+            },
+            'choice_label' => 'name',
+            'multiple' => false,
+            'by_reference' => true,
+            'required' => true
         ));
     }
 
@@ -36,7 +45,7 @@ class UpdateDescriptionTForm extends AbstractType
      */
     public function getName()
     {
-        return 'HomeworkUpdateDescriptionForm';
+        return 'HomeworkUpdateLevelForm';
     }
 
     /**
@@ -57,7 +66,7 @@ class UpdateDescriptionTForm extends AbstractType
     {
         return array(
             'validation_groups' => array(
-                'description'
+                'level'
             )
         );
     }

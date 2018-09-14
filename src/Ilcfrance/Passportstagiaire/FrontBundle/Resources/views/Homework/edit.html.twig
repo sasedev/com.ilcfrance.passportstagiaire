@@ -24,10 +24,12 @@
 						<div class="box-header"><h3 class="box-title">{{'Homework.tlabel.admin.overview'|trans}}</h3></div>
 						<div class="box-body">
 							<div class="row">
+                                <div class="col-lg-3 text-right">{{'Homework.level'|trans|raw}} :</div>
+                                <div class="col-lg-9">{{homework.level.name}}&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'Homework.originalName'|trans|raw}} :</div>
 								<div class="col-lg-9">{{homework.originalName}}&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'Homework.description'|trans|raw}} :</div>
-								<div class="col-lg-9">{%if homework.description is not empty%}{{homework.description|raw}}{%else%}{{bsLabelWarning('_NA'|trans)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-9">{%if homework.description is not empty%}{{homework.description}}{%else%}{{bsLabelWarning('_NA'|trans)}}{%endif%}&nbsp;</div>
 								<div class="col-lg-12">&nbsp;</div>
 								<div class="col-lg-3 text-right">{{'Homework.size'|trans|raw}} :</div>
 								<div class="col-lg-9">{%if homework.size<1024%}
@@ -58,6 +60,15 @@
 				</div>
 				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
 					<div class="panel box box-danger">
+                        <div class="box-header"><h3 class="box-title">{{'Homework.tlabel.admin.editLevel'|trans}}</h3></div>
+                        <div class="box-body">
+                            {{form_start(HomeworkUpdateLevelForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_homework_editPost', {'id': homework.id}), 'style': 'horizontal'})}}
+                            {{form_row(HomeworkUpdateLevelForm.level, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'select2', 'style': 'width:100%', 'placeholder': 'Homework.level.placeholder' } })}}
+                            <div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+                            {{form_end(HomeworkUpdateLevelForm)}}
+                        </div>
+                    </div>
+                    <div class="panel box box-danger">
 						<div class="box-header"><h3 class="box-title">{{'Homework.tlabel.admin.editOriginalName'|trans}}</h3></div>
 						<div class="box-body">
 							{{form_start(HomeworkUpdateOriginalNameForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_homework_editPost', {'id': homework.id}), 'style': 'horizontal'})}}
@@ -70,7 +81,7 @@
 						<div class="box-header"><h3 class="box-title">{{'Homework.tlabel.admin.editDescription'|trans}}</h3></div>
 						<div class="box-body">
 							{{form_start(HomeworkUpdateDescriptionForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_homework_editPost', {'id': homework.id}), 'style': 'horizontal'})}}
-							{{form_row(HomeworkUpdateDescriptionForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+							{{form_row(HomeworkUpdateDescriptionForm.description, {'label_col': 3, 'widget_col': 8 })}}
 							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
 							{{form_end(HomeworkUpdateDescriptionForm)}}
 						</div>

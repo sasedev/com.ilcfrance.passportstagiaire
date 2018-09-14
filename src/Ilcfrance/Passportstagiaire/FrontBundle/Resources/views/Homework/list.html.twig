@@ -21,6 +21,7 @@
 				<table id="homeworkList" class="table table-bordered table-hover">
 					<thead>
 						<tr>
+						    <th>{{ 'Homework.level.label'|trans|raw }}</th>
 							<th>{{ 'Homework.originalName.label'|trans|raw }}</th>
 							<th>{{ 'Homework.description.label'|trans|raw }}</th>
 							<th>{{ 'Homework.mimeType.label'|trans|raw }}</th>
@@ -32,6 +33,7 @@
 					{% if homeworks|length != 0 %}
 						{% for homework in homeworks %}
 						<tr>
+						    <td>{{ homework.level.name }} </td>
 							<td>{{ homework.originalName }} </td>
 							<td>{{ homework.description|raw }}</td>
 							<td>{{ homework.mimeType }} </td>
@@ -97,6 +99,7 @@ $(function() {
 			null,
 			null,
 			null,
+            null,
 			{ "searchable": false, "sortable": false }
 		],
 		"pageLength": 10{% if is_granted('ROLE_ADMIN') %},

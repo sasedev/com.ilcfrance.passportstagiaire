@@ -374,3 +374,39 @@ ilcfrance_passportstagiaire_front_homework_editPost:
     requirements:
         id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
     
+
+    
+ilcfrance_passportstagiaire_front_level_list:
+    path:     /levels
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Level:list" }
+
+ilcfrance_passportstagiaire_front_level_addGet:
+    path:     /level/add
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Level:addGet" }
+    methods: [GET]
+
+ilcfrance_passportstagiaire_front_level_addPost:
+    path:     /level/add
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Level:addPost" }
+    methods: [POST]
+
+ilcfrance_passportstagiaire_front_level_delete:
+    path:     /level/delete/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Level:delete" }
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ilcfrance_passportstagiaire_front_level_editGet:
+    path:     /level/edit/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Level:editGet" }
+    methods: [GET]
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+
+ilcfrance_passportstagiaire_front_level_editPost:
+    path:     /level/edit/{id}
+    defaults: { _controller: "IlcfrancePassportstagiaireFrontBundle:Level:editPost" }
+    methods: [POST]
+    requirements:
+        id: "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}"
+    

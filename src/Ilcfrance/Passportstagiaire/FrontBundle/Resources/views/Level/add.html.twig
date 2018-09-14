@@ -2,27 +2,26 @@
 {% block breadcrumb %}
 <ol class="breadcrumb">
 	<li><a href="{{ path('ilcfrance_passportstagiaire_front_homepage') }}">{{ faIco('dashboard') }} {{'breadcrumb.admin.dasboard'|trans|raw}}</a></li>
-	<li><a href="{{ path('ilcfrance_passportstagiaire_front_homework_list') }}">{{faIco('file')}} {{'Homework.breadcrumb.admin.list'|trans|raw}}</a></li>
-	<li class="active"><a href="{{ path('ilcfrance_passportstagiaire_front_homework_addGet') }}">{{faIco('plus')}} {{'Homework.breadcrumb.admin.add'|trans()|raw}}</a></li>
+	<li><a href="{{ path('ilcfrance_passportstagiaire_front_level_list') }}">{{faIco('file')}} {{'Level.breadcrumb.admin.list'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('ilcfrance_passportstagiaire_front_level_addGet') }}">{{faIco('plus')}} {{'Level.breadcrumb.admin.add'|trans()|raw}}</a></li>
 </ol>
 {% endblock breadcrumb %}
 {% block main %}
 <div class="row">
 	<div class="col-lg-12">
 		<div class="well well-sm text-right">
-			<a href="{{ path('ilcfrance_passportstagiaire_front_homework_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+			<a href="{{ path('ilcfrance_passportstagiaire_front_level_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
 		</div>
 		<div class="box box-primary">
 			<div class="box-header">
-				<h3 class="box-title">{{ 'Homework.tlabel.admin.add'|trans|raw}}</h3>
+				<h3 class="box-title">{{ 'Level.tlabel.admin.add'|trans|raw}}</h3>
 			</div>
 			<div class="box-body">
-				{{form_start(HomeworkAddForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_homework_addPost'), 'style': 'horizontal'})}}
-				{{form_row(HomeworkAddForm.level, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'select2', 'style': 'width:100%', 'placeholder': 'Homework.level.placeholder' } })}}
-				{{form_row(HomeworkAddForm.file, {'label_col': 3, 'widget_col': 8, 'attr': {'placeholder': 'Homework.fileName.placeholder'} })}}
-				{{form_row(HomeworkAddForm.description, {'label_col': 3, 'widget_col': 8 })}}
+				{{form_start(LevelAddForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_level_addPost'), 'style': 'horizontal'})}}
+				{{form_row(LevelAddForm.name, {'label_col': 3, 'widget_col': 8, 'attr': {'placeholder': 'Level.name.placeholder'} })}}
+				{{form_row(LevelAddForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
 				<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnAdd'|trans|raw}}</button></div></div>
-				{{form_end(HomeworkAddForm)}}
+				{{form_end(LevelAddForm)}}
 			</div>
 		</div>
 	</div>
@@ -50,8 +49,6 @@ $(function() {
 			});
 		}
 	});
-
-	$("#HomeworkAddForm_file").fileinput({'showUpload':false, 'previewFileType':'image', browseClass: "btn btn-success", browseLabel: " {{ 'action.btnSelect'|trans}}", browseIcon: '{{faIco('file')}}', removeClass: "btn btn-danger", removeLabel: " {{ 'action.btnCancel'|trans}}", removeIcon: '{{faIco('trash')}}'});
 });
 </script>
 {% endblock htmlBodyScripts %}

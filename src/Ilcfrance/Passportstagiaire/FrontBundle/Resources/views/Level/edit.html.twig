@@ -1,0 +1,93 @@
+{% extends 'IlcfrancePassportstagiaireResBundle::admin.tpl.html.twig' %}
+{% block breadcrumb %}
+<ol class="breadcrumb">
+	<li><a href="{{ path('ilcfrance_passportstagiaire_front_homepage') }}">{{ faIco('dashboard') }} {{'breadcrumb.admin.dasboard'|trans|raw}}</a></li>
+	<li><a href="{{ path('ilcfrance_passportstagiaire_front_level_list') }}">{{faIco('file')}} {{'Level.breadcrumb.admin.list'|trans|raw}}</a></li>
+	<li class="active"><a href="{{ path('ilcfrance_passportstagiaire_front_level_editGet', {'id': level.id}) }}">{{faIco('edit')}} {{'Level.breadcrumb.admin.edit'|trans({'%level%': level.name})|raw}}</a></li>
+</ol>
+{% endblock breadcrumb %}
+{% block main %}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="well well-sm text-right">
+			<a href="{{ path('ilcfrance_passportstagiaire_front_level_list') }}" class="btn btn-primary">{{ faIco('th') }} {{ 'action.list'|trans }}</a>
+			<a href="{{ path('ilcfrance_passportstagiaire_front_level_addGet') }}" class="btn btn-primary">{{ faIco('plus') }} {{ 'action.add'|trans }}</a>
+		</div>
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li {%if tabActive==1%} class="active"{%endif%}><a href="#overview" data-toggle="tab">{{'Level.tab.admin.overview'|trans|raw}}</a></li>
+				<li {%if tabActive==2%} class="active"{%endif%}><a href="#edit" data-toggle="tab">{{'Level.tab.admin.edit'|trans|raw}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade{%if tabActive==1%} in active{%endif%}" id="overview">
+					<div class="panel box box-primary">
+						<div class="box-header"><h3 class="box-title">{{'Level.tlabel.admin.overview'|trans}}</h3></div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-lg-3 text-right">{{'Level.name'|trans|raw}} :</div>
+								<div class="col-lg-9">{{level.name}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Level.description'|trans|raw}} :</div>
+								<div class="col-lg-9">{%if level.description is not empty%}{{level.description|raw}}{%else%}{{bsLabelWarning('_NA'|trans)}}{%endif%}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Level.homeworks'|trans|raw}} :</div>
+								<div class="col-lg-9">{{level.homeworks|length}}&nbsp;</div>
+								<div class="col-lg-12">&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Level.dtCrea'|trans|raw}} :</div>
+								<div class="col-lg-9">{{level.dtCrea|localeDate('medium')}} {{'_at'|trans}} {{level.dtCrea|localeDate('none', 'short')}}&nbsp;</div>
+								<div class="col-lg-3 text-right">{{'Level.dtUpdate'|trans|raw}} :</div>
+								<div class="col-lg-9">{{level.dtUpdate|localeDate('medium')}} {{'_at'|trans}} {{level.dtUpdate|localeDate('none', 'short')}}&nbsp;</div>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade{%if tabActive==2%} in active{%endif%}" id="edit">
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Level.tlabel.admin.editName'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(LevelUpdateNameForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_level_editPost', {'id': level.id}), 'style': 'horizontal'})}}
+							{{form_row(LevelUpdateNameForm.name, {'label_col': 3, 'widget_col': 8 })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(LevelUpdateNameForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header"><h3 class="box-title">{{'Level.tlabel.admin.editDescription'|trans}}</h3></div>
+						<div class="box-body">
+							{{form_start(LevelUpdateDescriptionForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_level_editPost', {'id': level.id}), 'style': 'horizontal'})}}
+							{{form_row(LevelUpdateDescriptionForm.description, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+							<div class="form-group"><div class="col-lg-offset-3 col-lg-2"><button class="btn-primary btn" type="submit">{{glyphIco('save')}} {{'action.btnEdit'|trans|raw}}</button></div></div>
+							{{form_end(LevelUpdateDescriptionForm)}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock main %}
+{% block htmlBodyScripts %}
+{{ parent() }}
+<script type="text/javascript">
+$(function() {
+	tinymce.init({
+		selector: 'textarea.wysiwyg',
+		branding: false,
+		theme: "modern",
+		content_css : '{{ asset('/res/css/app.min.css') }}',
+		plugins: [ "advlist autolink lists link image charmap preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "nonbreaking save table contextmenu directionality", "template paste textcolor" ],
+		toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | preview ",
+		setup: function (editor) {
+			editor.on('init', function (e) {
+				editor.save();
+			});
+		},
+		init_instance_callback: function (editor) {
+			editor.on('Change', function (e) {
+				editor.save();
+			});
+		}
+	});
+});
+</script>
+{% endblock htmlBodyScripts %}

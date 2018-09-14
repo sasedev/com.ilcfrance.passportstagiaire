@@ -1,5 +1,5 @@
 <?php
-namespace Ilcfrance\Passportstagiaire\FrontBundle\Form\Homework;
+namespace Ilcfrance\Passportstagiaire\FrontBundle\Form\Level;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @author sasedev <sinus@saseprod.net>
  */
-class UpdateDescriptionTForm extends AbstractType
+class UpdateNameTForm extends AbstractType
 {
 
     /**
@@ -23,20 +23,14 @@ class UpdateDescriptionTForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('description', TextType::class, array(
-            'label' => 'Homework.description.label',
-            'required' => false
+        $builder->add('name', TextType::class, array(
+            'label' => 'Level.name.label'
         ));
     }
 
-    /**
-     *
-     * {@inheritdoc} @see FormTypeInterface::getName()
-     * @return string
-     */
     public function getName()
     {
-        return 'HomeworkUpdateDescriptionForm';
+        return 'LevelUpdateNameForm';
     }
 
     /**
@@ -57,7 +51,7 @@ class UpdateDescriptionTForm extends AbstractType
     {
         return array(
             'validation_groups' => array(
-                'description'
+                'name'
             )
         );
     }

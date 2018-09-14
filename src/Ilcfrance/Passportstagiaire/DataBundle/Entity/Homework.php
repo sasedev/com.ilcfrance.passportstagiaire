@@ -28,6 +28,16 @@ class Homework implements EntityTraceable
      *      @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
+    
+    /**
+     *
+     * @var Level @ORM\ManyToOne(targetEntity="Level", inversedBy="homeworks", cascade={"persist"})
+     *      @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="level_id", referencedColumnName="id")
+     *      })
+     *      @ORM\Cache(usage="NONSTRICT_READ_WRITE", region="region_Homework_level")
+     */
+    protected $level;
 
     /**
      *
@@ -112,6 +122,30 @@ class Homework implements EntityTraceable
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get $level
+     *
+     * @return Level
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    /**
+     * Set $level
+     *
+     * @param Level $level
+     *
+     * @return Homework $this
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
+        
+        return $this;
     }
 
     /**

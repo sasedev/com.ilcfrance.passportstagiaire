@@ -9,3 +9,7 @@ ALTER TABLE "ilcfrance_trainee_records" ADD COLUMN "correctionstructure"        
 ALTER TABLE "ilcfrance_trainee_records" ADD COLUMN "correctionprononciation"                                           TEXT NULL;
 ALTER TABLE "ilcfrance_trainee_records" ADD COLUMN "mailcomments"                                                      TEXT NULL;
 ALTER TABLE "ilcfrance_trainee_records" ADD COLUMN "fileemls"                                                          INT8 NOT NULL DEFAULT 0;
+
+ALTER TABLE "ilcfrance_homeworks" ADD COLUMN "level_id"                                                           UUID NULL;
+ALTER TABLE "ilcfrance_homeworks" ADD CONSTRAINT "fk_ilcfrance_homeworks_level" FOREIGN KEY ("level_id") REFERENCES "ilcfrance_levels" ("id") ON UPDATE CASCADE ON DELETE SET NULL;
+

@@ -346,6 +346,7 @@
 											{{record.worksCovered|raw}}
 											&nbsp;
 										</div>
+										{% if record.recordType == constant('RT_NORMAL', record) %}
 										<div class="col-lg-3 text-right">
 											{{'TraineeRecord.takeaways'|trans|raw}}
 											:
@@ -354,6 +355,7 @@
 											{{record.takeaways|raw}}
 											&nbsp;
 										</div>
+										{% endif %}
 										<div class="col-lg-3 text-right">
 											{{'TraineeRecord.comments'|trans|raw}}
 											:
@@ -582,6 +584,7 @@
 									{{record.worksCovered|raw}}
 									&nbsp;
 								</div>
+								{% if record.recordType == constant('RT_NORMAL', record) %}
 								<div class="col-lg-3 text-right">
 									{{'TraineeRecord.takeaways'|trans|raw}}
 									:
@@ -590,6 +593,7 @@
 									{{record.takeaways|raw}}
 									&nbsp;
 								</div>
+								{% endif %}
 								<div class="col-lg-3 text-right">
 									{{'TraineeRecord.comments'|trans|raw}}
 									:

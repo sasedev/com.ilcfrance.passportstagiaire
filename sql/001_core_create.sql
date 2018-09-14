@@ -28,8 +28,18 @@ CREATE TABLE "ilcfrance_programs" (
     CONSTRAINT "pk_ilcfrance_programs" PRIMARY KEY ("id")
 );
 
+CREATE TABLE "ilcfrance_levels" (
+    "id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "name"                                                              TEXT NOT NULL,
+    "description"                                                       TEXT NULL,
+    "created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    "updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
+    CONSTRAINT "pk_ilcfrance_levels" PRIMARY KEY ("id")
+);
+
 CREATE TABLE "ilcfrance_homeworks" (
     "id"                                                                UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "level_id"                                                          UUID NOT NULL,
     "filename"                                                          TEXT NOT NULL,
     "filesize"                                                          INT8 NOT NULL DEFAULT 0,
     "filemimetype"                                                      TEXT NOT NULL,
@@ -39,7 +49,8 @@ CREATE TABLE "ilcfrance_homeworks" (
     "filedls"                                                           INT8 NOT NULL DEFAULT 0,
     "created_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
     "updated_at"                                                        TIMESTAMP WITH TIME ZONE NULL,
-    CONSTRAINT "pk_ilcfrance_homeworks" PRIMARY KEY ("id")
+    CONSTRAINT "pk_ilcfrance_homeworks" PRIMARY KEY ("id"),
+    CONSTRAINT "fk_ilcfrance_homeworks_level" FOREIGN KEY ("level_id") REFERENCES "ilcfrance_levels" ("id") ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE "ilcfrance_locales" (

@@ -5,6 +5,7 @@ use Ilcfrance\Passportstagiaire\FrontBundle\Form\Homework\AddTForm as HomeworkAd
 use Ilcfrance\Passportstagiaire\FrontBundle\Form\Homework\UpdateContentTForm as HomeworkUpdateContentTForm;
 use Ilcfrance\Passportstagiaire\FrontBundle\Form\Homework\UpdateDescriptionTForm as HomeworkUpdateDescriptionTForm;
 use Ilcfrance\Passportstagiaire\FrontBundle\Form\Homework\UpdateOriginalNameTForm as HomeworkUpdateOriginalNameTForm;
+use Ilcfrance\Passportstagiaire\FrontBundle\Form\Homework\UpdateLevelTForm as HomeworkUpdateLevelTForm;
 use Ilcfrance\Passportstagiaire\ResBundle\Controller\IlcfranceController;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -255,6 +256,7 @@ class HomeworkController extends IlcfranceController
                 $homeworkUpdateDescriptionForm = $this->createForm(HomeworkUpdateDescriptionTForm::class, $homework);
                 $homeworkUpdateContentForm = $this->createForm(HomeworkUpdateContentTForm::class, $homework);
                 $homeworkUpdateOriginalNameForm = $this->createForm(HomeworkUpdateOriginalNameTForm::class, $homework);
+                $homeworkUpdateLevelForm = $this->createForm(HomeworkUpdateLevelTForm::class, $homework);
 
                 $this->addTwigVar('tabActive', $this->getSession()
                     ->get('tabActive', 1));
@@ -264,6 +266,7 @@ class HomeworkController extends IlcfranceController
                 $this->addTwigVar('HomeworkUpdateDescriptionForm', $homeworkUpdateDescriptionForm->createView());
                 $this->addTwigVar('HomeworkUpdateContentForm', $homeworkUpdateContentForm->createView());
                 $this->addTwigVar('HomeworkUpdateOriginalNameForm', $homeworkUpdateOriginalNameForm->createView());
+                $this->addTwigVar('HomeworkUpdateLevelForm', $homeworkUpdateLevelForm->createView());
 
                 $this->addTwigVar('admmenu_active', 'homeworks_edit');
                 $this->addTwigVar('pageTitle', $this->translate('Homework.pageTitle.admin.edit', array(
@@ -309,6 +312,7 @@ class HomeworkController extends IlcfranceController
                 $homeworkUpdateDescriptionForm = $this->createForm(HomeworkUpdateDescriptionTForm::class, $homework);
                 $homeworkUpdateContentForm = $this->createForm(HomeworkUpdateContentTForm::class, $homework);
                 $homeworkUpdateOriginalNameForm = $this->createForm(HomeworkUpdateOriginalNameTForm::class, $homework);
+                $homeworkUpdateLevelForm = $this->createForm(HomeworkUpdateLevelTForm::class, $homework);
 
                 $this->addTwigVar('tabActive', $this->getSession()
                     ->get('tabActive', 1));
@@ -351,6 +355,26 @@ class HomeworkController extends IlcfranceController
                     } else {
                         $em->refresh($homework);
 
+                        $this->addFlash('error', $this->translate('Homework.edit.failure', array(
+                            '%homework%' => $homework->getOriginalName()
+                        )));
+                    }
+                } elseif (isset($reqData['HomeworkUpdateLevelForm'])) {
+                    $this->addTwigVar('tabActive', 2);
+                    $this->getSession()->set('tabActive', 2);
+                    $homeworkUpdateLevelForm->handleRequest($request);
+                    if ($homeworkUpdateLevelForm->isValid()) {
+                        $em->persist($homework);
+                        $em->flush();
+                        
+                        $this->addFlash('success', $this->translate('Homework.edit.success', array(
+                            '%homework%' => $homework->getOriginalName()
+                        )));
+                        
+                        return $this->redirect($urlFrom);
+                    } else {
+                        $em->refresh($homework);
+                        
                         $this->addFlash('error', $this->translate('Homework.edit.failure', array(
                             '%homework%' => $homework->getOriginalName()
                         )));
@@ -401,6 +425,7 @@ class HomeworkController extends IlcfranceController
                 $this->addTwigVar('HomeworkUpdateDescriptionForm', $homeworkUpdateDescriptionForm->createView());
                 $this->addTwigVar('HomeworkUpdateContentForm', $homeworkUpdateContentForm->createView());
                 $this->addTwigVar('HomeworkUpdateOriginalNameForm', $homeworkUpdateOriginalNameForm->createView());
+                $this->addTwigVar('HomeworkUpdateLevelForm', $homeworkUpdateLevelForm->createView());
 
                 $this->addTwigVar('admmenu_active', 'homeworks_edit');
                 $this->addTwigVar('pageTitle', $this->translate('Homework.pageTitle.admin.edit', array(

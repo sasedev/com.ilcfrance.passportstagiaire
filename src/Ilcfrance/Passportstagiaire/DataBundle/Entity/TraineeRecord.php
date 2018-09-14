@@ -101,7 +101,6 @@ class TraineeRecord implements EntityTraceable
     /**
      *
      * @var string @ORM\Column(name="takeaways", type="text", nullable=true)
-     *      @Assert\NotBlank(groups={"takeaways"})
      */
     protected $takeaways;
 
