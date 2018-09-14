@@ -1,17 +1,8 @@
 <?php
 namespace Ilcfrance\Passportstagiaire\FrontBundle\Controller;
 
-use Swift_EmbeddedFile;
-use Swift_Message;
-use Ilcfrance\Passportstagiaire\FrontBundle\Form\TraineeRecordDocument\UpdateContentTForm as TraineeRecordDocumentUpdateContentTForm;
-use Ilcfrance\Passportstagiaire\FrontBundle\Form\TraineeRecordDocument\UpdateDescriptionTForm as TraineeRecordDocumentUpdateDescriptionTForm;
-use Ilcfrance\Passportstagiaire\FrontBundle\Form\TraineeRecordDocument\UpdateOriginalNameTForm as TraineeRecordDocumentUpdateOriginalNameTForm;
 use Ilcfrance\Passportstagiaire\ResBundle\Controller\IlcfranceController;
-use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\StreamedResponse;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
  *
