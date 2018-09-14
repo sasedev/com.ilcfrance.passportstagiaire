@@ -120,7 +120,8 @@ class TraineeHistoricalController extends IlcfranceController
                     ->get('tabActive', 1));
                 $this->getSession()->remove('tabActive');
 
-                $this->addTwigVar('traineeHistorical', $traineeHistorical);
+                $this->addTwigVar('traineeHistorical', $traineeRecord);
+                $this->addTwigVar('traineeRecord', $traineeRecord);
                 $this->addTwigVar('TraineeHistoricalUpdateCoursesForm', $traineeHistoricalUpdateCoursesForm->createView());
                 $this->addTwigVar('TraineeHistoricalUpdateInitLevelForm', $traineeHistoricalUpdateInitLevelForm->createView());
                 $this->addTwigVar('TraineeHistoricalUpdateLevelForm', $traineeHistoricalUpdateLevelForm->createView());
@@ -424,10 +425,10 @@ class TraineeHistoricalController extends IlcfranceController
                         $this->addFlash('success', $this->translate('TraineeRecord.add.success', array(
                             '%traineeRecord%' => $traineeRecord->getFullName()
                         )));
-                        $this->addTwigVar('tabActive', 1);
-                        $this->getSession()->set('tabActive', 1);
+                        $this->addTwigVar('tabActive', 2);
+                        $this->getSession()->set('tabActive', 2);
 
-                        return $this->redirect($urlFrom);
+                        return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_front_trainee_record_editGet', array('id' => $traineeRecord->getId())));
                     } else {
                         $em->refresh($traineeHistorical);
 
@@ -436,6 +437,7 @@ class TraineeHistoricalController extends IlcfranceController
                 }
 
                 $this->addTwigVar('traineeHistorical', $traineeHistorical);
+                $this->addTwigVar('traineeRecord', $traineeRecord);
                 $this->addTwigVar('TraineeHistoricalUpdateCoursesForm', $traineeHistoricalUpdateCoursesForm->createView());
                 $this->addTwigVar('TraineeHistoricalUpdateInitLevelForm', $traineeHistoricalUpdateInitLevelForm->createView());
                 $this->addTwigVar('TraineeHistoricalUpdateLevelForm', $traineeHistoricalUpdateLevelForm->createView());

@@ -385,86 +385,6 @@
 							{{form_end(TraineeRecordUpdateRecordTypeForm)}}
 						</div>
 					</div>
-					<div class="panel box box-danger">
-						<div class="box-header">
-							<h3 class="box-title">
-								{{'TraineeRecord.tlabel.admin.editWorksCovered'|trans}}
-							</h3>
-						</div>
-						<div class="box-body">
-							{{form_start(TraineeRecordUpdateWorksCoveredForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_record_editPost', {'id': traineeRecord.id}), 'style': 'horizontal'})}}
-							{{form_row(TraineeRecordUpdateWorksCoveredForm.worksCovered, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
-							<div class="form-group">
-								<div class="col-lg-offset-3 col-lg-2">
-									<button class="btn-primary btn" type="submit">
-										{{glyphIco('save')}}
-										{{'action.btnEdit'|trans|raw}}
-									</button>
-								</div>
-							</div>
-							{{form_end(TraineeRecordUpdateWorksCoveredForm)}}
-						</div>
-					</div>
-					<div class="panel box box-danger">
-						<div class="box-header">
-							<h3 class="box-title">
-								{{'TraineeRecord.tlabel.admin.editTakeaways'|trans}}
-							</h3>
-						</div>
-						<div class="box-body">
-							{{form_start(TraineeRecordUpdateTakeawaysForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_record_editPost', {'id': traineeRecord.id}), 'style': 'horizontal'})}}
-							{{form_row(TraineeRecordUpdateTakeawaysForm.takeaways, {'label_col': 3, 'widget_col': 8 })}}
-							<div class="form-group">
-								<div class="col-lg-offset-3 col-lg-2">
-									<button class="btn-primary btn" type="submit">
-										{{glyphIco('save')}}
-										{{'action.btnEdit'|trans|raw}}
-									</button>
-								</div>
-							</div>
-							{{form_end(TraineeRecordUpdateTakeawaysForm)}}
-						</div>
-					</div>
-					<div class="panel box box-danger">
-						<div class="box-header">
-							<h3 class="box-title">
-								{{'TraineeRecord.tlabel.admin.editComments'|trans}}
-							</h3>
-						</div>
-						<div class="box-body">
-							{{form_start(TraineeRecordUpdateCommentsForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_record_editPost', {'id': traineeRecord.id}), 'style': 'horizontal'})}}
-							{{form_row(TraineeRecordUpdateCommentsForm.comments, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
-							<div class="form-group">
-								<div class="col-lg-offset-3 col-lg-2">
-									<button class="btn-primary btn" type="submit">
-										{{glyphIco('save')}}
-										{{'action.btnEdit'|trans|raw}}
-									</button>
-								</div>
-							</div>
-							{{form_end(TraineeRecordUpdateCommentsForm)}}
-						</div>
-					</div>
-					<div class="panel box box-danger">
-						<div class="box-header">
-							<h3 class="box-title">
-								{{'TraineeRecord.tlabel.admin.editHomeworks'|trans}}
-							</h3>
-						</div>
-						<div class="box-body">
-							{{form_start(TraineeRecordUpdateHomeworksForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_record_editPost', {'id': traineeRecord.id}), 'style': 'horizontal'})}}
-							{{form_row(TraineeRecordUpdateHomeworksForm.homeworks, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
-							<div class="form-group">
-								<div class="col-lg-offset-3 col-lg-2">
-									<button class="btn-primary btn" type="submit">
-										{{glyphIco('save')}}
-										{{'action.btnEdit'|trans|raw}}
-									</button>
-								</div>
-							</div>
-							{{form_end(TraineeRecordUpdateHomeworksForm)}}
-						</div>
-					</div>
 					{% if traineeRecord.recordType == constant('RT_PHONE', traineeRecord) %}
 					<div class="panel box box-danger">
 						<div class="box-header">
@@ -547,6 +467,86 @@
 						</div>
 					</div>
 					{% endif %}
+					<div class="panel box box-danger">
+						<div class="box-header">
+							<h3 class="box-title">
+								{{'TraineeRecord.tlabel.admin.editWorksCovered'|trans}}
+							</h3>
+						</div>
+						<div class="box-body">
+							{{form_start(TraineeRecordUpdateWorksCoveredForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_record_editPost', {'id': traineeRecord.id}), 'style': 'horizontal'})}}
+							{{form_row(TraineeRecordUpdateWorksCoveredForm.worksCovered, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+							<div class="form-group">
+								<div class="col-lg-offset-3 col-lg-2">
+									<button class="btn-primary btn" type="submit">
+										{{glyphIco('save')}}
+										{{'action.btnEdit'|trans|raw}}
+									</button>
+								</div>
+							</div>
+							{{form_end(TraineeRecordUpdateWorksCoveredForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header">
+							<h3 class="box-title">
+								{{'TraineeRecord.tlabel.admin.editTakeaways'|trans}}
+							</h3>
+						</div>
+						<div class="box-body">
+							{{form_start(TraineeRecordUpdateTakeawaysForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_record_editPost', {'id': traineeRecord.id}), 'style': 'horizontal'})}}
+							{{form_row(TraineeRecordUpdateTakeawaysForm.takeaways, {'label_col': 3, 'widget_col': 8 })}}
+							<div class="form-group">
+								<div class="col-lg-offset-3 col-lg-2">
+									<button class="btn-primary btn" type="submit">
+										{{glyphIco('save')}}
+										{{'action.btnEdit'|trans|raw}}
+									</button>
+								</div>
+							</div>
+							{{form_end(TraineeRecordUpdateTakeawaysForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header">
+							<h3 class="box-title">
+								{{'TraineeRecord.tlabel.admin.editComments'|trans}}
+							</h3>
+						</div>
+						<div class="box-body">
+							{{form_start(TraineeRecordUpdateCommentsForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_record_editPost', {'id': traineeRecord.id}), 'style': 'horizontal'})}}
+							{{form_row(TraineeRecordUpdateCommentsForm.comments, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+							<div class="form-group">
+								<div class="col-lg-offset-3 col-lg-2">
+									<button class="btn-primary btn" type="submit">
+										{{glyphIco('save')}}
+										{{'action.btnEdit'|trans|raw}}
+									</button>
+								</div>
+							</div>
+							{{form_end(TraineeRecordUpdateCommentsForm)}}
+						</div>
+					</div>
+					<div class="panel box box-danger">
+						<div class="box-header">
+							<h3 class="box-title">
+								{{'TraineeRecord.tlabel.admin.editHomeworks'|trans}}
+							</h3>
+						</div>
+						<div class="box-body">
+							{{form_start(TraineeRecordUpdateHomeworksForm, {'method':'POST', 'action': path('ilcfrance_passportstagiaire_front_trainee_record_editPost', {'id': traineeRecord.id}), 'style': 'horizontal'})}}
+							{{form_row(TraineeRecordUpdateHomeworksForm.homeworks, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
+							<div class="form-group">
+								<div class="col-lg-offset-3 col-lg-2">
+									<button class="btn-primary btn" type="submit">
+										{{glyphIco('save')}}
+										{{'action.btnEdit'|trans|raw}}
+									</button>
+								</div>
+							</div>
+							{{form_end(TraineeRecordUpdateHomeworksForm)}}
+						</div>
+					</div>
 				</div>
 				{% endif %}
 				{% if traineeRecord.recordType == constant('RT_NORMAL', traineeRecord) %}

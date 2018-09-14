@@ -8,6 +8,8 @@ use Ilcfrance\Passportstagiaire\DataBundle\EntityRepository\TraineeRepository;
 use Sasedev\Form\EntityidBundle\Form\Type\EntityidType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -45,8 +47,7 @@ class AddTForm extends AbstractType
                 },
                 'choice_label' => 'fullName',
                 'multiple' => false,
-                'by_reference' => true,
-                'required' => true
+                'by_reference' => true
             ));
         } else {
             $builder->add('trainee', EntityidType::class, array(
@@ -59,8 +60,7 @@ class AddTForm extends AbstractType
                 },
                 'choice_label' => 'id',
                 'multiple' => false,
-                'by_reference' => true,
-                'required' => true
+                'by_reference' => true
             ));
         }
 
@@ -80,8 +80,7 @@ class AddTForm extends AbstractType
                     },
                     'choice_label' => 'fullName',
                     'multiple' => false,
-                    'by_reference' => true,
-                    'required' => true
+                    'by_reference' => true
                 ));
             } else {
                 $builder->add('historical', EntityType::class, array(
@@ -98,8 +97,7 @@ class AddTForm extends AbstractType
                     },
                     'choice_label' => 'fullName',
                     'multiple' => false,
-                    'by_reference' => true,
-                    'required' => true
+                    'by_reference' => true
                 ));
             }
         } else {
@@ -113,8 +111,7 @@ class AddTForm extends AbstractType
                 },
                 'choice_label' => 'id',
                 'multiple' => false,
-                'by_reference' => true,
-                'required' => true
+                'by_reference' => true
             ));
         }
 
@@ -134,18 +131,36 @@ class AddTForm extends AbstractType
             'placeholder' => 'TraineeRecord.recordType.placeholder'
         ));
         
+        $builder->add('correctionVocabulairy', TextareaType::class, array(
+            'label' => 'TraineeRecord.correctionVocabulairy.label',
+            'required' => false
+        ));
+        
+        $builder->add('correctionStructure', TextareaType::class, array(
+            'label' => 'TraineeRecord.correctionStructure.label',
+            'required' => false
+        ));
+        
+        $builder->add('correctionPrononciation', TextareaType::class, array(
+            'label' => 'TraineeRecord.correctionPrononciation.label',
+            'required' => false
+        ));
+        
         $builder->add('worksCovered', TextareaType::class, array(
-            'label' => 'TraineeRecord.worksCovered.label'
+            'label' => 'TraineeRecord.worksCovered.label',
+            'required' => false
         ));
-
+        
         $builder->add('takeaways', TextType::class, array(
-            'label' => 'TraineeRecord.takeaways.label'
+            'label' => 'TraineeRecord.takeaways.label',
+            'required' => false
         ));
-
+        
         $builder->add('comments', TextareaType::class, array(
-            'label' => 'TraineeRecord.comments.label'
+            'label' => 'TraineeRecord.comments.label',
+            'required' => false
         ));
-
+        
         $builder->add('homeworks', TextareaType::class, array(
             'label' => 'TraineeRecord.homeworks.label',
             'required' => false
@@ -186,10 +201,14 @@ class AddTForm extends AbstractType
                 'worksCovered',
                 'takeaways',
                 'comments',
-                'homeworks'
+                'homeworks',
+                'correctionVocabulairy',
+                'correctionStructure',
+                'correctionPrononciation'
             ),
             'trainee' => null,
-            'historical' => null
+            'historical' => null,
+            'data_class' => TraineeRecord::class,
         );
     }
 

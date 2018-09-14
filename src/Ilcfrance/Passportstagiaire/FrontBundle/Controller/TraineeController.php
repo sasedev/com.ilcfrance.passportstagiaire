@@ -866,6 +866,7 @@ class TraineeController extends IlcfranceController
                 $this->getSession()->remove('tabActive');
 
                 $this->addTwigVar('trainee', $trainee);
+                $this->addTwigVar('traineeRecord', $traineeRecord);
                 $this->addTwigVar('TraineeUpdateAddressForm', $traineeUpdateAddressForm->createView());
                 $this->addTwigVar('TraineeUpdateCoursesForm', $traineeUpdateCoursesForm->createView());
                 $this->addTwigVar('TraineeUpdateEmailForm', $traineeUpdateEmailForm->createView());
@@ -1246,10 +1247,10 @@ class TraineeController extends IlcfranceController
                         $this->addFlash('success', $this->translate('TraineeRecord.add.success', array(
                             '%traineeRecord%' => $traineeRecord->getFullName()
                         )));
-                        $this->addTwigVar('tabActive', 1);
-                        $this->getSession()->set('tabActive', 1);
+                        $this->addTwigVar('tabActive', 2);
+                        $this->getSession()->set('tabActive', 2);
 
-                        return $this->redirect($urlFrom);
+                        return $this->redirect($this->generateUrl('ilcfrance_passportstagiaire_front_trainee_record_editGet', array('id' => $traineeRecord->getId())));
                     } else {
                         $em->refresh($trainee);
 
@@ -1258,6 +1259,7 @@ class TraineeController extends IlcfranceController
                 }
 
                 $this->addTwigVar('trainee', $trainee);
+                $this->addTwigVar('traineeRecord', $traineeRecord);
                 $this->addTwigVar('TraineeUpdateAddressForm', $traineeUpdateAddressForm->createView());
                 $this->addTwigVar('TraineeUpdateCoursesForm', $traineeUpdateCoursesForm->createView());
                 $this->addTwigVar('TraineeUpdateEmailForm', $traineeUpdateEmailForm->createView());

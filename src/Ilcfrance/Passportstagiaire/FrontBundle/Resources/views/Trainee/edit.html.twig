@@ -1071,6 +1071,9 @@
 							{{form_row(TraineeRecordAddForm.historical, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'select2', 'style': 'width:100%', 'placeholder': 'TraineeRecord.historical.placeholder' } })}}
 							{{form_row(TraineeRecordAddForm.recordDate, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'datetimepicker'} })}}
 							{{form_row(TraineeRecordAddForm.recordType, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'select2', 'style': 'width:100%', 'placeholder': 'TraineeRecord.recordType.placeholder' } })}}
+							{{form_row(TraineeRecordAddForm.correctionVocabulairy, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg', 'row_id': 'row_correctionVocabulairy'} })}}
+							{{form_row(TraineeRecordAddForm.correctionStructure, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg', 'row_id': 'row_correctionStructure'} })}}
+							{{form_row(TraineeRecordAddForm.correctionPrononciation, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg', 'row_id': 'row_correctionPrononciation'} })}}
 							{{form_row(TraineeRecordAddForm.worksCovered, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
 							{{form_row(TraineeRecordAddForm.takeaways, {'label_col': 3, 'widget_col': 8 })}}
 							{{form_row(TraineeRecordAddForm.comments, {'label_col': 3, 'widget_col': 8, 'attr': {'class': 'wysiwyg'} })}}
@@ -1238,6 +1241,28 @@ $(function() {
 		modalDeleteBtn = $('#sendmailConfirmTraineeRecord').find('.danger');
 		modalDeleteBtn.attr('href', lnk);
 		$('#sendmailConfirmTraineeRecord').modal('show');
+	});
+
+	//alert($('#TraineeRecordAddForm_recordType').val());
+	if($('#TraineeRecordAddForm_recordType').val() == {{ constant('RT_NORMAL', traineeRecord) }}) {
+		$('#row_correctionVocabulairy').addClass('hidden');
+		$('#row_correctionStructure').addClass('hidden');
+		$('#row_correctionPrononciation').addClass('hidden');
+	} else {
+		$('#row_correctionVocabulairy').removeClass('hidden');
+		$('#row_correctionStructure').removeClass('hidden');
+		$('#row_correctionPrononciation').removeClass('hidden');
+	}
+	$('#TraineeRecordAddForm_recordType').on('change', function() {
+		if(this.value == {{ constant('RT_NORMAL', traineeRecord) }}) {
+			$('#row_correctionVocabulairy').addClass('hidden');
+			$('#row_correctionStructure').addClass('hidden');
+			$('#row_correctionPrononciation').addClass('hidden');
+		} else {
+			$('#row_correctionVocabulairy').removeClass('hidden');
+			$('#row_correctionStructure').removeClass('hidden');
+			$('#row_correctionPrononciation').removeClass('hidden');
+		}
 	});
 });
 </script>
