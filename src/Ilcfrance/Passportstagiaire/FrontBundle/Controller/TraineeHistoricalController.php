@@ -120,7 +120,7 @@ class TraineeHistoricalController extends IlcfranceController
                     ->get('tabActive', 1));
                 $this->getSession()->remove('tabActive');
 
-                $this->addTwigVar('traineeHistorical', $traineeRecord);
+                $this->addTwigVar('traineeHistorical', $traineeHistorical);
                 $this->addTwigVar('traineeRecord', $traineeRecord);
                 $this->addTwigVar('TraineeHistoricalUpdateCoursesForm', $traineeHistoricalUpdateCoursesForm->createView());
                 $this->addTwigVar('TraineeHistoricalUpdateInitLevelForm', $traineeHistoricalUpdateInitLevelForm->createView());
