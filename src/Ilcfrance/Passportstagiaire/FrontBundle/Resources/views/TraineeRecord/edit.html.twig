@@ -245,7 +245,7 @@
 									{{traineeRecord.nbrEmails|raw}}
 									&nbsp;
 								</div>
-								{% if is_granted('ROLE_ADMIN') or traineeRecord.historical is null or  (traineeRecord.historical is not null and  traineeRecord.historical.lockout == constant('LOCKOUT_LOCKED', traineeRecord.historical)) %}
+								{% if is_granted('ROLE_ADMIN') or (traineeRecord.teacher is not null and app.user.id == traineeRecord.teacher.id) %}
 								<div class="col-lg-12">&nbsp;</div>
 								<div class="col-lg-3 text-right">&nbsp;</div>
 								<div class="col-lg-9">
@@ -645,7 +645,7 @@
 												{{ faIco('download') }}
 												{{ 'action.btnDownload'|trans }}
 											</a>
-											{% if is_granted('ROLE_ADMIN') or traineeRecord.historical is null or  (traineeRecord.historical is not null and  traineeRecord.historical.lockout == constant('LOCKOUT_UNLOCKED', traineeRecord.historical)) %}
+											{% if is_granted('ROLE_ADMIN') or (traineeRecord.teacher is not null and app.user.id == traineeRecord.teacher.id) %}
 											<a class="btn btn-sm btn-default sendmailConfirmTraineeRecordDocument" href="{{path('ilcfrance_passportstagiaire_front_trainee_record_document_sendmail',{'id':doc.id})}}">
 												{{ faIco('envelope') }}
 												{{ 'action.btnSend'|trans }}
